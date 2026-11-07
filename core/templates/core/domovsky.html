@@ -1,32 +1,360 @@
 
-<!DOCTYPE html>
+!DOCTYPE html>
 <html lang="cs">
 <head>
     <meta charset="UTF-8">
-    <title>Cestovní Portál</title>
-</head>
-<body>
-    <h1>Vítejte na našem cestovním portálu!</h1>
-    <p>Aktuální čas a datum: <strong>{{ aktualni_cas|date:"d.m.Y H:i:s" }}</strong></p>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cestovatelské Radosti | Úvodní stránka</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Charm & Great Vibes jako záloha pro Fairwater Script -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Charm:wght@400;700&family=Great+Vibes&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <div>
-        {% if user.is_authenticated %}
-            <p>Přihlášen uživatel: <strong>{{ user.username }}</strong> |
-            <form action="{% url 'logout' %}" method="post" style="display:inline;">
-                {% csrf_token %}
-                <button type="submit">Odhlásit se</button>
-            </form></p>
-        {% else %}
-            <a href="{% url 'login' %}">Přihlásit se</a>
-        {% endif %}
+    <style>
+        /* Definice custom fontů s fallbackem pro Fairwater Script */
+        @font-face {
+            font-family: 'Fairwater Script';
+            src: local('Fairwater Script'), local('Fairwater-Script');
+            font-display: swap;
+        }
+
+        .font-fairwater {
+            font-family: 'Fairwater Script', 'Charm', 'Great Vibes', cursive;
+        }
+
+        .font-sans-custom {
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Plynulá tranzice obrázků na pozadí */
+        .bg-layer {
+            transition: background-image 1s ease-in-out;
+        }
+
+        /* Vlastní scrollbar pro modal a chat */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.1);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body class="font-sans-custom min-h-screen text-white relative overflow-x-hidden bg-slate-900 select-none">
+
+    <!-- VRSTVA POZADÍ (Střídání obrázků podle hodiny) -->
+    <div id="bg-container" class="fixed inset-0 z-0">
+        <!-- Tmavý překryv pro vynikající čitelnost textu -->
+        <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70 z-10 pointer-events-none"></div>
+        <div id="bg-image" class="absolute inset-0 bg-cover bg-center bg-no-repeat bg-layer transform scale-105 transition-transform duration-10000"></div>
     </div>
 
-    <hr>
-    <nav>
-        <ul>
-            <li><a href="{% url 'vyber_zeme' %}">Vybrat zemi a zobrazit itineráře</a></li>
-            <li><a href="{% url 'chat_admin' %}">Napsat administrátorovi</a></li>
-        </ul>
-    </nav>
-</body>
-</html>
+    <!-- HLAVNÍ OBSAH KONTENORU -->
+    <div class="relative z-20 min-h-screen flex flex-col justify-between p-4 sm:p-6 md:p-8">
+
+        <!-- HORNÍ PANEL (Levý roh + Pravý roh) -->
+        <header class="w-full flex flex-col md:flex-row justify-between items-start md:items-start gap-4">
+
+            <!-- LEVÝ HORNÍ ROH: Přihlášení & Pozdrav -->
+            <div class="bg-black/40 backdrop-blur-md border border-white/15 p-4 rounded-2xl shadow-lg max-w-sm w-full md:w-auto">
+                <div class="flex items-center gap-2 mb-2">
+                    <span class="text-xl">👋</span>
+                    <h2 class="text-sm font-semibold tracking-wide text-white/90">Budeme cestovat společně?</h2>
+                </div>
+                <p class="text-xs text-white/70 mb-3">Přihlas se ke svému účtu a objevuj uložené zážitky.</p>
+                <button onclick="openLoginModal()" class="w-full sm:w-auto px-5 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-medium text-xs rounded-xl transition duration-200 shadow-md flex items-center justify-center gap-2 group">
+                    <svg class="w-4 h-4 transition-transform group-hover:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path>
+                    </svg>
+                    Přihlásit se
+                </button>
+            </div>
+
+            <!-- PRAVÝ HORNÍ ROH: Záznam z palubního deníku -->
+            <div class="bg-black/40 backdrop-blur-md border border-white/15 p-4 rounded-2xl shadow-lg max-w-md w-full md:w-auto text-left md:text-right self-end md:self-start">
+                <div class="flex items-center md:justify-end gap-2 text-rose-400 mb-1">
+                    <span class="text-base">📌</span>
+                    <span class="font-bold text-sm tracking-wide text-white">Záznam z palubního deníku</span>
+                </div>
+                <!-- Dynamické Datum a Čas -->
+                <div id="logbook-datetime" class="font-mono text-sm sm:text-base font-semibold text-amber-200/90 my-1">
+                    Načítání času...
+                </div>
+                <!-- Kurzivní věta -->
+                <p class="text-xs sm:text-sm italic text-white/80 font-light mt-1">
+                    Právě teď je ten nejlepší čas začít plánovat další cestu.
+                </p>
+            </div>
+
+        </header>
+
+        <!-- STŘED STRÁNKY (Zhruba v 1/3 výšky) -->
+        <main class="w-full max-w-4xl mx-auto text-center my-auto py-12 px-4 flex flex-col items-center">
+
+            <!-- Hlavní nadpis (Fairwater Script, 24px) -->
+            <h1 class="font-fairwater text-[24px] leading-snug mb-4 text-amber-100 drop-shadow-md tracking-wide">
+                Vítejte ve světě mých cestovatelských radostí!
+            </h1>
+
+            <!-- Podnadpis (Fairwater Script, 16px) -->
+            <p class="font-fairwater text-[16px] leading-relaxed max-w-2xl text-white/90 drop-shadow mb-8 font-light">
+                Nemusíte mít procestovaný celý svět, abyste mohli milovat cestování. Podělím se s vámi o své osobní zážitky, praktické tipy a oblíbená místa, která stojí za to navštívit. Pojďme načerpat inspiraci na vaši příští cestu!
+            </p>
+
+            <!-- VYBRAT ZEMI A ZOBRAZIT ITINERÁŘE (Pouze 4 vybrané země) -->
+            <div class="w-full max-w-md bg-black/40 backdrop-blur-md p-3 rounded-2xl border border-white/20 shadow-2xl flex flex-col sm:flex-row gap-3">
+                <select id="country-select" class="flex-1 bg-white/10 text-white placeholder-white/50 border border-white/20 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-400 transition cursor-pointer">
+                    <option value="" class="bg-slate-800 text-white">🌍 Vyberte zemi...</option>
+                    <option value="turecko" class="bg-slate-800 text-white">🇹🇷 Turecko</option>
+                    <option value="egypt" class="bg-slate-800 text-white">🇪🇬 Egypt</option>
+                    <option value="kapverdy" class="bg-slate-800 text-white">🇨🇻 Kapverdy</option>
+                    <option value="tunisko" class="bg-slate-800 text-white">🇹🇳 Tunisko</option>
+                </select>
+                <button onclick="showItinerary()" class="px-6 py-3 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white font-semibold text-sm rounded-xl transition duration-200 shadow-lg flex items-center justify-center gap-2 whitespace-nowrap">
+                    <span>Zobrazit itineráře</span>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                    </svg>
+                </button>
+            </div>
+
+        </main>
+
+        <!-- PRÁZDNÝ FOOTER SPACING -->
+        <footer class="w-full h-12"></footer>
+
+    </div>
+
+    <!-- PRAVÝ DOLNÍ ROH: CHAT S ADMINISTRÁTOREM -->
+    <div class="fixed bottom-4 right-4 z-50">
+
+        <!-- 1. ZAVŘENÉ TLAČÍTKO / BUBLINA -->
+        <button id="chat-bubble" onclick="toggleChat()" class="flex items-center gap-3 bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white px-5 py-3.5 rounded-full shadow-2xl transition-all duration-300 hover:scale-105 border border-white/20 group">
+            <span class="text-xl">🙋‍♂️</span>
+            <span class="font-medium text-xs sm:text-sm pr-1">Potřebuješ poradit? Napiš mi!</span>
+            <span class="relative flex h-3 w-3">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
+            </span>
+        </button>
+
+        <!-- 2. OTEVŘENÉ OKNO CHATU -->
+        <div id="chat-window" class="hidden w-80 sm:w-96 bg-slate-900/95 backdrop-blur-xl border border-white/20 rounded-2xl shadow-2xl overflow-hidden flex-col transition-all duration-300">
+            <!-- Hlavička chatu -->
+            <div class="bg-gradient-to-r from-indigo-700 to-violet-800 p-4 flex justify-between items-center border-b border-white/10">
+                <div class="flex items-center gap-2">
+                    <span class="text-lg">💭</span>
+                    <h3 class="font-semibold text-sm text-white">Napsat administrátorovi</h3>
+                </div>
+                <button onclick="toggleChat()" class="text-white/70 hover:text-white p-1 rounded-lg hover:bg-white/10 transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Tělo chatu / Zpráva -->
+            <div class="p-4 space-y-3">
+                <div class="bg-white/5 border border-white/10 p-3 rounded-xl text-xs text-white/80 leading-relaxed italic border-l-4 border-l-indigo-400">
+                    Máš dotaz k webu, nápad na článek nebo jsi narazil/a na chybu? Napiš mi přímo sem do chatu. Jsem tu pro tebe a rád/a pomůžu!
+                </div>
+
+                <!-- Konverzace (Dynamicky přidávané zprávy) -->
+                <div id="chat-messages" class="max-h-48 overflow-y-auto space-y-2 py-1 pr-1 text-xs">
+                    <!-- Zprávy se načtou sem -->
+                </div>
+            </div>
+
+            <!-- Vstup pro zprávu -->
+            <form onsubmit="sendChatMessage(event)" class="p-3 bg-black/40 border-t border-white/10 flex gap-2">
+                <input type="text" id="chat-input" placeholder="[ Sem napiš svou zprávu... ]" required class="flex-1 bg-white/10 text-white placeholder-white/40 border border-white/15 rounded-xl px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-indigo-400">
+                <button type="submit" class="bg-indigo-600 hover:bg-indigo-500 text-white px-3 py-2 rounded-xl text-xs font-medium transition flex items-center justify-center">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+                    </svg>
+                </button>
+            </form>
+        </div>
+
+    </div>
+
+    <!-- MODAL OKNO PRO PŘIHLÁŠENÍ -->
+    <div id="login-modal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden items-center justify-center p-4">
+        <div class="bg-slate-900 border border-white/20 rounded-2xl w-full max-w-md p-6 shadow-2xl relative animate-in fade-in zoom-in duration-200">
+            <button onclick="closeLoginModal()" class="absolute top-4 right-4 text-white/60 hover:text-white p-1 rounded-lg">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+
+            <div class="text-center mb-6">
+                <span class="text-3xl">🧳</span>
+                <h3 class="text-xl font-bold text-white mt-2">Vítejte zpět!</h3>
+                <p class="text-xs text-white/60 mt-1">Přihlaste se ke svému cestovatelskému účtu</p>
+            </div>
+
+            <form onsubmit="handleLogin(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-medium text-white/80 mb-1">E-mailová adresa</label>
+                    <input type="email" required placeholder="vás@email.cz" class="w-full bg-white/5 border border-white/15 rounded-xl px-4 py-2.5 text-sm text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-emerald-400">
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-white/80 mb-1">Heslo</label>
+                    <input type="password" required placeholder="••••••••" class="w-full bg-white/5 border border-white/15 rounded-xl px-4 py-2.5 text-sm text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-emerald-400">
+                </div>
+                <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-semibold py-3 rounded-xl text-sm transition shadow-lg mt-2">
+                    Přihlásit se
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- OZNÁMENÍ / TOAST -->
+    <div id="toast" class="fixed top-6 left-1/2 -translate-x-1/2 z-50 bg-slate-800 border border-white/20 text-white px-6 py-3 rounded-xl shadow-2xl transition-all duration-300 opacity-0 pointer-events-none text-sm font-medium"></div>
+
+    <!-- JAVASCRIPT LOGIKA -->
+    <script>
+        // ==========================================
+        // 1. DYNAMICKÉ POZADÍ ZMĚNĚNÉ KAŽDOU HODINU
+        // ==========================================
+
+        const folderPath = 'pozadí úvodní stránka/';
+
+        // Záložní kvalitní obrázky z Unsplash pro každou hodinu
+        const fallbackImages = [
+            'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1920&q=80',
+            'https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1920&q=80',
+            'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=1920&q=80',
+            'https://images.unsplash.com/photo-1476514525535-ce74f45814e3?auto=format&fit=crop&w=1920&q=80',
+            'https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=1920&q=80',
+            'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1920&q=80'
+        ];
+
+        function updateBackgroundImage() {
+            const currentHour = new Date().getHours(); // Vrací číslo 0 až 23
+
+            // Soubor v lokální složce např.: pozadí úvodní stránka/pozadi1.jpg až pozadi24.jpg (nebo podle hodiny pozadi0.jpg - pozadi23.jpg)
+            const hourImageName = `pozadi${currentHour + 1}.jpg`;
+            const primaryUrl = `${folderPath}${hourImageName}`;
+
+            // Výběr fallbacku podle hodiny
+            const fallbackUrl = fallbackImages[currentHour % fallbackImages.length];
+
+            const bgElement = document.getElementById('bg-image');
+
+            // Ověření dostupnosti lokálního obrázku
+            const img = new Image();
+            img.src = primaryUrl;
+            img.onload = function() {
+                bgElement.style.backgroundImage = `url('${primaryUrl}')`;
+            };
+            img.onerror = function() {
+                bgElement.style.backgroundImage = `url('${fallbackUrl}')`;
+            };
+        }
+
+        // ==========================================
+        // 2. ZE-DŇA A ČASU PALUBNÍHO DENÍKU (ČESKY)
+        // ==========================================
+        function updateDateTime() {
+            const now = new Date();
+
+            const days = ['Neděle', 'Pondělí', 'Úterý', 'Středa', 'Čtvrtek', 'Pátek', 'Sobota'];
+            const months = [
+                'ledna', 'února', 'března', 'dubna', 'května', 'června',
+                'července', 'srpna', 'září', 'října', 'listopadu', 'prosince'
+            ];
+
+            const dayName = days[now.getDay()];
+            const dayNum = now.getDate();
+            const monthName = months[now.getMonth()];
+            const year = now.getFullYear();
+
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+
+            const formattedString = `${dayName} ${dayNum}. ${monthName} ${year} | ${hours}:${minutes}`;
+
+            document.getElementById('logbook-datetime').innerText = formattedString;
+        }
+
+        // ==========================================
+        // 3. OVLÁDÁNÍ CHATU S ADMINISTRÁTOREM
+        // ==========================================
+        function toggleChat() {
+            const bubble = document.getElementById('chat-bubble');
+            const window = document.getElementById('chat-window');
+
+            if (window.classList.contains('hidden')) {
+                window.classList.remove('hidden');
+                window.classList.add('flex');
+                bubble.classList.add('hidden');
+            } else {
+                window.classList.add('hidden');
+                window.classList.remove('flex');
+                bubble.classList.remove('hidden');
+            }
+        }
+
+        function sendChatMessage(event) {
+            event.preventDefault();
+            const input = document.getElementById('chat-input');
+            const messagesContainer = document.getElementById('chat-messages');
+            const text = input.value.trim();
+
+            if (!text) return;
+
+            const userMsg = document.createElement('div');
+            userMsg.className = 'bg-indigo-600/60 text-white p-2.5 rounded-xl ml-auto max-w-[85%] text-right backdrop-blur-sm border border-indigo-400/30';
+            userMsg.innerText = text;
+            messagesContainer.appendChild(userMsg);
+
+            input.value = '';
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+            setTimeout(() => {
+                const adminMsg = document.createElement('div');
+                adminMsg.className = 'bg-white/10 text-white/90 p-2.5 rounded-xl mr-auto max-w-[85%] backdrop-blur-sm border border-white/10';
+                adminMsg.innerText = 'Děkuji za zprávu! Ozvu se ti co nejdříve.';
+                messagesContainer.appendChild(adminMsg);
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            }, 1000);
+        }
+
+        // ==========================================
+        // 4. MODAL PŘIHLÁŠENÍ & ITINERÁŘE
+        // ==========================================
+        function openLoginModal() {
+            document.getElementById('login-modal').classList.remove('hidden');
+            document.getElementById('login-modal').classList.add('flex');
+        }
+
+        function closeLoginModal() {
+            document.getElementById('login-modal').classList.add('hidden');
+            document.getElementById('login-modal').classList.remove('flex');
+        }
+
+        function handleLogin(event) {
+            event.preventDefault();
+            closeLoginModal();
+            showToast('Úspěšně přihlášeno! Vítejte zpět.');
+        }
+
+        function showItinerary() {
+            const select = document.getElementById('country-select');
+            const selectedValue = select.value;
+
+            if (!selectedValue) {
+                showToast('Prosím vyberte zemi ze seznamu.');
+                return;
+            }
+
+            const countryName = select.options[select.selectedIndex].text;
+            showToast(`Načítám itineráře pro: ${countryName}`);
+        }
