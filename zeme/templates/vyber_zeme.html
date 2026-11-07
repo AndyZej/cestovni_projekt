@@ -1,0 +1,24 @@
+HTML
+
+<!DOCTYPE html>
+
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <title>Výběr země</title>
+</head>
+<body>
+    <h1>Nabízené destinace</h1>
+    <ul>
+        {% for z in vsechny_zeme %}
+            <li>
+                <strong>{{ z.nazev }}</strong> - 
+                <a href="{% url 'detail_zeme' z.slug %}">Zobrazit podrobnosti a itinerář</a>
+            </li>
+        {% empty %}
+            <li>Zatím nejsou přidány žádné země.</li>
+        {% endfor %}
+    </ul>
+    <p><a href="{% url 'domov' %}">Zpět na úvodní stránku</a></p>
+</body>
+</html>

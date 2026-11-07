@@ -5,5 +5,5 @@ from . import views
 
 urlpatterns = [
     path('', views.vyber_zeme, name='vyber_zeme'),
-    path('itinerar/<int:zeme_id>/', views.detail_itineraru, name='itinerar'),
+    path('<slug:slug>/', views.detail_zeme, name='detail_zeme'),
 ]

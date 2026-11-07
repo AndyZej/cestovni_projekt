@@ -21,8 +21,9 @@
         :root {
             --font-script: 'Fairwater Script', 'Charm', cursive;
             --font-sans: 'Montserrat', sans-serif;
-            --glass-bg: rgba(20, 20, 20, 0.45);
-            --glass-border: rgba(255, 255, 255, 0.2);
+            /* Dynamické proměnné pro pozadí panelů (mění se v JS) */
+            --panel-bg: rgba(25, 30, 45, 0.75);
+            --panel-border: rgba(255, 255, 255, 0.2);
             --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
             --text-color: #ffffff;
         }
@@ -31,6 +32,7 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+            user-select: none;
         }
 
         body, html {
@@ -38,9 +40,10 @@
             font-family: var(--font-sans);
             color: var(--text-color);
             overflow-x: hidden;
+            background-color: #0f172a;
         }
 
-        /* Pevné pozadí stránky */
+        /* Pevné pozadí stránky s obrázkem 1.jpg */
         #bg-overlay {
             position: fixed;
             top: 0;
@@ -48,29 +51,40 @@
             width: 100%;
             height: 100%;
             z-index: -1;
-            /* Zde zadejte název vašeho obrázku, např. '1.jpg' */
             background-image: url('1.jpg');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            background-color: #1a1a1a;
         }
 
-        /* Tmavší vrstva přes pozadí pro dobrou čitelnost textů */
+        /* Jemný barevný filtr přes obrázek pro hloubku */
         #bg-overlay::before {
             content: '';
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0, 0, 0, 0.35);
+            background: rgba(15, 23, 42, 0.35);
         }
 
+        /* Plátno pro animované bubliny */
+        #bubble-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 1;
+            pointer-events: auto;
+        }
+
+        /* Styl tabulek (panelů) s dynamickým barevným tónováním */
         .glass-panel {
-            background: var(--glass-bg);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid var(--glass-border);
+            background: var(--panel-bg);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid var(--panel-border);
             border-radius: 20px;
             box-shadow: var(--glass-shadow);
+            transition: background 1.2s ease, border-color 1.2s ease;
         }
 
         /* 1. Levý horní roh (Přihlášení) */
@@ -166,19 +180,19 @@
 
         .main-heading {
             font-family: var(--font-script);
-            font-size: 24px;
+            font-size: 28px;
             line-height: 1.4;
             margin-bottom: 16px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.6);
+            text-shadow: 0 2px 6px rgba(0,0,0,0.8);
         }
 
         .sub-heading {
             font-family: var(--font-script);
-            font-size: 16px;
+            font-size: 18px;
             line-height: 1.6;
             margin-bottom: 30px;
             opacity: 0.95;
-            text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+            text-shadow: 0 1px 4px rgba(0,0,0,0.8);
         }
 
         /* Výběr země */
@@ -188,9 +202,9 @@
 
         .country-select {
             appearance: none;
-            background: var(--glass-bg);
+            background: var(--panel-bg);
             backdrop-filter: blur(8px);
-            border: 1px solid var(--glass-border);
+            border: 1px solid var(--panel-border);
             color: white;
             padding: 12px 45px 12px 20px;
             font-size: 1rem;
@@ -202,15 +216,15 @@
             background-image: url("data:image/svg+xml;utf8,<svg fill='white' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='7 10l5 5 5-5z'/></svg>");
             background-repeat: no-repeat;
             background-position: right 14px center;
-            transition: background 0.2s;
+            transition: background 0.3s;
         }
 
         .country-select:hover {
-            background-color: rgba(40, 40, 40, 0.6);
+            background-color: rgba(40, 45, 60, 0.85);
         }
 
         .country-select option {
-            background: #2b2b2b;
+            background: #1e293b;
             color: white;
         }
 
@@ -277,7 +291,7 @@
             width: 100%;
             padding: 10px 14px;
             border-radius: 8px;
-            border: 1px solid var(--glass-border);
+            border: 1px solid var(--panel-border);
             background: rgba(0, 0, 0, 0.2);
             color: white;
             outline: none;
@@ -289,6 +303,9 @@
 
     <!-- Obrázek pozadí -->
     <div id="bg-overlay"></div>
+
+    <!-- Plátno pro animované bubliny -->
+    <canvas id="bubble-canvas"></canvas>
 
     <!-- 1. Levý horní roh (Přihlášení) -->
     <div class="top-left glass-panel">
@@ -366,9 +383,185 @@
             document.getElementById('chat-box').style.display = open ? 'flex' : 'none';
         }
 
-        // Spuštění
         updateDateTime();
         setInterval(updateDateTime, 1000);
+
+        // --- BUBLINY A DYNAMICKÉ TÓNOVÁNÍ PANELŮ ---
+        const canvas = document.getElementById('bubble-canvas');
+        const ctx = canvas.getContext('2d');
+
+        let width = canvas.width = window.innerWidth;
+        let height = canvas.height = window.innerHeight;
+
+        const mouse = { x: null, y: null, radius: 150 };
+
+        window.addEventListener('mousemove', (e) => { mouse.x = e.clientX; mouse.y = e.clientY; });
+        window.addEventListener('mouseleave', () => { mouse.x = null; mouse.y = null; });
+        window.addEventListener('touchmove', (e) => {
+            if (e.touches.length > 0) { mouse.x = e.touches[0].clientX; mouse.y = e.touches[0].clientY; }
+        });
+        window.addEventListener('touchend', () => { mouse.x = null; mouse.y = null; });
+        window.addEventListener('resize', () => {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        });
+
+        // Světlé barevné palety pro bubliny
+        const lightPalettes = [
+            { min: 200, max: 240 }, // Modrá / Šeříková
+            { min: 320, max: 350 }, // Světle růžová
+            { min: 160, max: 190 }, // Tyrkysová
+            { min: 35,  max: 55  }, // Zlatavá / Krémová
+            { min: 260, max: 290 }  // Fialková
+        ];
+
+        let currentPaletteIndex = 0;
+        let baseHue = lightPalettes[0];
+
+        // Funkci pro dynamickou změnu tmavšího tónu panelů
+        function updatePanelTheme(hue) {
+            const panelBg = `hsla(${hue}, 35%, 14%, 0.82)`;
+            const panelBorder = `hsla(${hue}, 45%, 35%, 0.35)`;
+            document.documentElement.style.setProperty('--panel-bg', panelBg);
+            document.documentElement.style.setProperty('--panel-border', panelBorder);
+        }
+
+        // Nastavení počátečního tónu panelů
+        updatePanelTheme((baseHue.min + baseHue.max) / 2);
+
+        // Změna palety bublin i panelů každých 5 minut (300 000 ms)
+        setInterval(() => {
+            currentPaletteIndex = (currentPaletteIndex + 1) % lightPalettes.length;
+            baseHue = lightPalettes[currentPaletteIndex];
+            const avgHue = (baseHue.min + baseHue.max) / 2;
+
+            updatePanelTheme(avgHue);
+            bubbles.forEach(bubble => bubble.updateColor());
+        }, 5 * 60 * 1000);
+
+        class Bubble {
+            constructor(x, y, radius) {
+                this.x = x || Math.random() * width;
+                this.y = y || height + (Math.random() * 100);
+                this.radius = radius || Math.random() * 35 + 10;
+                this.baseRadius = this.radius;
+
+                this.vy = -(Math.random() * 0.6 + 0.3);
+                this.vx = (Math.random() - 0.5) * 0.4;
+
+                this.updateColor();
+
+                this.angle = Math.random() * Math.PI * 2;
+                this.swingSpeed = Math.random() * 0.02 + 0.005;
+                this.swingMagnitude = Math.random() * 0.8 + 0.2;
+            }
+
+            updateColor() {
+                const hue = Math.floor(Math.random() * (baseHue.max - baseHue.min) + baseHue.min);
+                const opacity = Math.random() * 0.35 + 0.15;
+                this.color = `hsla(${hue}, 80%, 90%, ${opacity})`;
+                this.borderColor = `hsla(${hue}, 90%, 95%, ${opacity + 0.25})`;
+            }
+
+            draw() {
+                ctx.save();
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+
+                const gradient = ctx.createRadialGradient(
+                    this.x - this.radius * 0.3,
+                    this.y - this.radius * 0.3,
+                    this.radius * 0.1,
+                    this.x,
+                    this.y,
+                    this.radius
+                );
+                gradient.addColorStop(0, 'rgba(255, 255, 255, 0.75)');
+                gradient.addColorStop(0.4, this.color);
+                gradient.addColorStop(1, 'rgba(255, 255, 255, 0.05)');
+
+                ctx.fillStyle = gradient;
+                ctx.fill();
+
+                ctx.lineWidth = 1;
+                ctx.strokeStyle = this.borderColor;
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.arc(
+                    this.x - this.radius * 0.3,
+                    this.y - this.radius * 0.3,
+                    this.radius * 0.3,
+                    Math.PI * 1.2,
+                    Math.PI * 1.7
+                );
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.65)';
+                ctx.lineWidth = Math.max(1, this.radius * 0.08);
+                ctx.stroke();
+
+                ctx.restore();
+            }
+
+            update() {
+                this.angle += this.swingSpeed;
+                this.x += Math.sin(this.angle) * this.swingMagnitude + this.vx;
+                this.y += this.vy;
+
+                if (mouse.x !== null && mouse.y !== null) {
+                    const dx = mouse.x - this.x;
+                    const dy = mouse.y - this.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < mouse.radius) {
+                        const force = (mouse.radius - distance) / mouse.radius;
+                        if (this.radius < this.baseRadius * 1.4) {
+                            this.radius += 0.8;
+                        }
+                        this.x -= (dx / distance) * force * 1.5;
+                        this.y -= (dy / distance) * force * 1.5;
+                    } else if (this.radius > this.baseRadius) {
+                        this.radius -= 0.3;
+                    }
+                } else if (this.radius > this.baseRadius) {
+                    this.radius -= 0.3;
+                }
+
+                if (this.y + this.radius < -20) {
+                    this.y = height + this.radius + Math.random() * 20;
+                    this.x = Math.random() * width;
+                    this.updateColor();
+                }
+
+                if (this.x < -this.radius) this.x = width + this.radius;
+                if (this.x > width + this.radius) this.x = -this.radius;
+
+                this.draw();
+            }
+        }
+
+        const bubbles = [];
+        const bubbleCount = Math.min(Math.floor(window.innerWidth / 20), 45);
+
+        for (let i = 0; i < bubbleCount; i++) {
+            const bubble = new Bubble();
+            bubble.y = Math.random() * height;
+            bubbles.push(bubble);
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+            for (let i = 0; i < bubbles.length; i++) {
+                bubbles[i].update();
+            }
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+
+        // Kliknutím na obrazovku vytvoříte novou bublinu
+        canvas.addEventListener('click', (e) => {
+            bubbles.push(new Bubble(e.clientX, e.clientY, Math.random() * 30 + 15));
+        });
     </script>
 </body>
 </html>
