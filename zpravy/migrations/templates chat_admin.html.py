@@ -1,0 +1,23 @@
+
+<!DOCTYPE html>
+<html lang="cs">
+<head><meta charset="UTF-8"><title>Zprávy s administrátorem</title></head>
+<body>
+    <h1>Komunikace s administrátorem</h1>
+    <form method="POST">
+        {% csrf_token %}
+        <textarea name="zprava" rows="4" cols="50" placeholder="Napište zprávu administrátorovi..."></textarea><br>
+        <button type="submit">Odeslat zprávu</button>
+    </form>
+
+    <h2>Historie vašich zpráv:</h2>
+    <ul>
+        {% for z in zpravy %}
+            <li><strong>{{ z.cas_odeslani|date:"d.m.Y H:i" }}:</strong> {{ z.zprava }}</li>
+        {% empty %}
+            <li>Zatím jste neposlali žádné zprávy.</li>
+        {% endfor %}
+    </ul>
+    <p><a href="{% url 'domov' %}">Zpět na úvodní stránku</a></p>
+</body>
+</html>
