@@ -1,14 +1,201 @@
 
 <!DOCTYPE html>
 <html lang="cs">
-<head><meta charset="UTF-8"><title>Přihlášení</title></head>
+<head>
+    <meta charset="UTF-8">
+    <title>Přihlášení do systému</title>
+</head>
 <body>
+
+<!-- Světlé záhlaví nahoře -->
+<div class="country-hero-section-light">
     <h1>Přihlášení do systému</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Přihlásit</button>
-    </form>
-    <p><a href="{% url 'domov' %}">Zpět na úvodní stránku</a></p>
+    <p>Vítejte ve vašem cestovatelském průvodci</p>
+</div>
+
+<!-- Hlavní bílá karta s formulářem uprostřed na světlém pozadí -->
+<div class="content-card-wrapper-light">
+    <div class="login-card-light">
+
+        <form method="post" class="login-form">
+            {% csrf_token %}
+
+            {% if form.errors %}
+                <div class="alert-error">
+                    Nesprávné uživatelské jméno nebo heslo. Zkuste to prosím znovu.
+                </div>
+            {% endif %}
+
+            <div class="form-group">
+                <label for="id_username">Uživatelské jméno:</label>
+                {{ form.username }}
+            </div>
+
+            <div class="form-group">
+                <label for="id_password">Heslo:</label>
+                {{ form.password }}
+            </div>
+
+            <div class="form-actions-row">
+                <label class="remember-me">
+                    <input type="checkbox" name="remember"> Zapamatovat si mě
+                </label>
+                <a href="#" class="forgot-password">Zapomněli jste heslo?</a>
+            </div>
+
+            <button type="submit" class="btn-light-submit">Přihlásit se</button>
+        </form>
+
+        <div class="login-footer-links">
+            <a href="{% url 'domov' %}">← Zpět na úvodní stránku</a>
+        </div>
+    </div>
+</div>
+
+<!-- Styly pro světlý a vzdušný vzhled -->
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background-color: #ffffff;
+    }
+
+    .country-hero-section-light {
+        background-color: #f8f9fa;
+        padding: 50px 20px;
+        text-align: center;
+        border-bottom: 2px solid #e0d0b0;
+    }
+
+    .country-hero-section-light h1 {
+        color: #b38b4d;
+        font-size: 38px;
+        font-family: serif;
+        margin-bottom: 10px;
+        letter-spacing: 1px;
+    }
+
+    .country-hero-section-light p {
+        color: #666666;
+        font-size: 16px;
+        font-style: italic;
+    }
+
+    .content-card-wrapper-light {
+        background-color: #ffffff;
+        display: flex;
+        justify-content: center;
+        padding: 50px 20px;
+        min-height: 50vh;
+    }
+
+    .login-card-light {
+        background: #ffffff;
+        padding: 40px;
+        border-radius: 8px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        border: 1px solid #eaeaea;
+        width: 100%;
+        max-width: 480px;
+        box-sizing: border-box;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: #444444;
+        font-family: serif;
+    }
+
+    .form-group input {
+        width: 100%;
+        padding: 12px 15px;
+        border: 1px solid #dcdcdc;
+        border-radius: 6px;
+        font-size: 16px;
+        box-sizing: border-box;
+        background-color: #fdfdfd;
+        transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    .form-group input:focus {
+        border-color: #b38b4d;
+        outline: none;
+        box-shadow: 0 0 5px rgba(179, 139, 77, 0.2);
+        background-color: #fff;
+    }
+
+    .form-actions-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 14px;
+        margin-bottom: 25px;
+        color: #666;
+    }
+
+    .form-actions-row a {
+        color: #b38b4d;
+        text-decoration: none;
+    }
+
+    .form-actions-row a:hover {
+        text-decoration: underline;
+    }
+
+    .btn-light-submit {
+        width: 100%;
+        background-color: #b38b4d;
+        color: white;
+        padding: 14px;
+        border: none;
+        border-radius: 6px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        letter-spacing: 0.5px;
+    }
+
+    .btn-light-submit:hover {
+        background-color: #9e773f;
+    }
+
+    .alert-error {
+        background-color: #fdf2f2;
+        color: #a94442;
+        padding: 12px;
+        border-radius: 6px;
+        font-size: 14px;
+        margin-bottom: 20px;
+        border: 1px solid #ebccd1;
+        text-align: center;
+    }
+
+    .login-footer-links {
+        margin-top: 25px;
+        text-align: center;
+        font-size: 14px;
+        border-top: 1px solid #f0f0f0;
+        padding-top: 20px;
+    }
+
+    .login-footer-links a {
+        color: #555555;
+        text-decoration: none;
+        font-weight: 500;
+    }
+
+    .login-footer-links a:hover {
+        color: #b38b4d;
+        text-decoration: underline;
+    }
+</style>
+
 </body>
 </html>

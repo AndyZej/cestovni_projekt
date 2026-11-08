@@ -5,7 +5,7 @@ from django.shortcuts import render
 from .models import Zeme
 
 def domov_view(request):
-    return render(request, 'zeme/index.html')
+    return render(request, 'zeme/domovsky.html')
 
 def login_view(request):
     return render(request, 'prihlaseni.html')
