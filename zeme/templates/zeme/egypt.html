@@ -1,4 +1,4 @@
-HTML
+
 <!DOCTYPE html>
 <html lang="cs">
 <head>
@@ -144,17 +144,8 @@ HTML
             border: 1px solid var(--border-color);
         }
 
-        .foto-box img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 2px;
-            border: 1px solid var(--luxury-gold);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
-        }
-
         .btn-gallery {
             display: inline-block;
-            margin-top: 22px;
             padding: 14px 30px;
             background: var(--luxury-gold);
             color: #ffffff;
@@ -320,19 +311,14 @@ HTML
             <li><strong>Prakticky žádný déšť:</strong> V Hurghadě prší průměrně 1 až 2 dny v roce. Veškerá sladká voda se do resortů přivádí z Nilu nebo odsoluje z moře.</li>
         </ul>
 
-        <h2>Fotografie</h2>
+        <h2>Galerie</h2>
         <div class="foto-box">
-            {% if zvolena_zeme.hlavni_foto %}
-                <img src="{{ zvolena_zeme.hlavni_foto.url }}" alt="Hurghada - Egypt">
-            {% else %}
-                <p><em>Fotografie není k dispozici.</em></p>
-            {% endif %}
-            <br>
-            <a href="{% url 'galerie' %}" class="btn-gallery">📷 Otevřít kompletní fotogalerii</a>
+            <!-- Dynamický odkaz směřující přesně na galerii Egypta -->
+            <a href="{% url 'galerie_zeme' 'egypt' %}" class="btn-gallery">📷 Otevřít kompletní fotogalerii</a>
         </div>
 
-        <!-- Tlačítko pro návrat na hlavní stránku, kde si můžete vybrat jinou zemi -->
-        <p><a href="{% url 'domov' %}" class="btn-back">← Zpět na výběr zemí (Hlavní stránka)</a></p>
+        <!-- Tlačítko pro návrat na hlavní stránku -->
+        <p><a href="{% url 'domov' %}" class="btn-back">← Zpět na hlavní stránku</a></p>
     </div>
 
 </body>

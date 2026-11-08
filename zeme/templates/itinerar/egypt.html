@@ -1,11 +1,13 @@
-HTML
+
+
+
 <!DOCTYPE html>
 <html lang="cs">
 <head>
     <meta charset="UTF-8">
-    <title>Itinerář Hurghada - Výlety a Průvodce</title>
+    <title>Itinerář Egypt - Hurghada & Luxor</title>
 
-    <!-- Google Fonts: Playfair Display (nadpisy) a Lato (text) -->
+    <!-- Google Fonts: Playfair Display a Lato -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
@@ -77,93 +79,151 @@ HTML
             letter-spacing: 0.5px;
         }
 
-        h3 {
+        .city-title {
             font-family: 'Playfair Display', serif;
             color: var(--luxury-gold);
-            font-size: 1.65em;
-            margin-top: 35px;
+            font-size: 1.8em;
+            margin-top: 40px;
             margin-bottom: 15px;
+            border-left: 4px solid var(--luxury-gold);
+            padding-left: 12px;
+        }
+
+        details {
+            background: #fcfbfa;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        details[open] {
+            border-color: var(--luxury-gold);
+            box-shadow: 0 4px 15px rgba(197, 160, 89, 0.1);
+        }
+
+        summary {
+            font-family: 'Playfair Display', serif;
+            color: var(--luxury-dark);
+            font-size: 1.4em;
+            padding: 20px 25px;
+            cursor: pointer;
             font-weight: 600;
+            list-style: none;
+            position: relative;
+            outline: none;
+            user-select: none;
+        }
+
+        summary::-webkit-details-marker {
+            display: none;
+        }
+
+        summary::after {
+            content: '+';
+            position: absolute;
+            right: 25px;
+            font-size: 1.2em;
+            color: var(--luxury-gold);
+            transition: transform 0.3s ease;
+        }
+
+        details[open] summary::after {
+            transform: rotate(45deg);
+        }
+
+        .trip-content {
+            padding: 0 25px 25px 25px;
+            border-top: 1px solid var(--border-color);
+            background: #ffffff;
         }
 
         .trip-meta {
             background-color: #fcfbfa;
             border-left: 3px solid var(--luxury-gold);
-            padding: 8px 15px;
-            margin-bottom: 15px;
+            padding: 10px 15px;
+            margin: 20px 0;
             font-size: 0.95em;
         }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 30px 0;
-            font-family: 'Lato', sans-serif;
-            border: 1px solid var(--border-color);
-        }
-
-        th, td {
-            padding: 14px 18px;
-            text-align: left;
-        }
-
-        th {
-            background-color: var(--luxury-dark);
-            color: var(--luxury-gold);
-            font-family: 'Playfair Display', serif;
-            font-size: 1.15em;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-        }
-
-        td {
-            border-bottom: 1px solid var(--border-color);
-            background-color: #fff;
-        }
-
-        tr:last-child td {
-            border-bottom: none;
-        }
-
-        tr:nth-child(even) td {
-            background-color: #fcfbfa;
-        }
-
-        ul {
-            line-height: 1.8;
-            padding-left: 22px;
-            margin-bottom: 25px;
-        }
-
-        li {
-            margin-bottom: 10px;
-        }
-
-        li strong {
-            color: var(--luxury-dark);
-        }
-
-        .foto-box {
-            text-align: center;
-            margin: 40px 0 25px 0;
-            padding: 30px;
+        /* --- FOTOGALERIE --- */
+        .gallery-section {
+            margin-top: 55px;
+            padding: 40px 30px;
             background: #fcfbfa;
             border-radius: 4px;
             border: 1px solid var(--border-color);
+            text-align: center;
         }
 
-        .foto-box img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 2px;
-            border: 1px solid var(--luxury-gold);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+        .gallery-section h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--luxury-dark);
+            font-size: 2.2em;
+            margin-top: 0;
+            margin-bottom: 25px;
         }
 
-        .btn-gallery {
+        .gallery-city-group {
+            margin-bottom: 35px;
+            text-align: left;
+        }
+
+        .gallery-city-group h4 {
+            font-family: 'Playfair Display', serif;
+            color: var(--luxury-gold);
+            font-size: 1.4em;
+            margin-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 5px;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 15px;
+        }
+
+        .gallery-card {
+            background: #1a1a1a;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 22px 12px;
+            text-decoration: none;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+        }
+
+        .gallery-card:hover {
+            border-color: var(--luxury-gold);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(197, 160, 89, 0.25);
+        }
+
+        .gallery-icon {
+            font-size: 1.9em;
+            color: var(--luxury-gold);
+            margin-bottom: 8px;
+        }
+
+        .gallery-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1em;
+            font-weight: 600;
+            color: #ffffff;
+            letter-spacing: 0.5px;
+            text-align: center;
+        }
+
+        .btn-gallery-all {
             display: inline-block;
-            margin-top: 22px;
-            padding: 14px 30px;
+            margin-top: 25px;
+            padding: 14px 32px;
             background: var(--luxury-gold);
             color: #ffffff;
             text-decoration: none;
@@ -177,7 +237,7 @@ HTML
             box-shadow: 0 4px 12px rgba(197, 160, 89, 0.25);
         }
 
-        .btn-gallery:hover {
+        .btn-gallery-all:hover {
             background: var(--luxury-gold-hover);
             box-shadow: 0 6px 18px rgba(197, 160, 89, 0.4);
         }
@@ -205,122 +265,127 @@ HTML
 <body>
 
     <header>
-        <h1>🇪🇬 Itinerář Hurghada</h1>
-        <p>Mystická cesta historií podél řeky Nil a objevování Rudého moře</p>
+        <h1>🇪🇬 Itinerář Egypt</h1>
+        <p>Průvodce výlety a zážitky v oblasti Hurghady a Údolí Nilu</p>
     </header>
 
     <div class="container">
 
-        <h2>Přehled výletů z Hurghady</h2>
+        <h2>Výlety a průvodce podle oblastí</h2>
+        <p>Vyberte si konkrétní výlet a rozklikněte si jeho detailní průběh a informace.</p>
 
-        <h3>Město Hurghada</h3>
-        <div class="trip-meta">
-            <strong>Cena:</strong> cca 10–20 € / osoba | <strong>Časová náročnost:</strong> cca 3–4 hodiny (půldenní výlet)
-        </div>
-        <p>Hurghada, původně nenápadná rybářská vesnička, se proměnila v rušné centrum egyptské Riviéry, které nabízí skvělý pohled do místní kultury. Nejstarší částí města je čtvrť <strong>El Dahar</strong>, kde vás pohltí atmosféra tradičního arabského bazaru s vůní koření, vodních dýmek a smlouváním o suvenýry. Jen kousek odtud stojí majestátní <strong>Mešita El Mina</strong> s vysokými minarety a působivou bílou architekturou přímo u pobřeží.</p>
-        <p>Procházku můžete spojit s návštěvou rušného rybího trhu, kde rybáři denně nabízejí své čerstvé úlovky z Rudého moře. Zcela jinou, moderní a luxusní tvář města pak představuje <strong>Hurghada Marina</strong> – nábřežní promenáda lemovaná jachtami, elegantními restauracemi a kavárnami.</p>
-        <p>Během výletu můžete navštívit také <strong>Koptický kostel</strong>, který ukazuje rozmanitou náboženskou historii regionu. Pokud cestujete s dětmi, skvělou zastávkou je akvárium <strong>Hurghada Grand Aquarium</strong> s podmořským tunelem plným žraloků a rejnoků. Výlet do města je ideálním půldenním zpestřením relaxace na pláži a dá vám možnost poznat Egypt i z jiné stránky než jen z bran hotelového resortu.</p>
+        <!-- 1. OBLAST: HURGHADA -->
+        <div class="city-title">🏖️ 1. Hurghada & Okolí</div>
 
-        <h3>Hurghada Grand Aquarium</h3>
-        <div class="trip-meta">
-            <strong>Cena:</strong> cca 35–45 € / dospělý (děti cca polovina) | <strong>Časová náročnost:</strong> cca 2–3 hodiny
-        </div>
-        <p>Hurghada Grand Aquarium představuje skvělý cíl pro rodinný výlet a nabízí jedinečný pohled na podmořský svět Rudého moře bez nutnosti potápění. Hlavním lákadlem je úchvatný prosklený podmořský tunel, kterým projdete přímo pod obřími nádržemi plnými žraloků, rejnoků a stovek barevných ryb.</p>
-        <p>Součástí areálu je také rozsáhlá sladkovodní expozice, mini zoo a výstava přibližující život v poušti. Děti i dospělí zde mohou obdivovat nejen mořské živočichy, ale i exotické ptactvo a plazy. Prohlídka areálu je přehledně členěná a zabere přibližně dvě až tři hodiny. Návštěvu lze snadno kombinovat s dopravou z hotelu a pohodlně ji tak vtěsnat do dopoledního či odpoledního programu.</p>
+        <details>
+            <summary>Město Hurghada (Trhy, mešita & luxusní přístav)</summary>
+            <div class="trip-content">
+                <div class="trip-meta">
+                    <strong>Cena:</strong> cca 10–20 € / osoba | <strong>Časová náročnost:</strong> cca 3–4 hodiny (půldenní výlet)
+                </div>
+                <p>Hurghada se z malé rybářské vesničky proměnila v rušné centrum egyptské Riviéry. V nejstarší čtvrti El Dahar vás pohltí atmosféra arabského bazaru s vůní koření a smlouváním o suvenýry. Jen kousek odtud stojí majestátní bílá Mešita El Mina s vysokými minarety přímo u pobřeží.</p>
+                <p>Tradiční život uvidíte i na rušném rybím trhu s čerstvými úlovky z Rudého moře. Zcela jinou, moderní a luxusní tvář města pak představuje nábřežní promenáda Hurghada Marina s jachtami a kavárnami. Procházku můžete rozšířit o Koptický kostel či podmořské akvárium. Výlet je ideálním zpestřením plážové relaxace pro ty, kteří chtějí poznat reálný Egypt mimo brány resortu.</p>
+            </div>
+        </details>
 
-        <h3>Celodenní výlet do Luxoru</h3>
-        <div class="trip-meta">
-            <strong>Cena:</strong> cca 50–85 € / osoba | <strong>Časová náročnost:</strong> cca 14–16 hodin (celodenní výlet)
-        </div>
-        <p>Představte si, že opouštíte brzké ranní ticho mořského pobřeží v Hurghadě a vydáváte se napříč nehostinnou, ale fascinující pouští. S východem slunce se před vámi najednou otevře úplně jiný svět – smaragdově zelené údolí ikonického Nilu, kde jako by se zastavil čas.</p>
-        <p>Vaše první kroky povedou na západní břeh, do bájného <strong>Údolí králů</strong>. Když sestoupíte po kamenných schodech hluboko do podzemí, obklopí vás ticho staré tisíce let. Na stěnách hrobek faraonů vás ohromí barvy, které vypadají, jako by je starověcí mistři nanášeli teprve včera. Uprostřed této vyprahlé krajiny pak spatříte <strong>chrám královny Hatšepsut</strong> – architektonický zázrak zasazený přímo do strmých skalních stěn, z něhož dýchá síla jediné ženy, jež vládla Egyptu jako faraon.</p>
-        <p>Cestou k řece vás pozdraví tichým, věčným pohledem <strong>Memnonovy kolosy</strong>, dvě obří kamenné postavy, které kdysi střežily monumentální chrámový komplex. Po náročném dopoledni přijde čas na zasloužený odpočinek: osvěžující oběd přímo u Nilu a krátká, pohodová plavba po vlnách této legendární řeky.</p>
-        <p>Vyvrcholení dne však čeká na východním břehu. Vstup do monumentálního <strong>Karnaku</strong> vám doslova vyrazí dech. Když se ocitnete ve Velké hypostylové síni, obklopeni 134 obřími sloupy tyčícími se k nebi, budete si připadat nepatrní jako zrnko písku. Příběh starověkého Egypta pak majestátně uzavře <strong>Luxorský chrám</strong> a legendární Alej sfing. Domů do hotelu se budete vracet až za tmy, ale v hlavě si ponesete vzpomínky na den, kdy jste se osobně dotkli jedné z největších civilizací lidské historie.</p>
+        <details>
+            <summary>Hurghada Grand Aquarium</summary>
+            <div class="trip-content">
+                <div class="trip-meta">
+                    <strong>Cena:</strong> cca 35–45 € / dospělý (děti cca polovina) | <strong>Časová náročnost:</strong> cca 2–3 hodiny
+                </div>
+                <p>Hurghada Grand Aquarium nabízí skvělý rodinný zážitek a podmořský svět bez nutnosti potápění. Hlavním lákadlem je prosklený podmořský tunel vedoucí přímo pod obřími nádržemi se žraloky, rejnoky a stovkami barevných ryb.</p>
+                <p>V areálu najdete také rozsáhlou sladkovodní expozici, mini zoo s exotickým ptactvem a plazy a výstavy přibližující život v poušti. Prohlídka je přehledně členěná, trvá přibližně 2 až 3 hodiny a snadno ji vtěsnáte do dopoledního či odpoledního programu.</p>
+            </div>
+        </details>
 
-        <h3>Plavba ponorkou nebo poloponorkou</h3>
-        <div class="trip-meta">
-            <strong>Cena:</strong> cca 15–20 € (poloponorka) / cca 30–35 € (skutečná ponorka) | <strong>Časová náročnost:</strong> cca 2–3 hodiny včetně dopravy
-        </div>
-        <p>Výlet ponorkou nebo poloponorkou v Hurghadě představuje ideální způsob, jak objevit krásy podmořského světa Rudého moře bez nutnosti potápění nebo šnorchlování. Skutečné ponorky, jako například ty vyplouvající z přístavu Hurghada Marina, se potápějí až do hloubky několika metrů pod hladinu a nabízejí pohodlné sezení s velkými prosklenými okny pro každého cestujícího.</p>
-        <p>Během plavby můžete zblízka pozorovat pestrobarevné korálové útesy, hejna exotických ryb a při troše štěstí i další obyvatele mořského dna. Alternativou jsou poloponorky (semi-submarines), které mají prosklenou kabinu ponořenou těsně pod hladinou a umožňují skvělý výhled seshora i zespodu. Celý zážitek obvykle trvá kolem dvou až tří hodin včetně transferu z hotelu, je nenáročný a skvěle se hodí i pro rodiny s dětmi nebo neplavce.</p>
+        <details>
+            <summary>Plavba ponorkou nebo poloponorkou</summary>
+            <div class="trip-content">
+                <div class="trip-meta">
+                    <strong>Cena:</strong> cca 15–20 € (poloponorka) / cca 30–35 € (skutečná ponorka) | <strong>Časová náročnost:</strong> cca 2–3 hodiny včetně dopravy
+                </div>
+                <p>Výlet ponorkou nebo poloponorkou je perfektní volbou pro neplavce a rodiny s dětmi. Skutečné ponorky se potápějí několik metrů pod hladinu a nabízejí pohodlné sezení s velkými prosklenými okny pro skvělý výhled na mořské dno.</p>
+                <p>Poloponorky s prosklenou kabinou ponořenou těsně pod hladinou umožňují pohodlně sledovat korálové útesy a hejna exotických ryb seshora i zespodu. Celý zážitek zabere 2 až 3 hodiny a přináší nenáročné objevování podmořského světa Rudého moře.</p>
+            </div>
+        </details>
 
-        <h2>Základní informace o Egyptě</h2>
-        <p>Egypt je transkontinentální stát ležící na pomezí severní Afriky a jihozápadní Asie (Sinajský poloostrov). Je kolébkou jedné z nejstarších a nejvýznamnějších civilizací světa.</p>
+        <!-- 2. OBLAST: LUXOR -->
+        <div class="city-title">🏛️ 2. Celodenní historické výlety</div>
 
-        <table>
-            <thead>
-                <tr>
-                    <th>Parametr</th>
-                    <th>Základní údaj</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Hlavní město</td>
-                    <td>Káhira (Cairo)</td>
-                </tr>
-                <tr>
-                    <td>Rozloha</td>
-                    <td>cca 1 000 000 km²</td>
-                </tr>
-                <tr>
-                    <td>Počet obyvatel</td>
-                    <td>cca 110 milionů</td>
-                </tr>
-                <tr>
-                    <td>Úřední jazyk</td>
-                    <td>Arabština</td>
-                </tr>
-                <tr>
-                    <td>Měna</td>
-                    <td>Egyptská libra (EGP)</td>
-                </tr>
-                <tr>
-                    <td>Náboženství</td>
-                    <td>Islám (cca 90 %, převážně sunnité), Koptští křesťané (cca 10 %)</td>
-                </tr>
-            </tbody>
-        </table>
+        <details>
+            <summary>Celodenní výlet z Hurghady do Luxoru</summary>
+            <div class="trip-content">
+                <div class="trip-meta">
+                    <strong>Cena:</strong> cca 50–85 € / osoba | <strong>Časová náročnost:</strong> cca 14–16 hodin (celodenní výlet)
+                </div>
+                <p>Cesta z Hurghady do Luxoru trvá sice přibližně 4 hodiny autobusem napříč vyprahlou pouští, ale tento zážitek za to rozhodně stojí. S východem slunce se před vámi najednou otevře smaragdově zelené údolí ikonického Nilu, kde jako by se zastavil čas.</p>
+                <p>První velkolepou zastávkou na východním břehu je monumentální chrámový komplex <strong>Karnak</strong>. Ve Velké hypostylové síni se 134 obřími sloupy tyčícími se k nebi si budete připadat nepatrní jako zrnko písku. Po prohlídce chrámu následuje zajímavá zastávka v <strong>tradiční dílně na zpracování alabastru a výrobu porcelánu</strong>, kde uvidíte místní mistry při ruční práci a můžete obdivovat detaily egyptských sošek.</p>
+                <p>Následuje zasloužený odpočinek a <strong>osvěžující oběd v restauraci</strong>. Hned po obědě vás čeká <strong>krátká, pohodová plavba po vlnách řeky Nil</strong>, která vás převeze na západní břeh a nabídne nádherný pohled na palmové háje lemující břehy.</p>
+                <p>Na západním břehu vstoupíte do bájného <strong>Údolí králů</strong>, kde jsou vtesány hrobky nejslavnějších faraonů. Při sestupu po kamenných schodech do podzemí vás obklopí tisícileté ticho a nádherně zachovalé barevné malby. Nedaleko odtud spatříte fascinující <strong>Chrám královny Hatšepsut</strong>, architektonický skvost zasazený přímo do strmé skalní stěny, který připomíná sílu jediné ženy, jež vládla Egyptu jako faraon.</p>
+                <p>Na závěr vás u cesty pozdraví tichým, věčným pohledem monumentální <strong>Memnonovy kolosy</strong> – dvě obří kamenné sochy, které kdysi střežily vstup do zádušního chrámu. Zpět do hotelu v Hurghadě se budete vracet až za tmy, ale s nezapomenutelnými vzpomínkami na den, kdy jste se osobním způsobem dotkli starověké historie.</p>
+            </div>
+        </details>
 
-        <ul>
-            <li><strong>Geografie:</strong> Většinu území tvoří Saharská poušť. Veškerý život se soustředí kolem řeky Nil a v její deltě.</li>
-            <li><strong>Podnebí:</strong> Suché pouštní s velmi horkými léty a mírnými zimami. Pobřeží Rudého moře má příznivější klima vhodné pro celoroční turistiku.</li>
-            <li><strong>Turistika:</strong> Klíčové odvětví ekonomiky – spojuje historické památky a pobřežní letoviska u Rudého moře.</li>
-        </ul>
 
-        <h2>Zajímavosti a tipy na cestu</h2>
+        <!-- FOTOGALERIE EGYPT (Dle struktury složek) -->
+        <div class="gallery-section">
+            <h3>📷 Fotogalerie Egypt</h3>
 
-        <h3>Místa a architektonické zajímavosti v Hurghadě</h3>
-        <ul>
-            <li><strong>Mešita El Mina (Al Mina):</strong> Největší mešita v Hurghadě postavená přímo na břehu moře. Její dva minarety dosahují výšky přes 40 metrů a v noci je celá stavba působivě nasvícená.</li>
-            <li><strong>Hurghada Marina:</strong> Moderní přístav jachet v kontrastu s tradičním městem. Nabízí klidnou pěší zónu s restauracemi a přiléhajícím tradičním rybím trhem.</li>
-            <li><strong>Koptská katedrála sv. Šenudy:</strong> Kostel v historické čtvrti El Dahar reprezentující koptství (egyptské křesťanství).</li>
-            <li><strong>El Gouna („Egyptské Benátky“):</strong> Luxusní městečko ležící cca 25 km severně od Hurghady, postavené na síti umělých tyrkysových lagun a kanálů spojených mosty.</li>
-        </ul>
+            <!-- SLOŽKA: AQUARIUM -->
+            <div class="gallery-city-group">
+                <h4>🦈 Aquarium</h4>
+                <div class="gallery-grid">
+                    <a href="#" class="gallery-card">
+                        <div class="gallery-icon">🦈</div>
+                        <div class="gallery-title">Akvárium</div>
+                    </a>
+                </div>
+            </div>
 
-        <h3>Přírodní a podmořské pikošky</h3>
-        <ul>
-            <li><strong>Bioluminiscence a ohnivé korály:</strong> Rudé moře je jedno z nejteplejších na světě. Při šnorchlování lze narazit na ohnivé korály nebo na maskované jedovaté ropušnice.</li>
-            <li><strong>Hvězdná obloha v poušti:</strong> V Arabské poušti za Hurghadou není téměř žádný světelný smog, což vytváří ideální podmínky pro pozorování Mléčné dráhy.</li>
-            <li><strong>Sandboarding:</strong> Sjíždění písečných dun na prkně v poušti.</li>
-        </ul>
+            <!-- SLOŽKA: HURGADA -->
+            <div class="gallery-city-group">
+                <h4>🏖️ Hurghada</h4>
+                <div class="gallery-grid">
+                    <a href="#" class="gallery-card">
+                        <div class="gallery-icon">🕌</div>
+                        <div class="gallery-title">Město</div>
+                    </a>
+                    <a href="#" class="gallery-card">
+                        <div class="gallery-icon">🤿</div>
+                        <div class="gallery-title">Ponorka</div>
+                    </a>
+                </div>
+            </div>
 
-        <h3>Kulturní zajímavosti a každodenní život</h3>
-        <ul>
-            <li><strong>Kultura smlouvání:</strong> Na trzích je smlouvání běžnou součástí nákupu. První cena bývá násobně vyšší a prodejci zákazníkům často nabízejí ibiškový čaj (Karkade).</li>
-            <li><strong>Faraonova pomsta:</strong> Střevní potíže způsobené jinými kmeny bakterií v místní kohoutkové vodě a jídle. Používá se výhradně balená voda.</li>
-            <li><strong>Prakticky žádný déšť:</strong> V Hurghadě prší průměrně 1 až 2 dny v roce. Veškerá sladká voda se do resortů přivádí z Nilu nebo odsoluje z moře.</li>
-        </ul>
+            <!-- SLOŽKA: LUXOR (A JEJICH PODSLOŽKY) -->
+            <div class="gallery-city-group">
+                <h4>🏛️ Luxor</h4>
+                <div class="gallery-grid">
+                    <a href="#" class="gallery-card">
+                        <div class="gallery-icon">🏛️</div>
+                        <div class="gallery-title">Karnak</div>[cite: 3]
+                    </a>
+                    <a href="#" class="gallery-card">
+                        <div class="gallery-icon">👑</div>
+                        <div class="gallery-title">Hatšepsut</div>[cite: 3]
+                    </a>
+                    <a href="#" class="gallery-card">
+                        <div class="gallery-icon">🗿</div>
+                        <div class="gallery-title">Memnonovy kolosy</div>[cite: 3]
+                    </a>
+                    <a href="#" class="gallery-card">
+                        <div class="gallery-icon">⛵</div>
+                        <div class="gallery-title">Nil</div>[cite: 3]
+                    </a>
+                    <a href="#" class="gallery-card">
+                        <div class="gallery-icon">🏺</div>
+                        <div class="gallery-title">Údolí králů</div>[cite: 3]
+                    </a>
+                </div>
+            </div>
 
-        <h2>Fotografie</h2>
-        <div class="foto-box">
-            {% if zvolena_zeme.hlavni_foto %}
-                <img src="{{ zvolena_zeme.hlavni_foto.url }}" alt="Hurghada - Egypt">
-            {% else %}
-                <p><em>Fotografie není k dispozici.</em></p>
-            {% endif %}
-            <br>
-            <a href="{% url 'galerie' %}" class="btn-gallery">📷 Otevřít kompletní fotogalerii</a>
+            <a href="{% url 'galerie' %}" class="btn-gallery-all">Otevřít kompletní fotogalerii</a>
         </div>
 
         <p><a href="{% url 'domov' %}" class="btn-back">← Zpět na výběr zemí (Hlavní stránka)</a></p>

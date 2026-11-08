@@ -1,10 +1,359 @@
+
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="cs">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Itinerář Tunisko - Djerba</title>
+
+    <!-- Google Fonts: Playfair Display a Lato -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --luxury-dark: #1a1a1a;
+            --luxury-gold: #c5a059;
+            --luxury-gold-hover: #b08d46;
+            --bg-color: #faf9f6;
+            --card-bg: #ffffff;
+            --text-main: #333333;
+            --border-color: #e2ded5;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            line-height: 1.8;
+        }
+
+        header {
+            background-color: var(--luxury-dark);
+            color: var(--luxury-gold);
+            padding: 70px 20px;
+            text-align: center;
+            border-bottom: 3px solid var(--luxury-gold);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.4em;
+            margin: 0;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        header p {
+            color: #d1ccbe;
+            font-style: italic;
+            font-size: 1.15em;
+            margin-top: 12px;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: -40px auto 50px auto;
+            padding: 50px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.04);
+            position: relative;
+        }
+
+        h2 {
+            font-family: 'Playfair Display', serif;
+            color: var(--luxury-dark);
+            font-size: 2.3em;
+            border-bottom: 2px solid var(--luxury-gold);
+            padding-bottom: 10px;
+            margin-top: 45px;
+            margin-bottom: 22px;
+            letter-spacing: 0.5px;
+        }
+
+        .city-title {
+            font-family: 'Playfair Display', serif;
+            color: var(--luxury-gold);
+            font-size: 1.8em;
+            margin-top: 40px;
+            margin-bottom: 15px;
+            border-left: 4px solid var(--luxury-gold);
+            padding-left: 12px;
+        }
+
+        details {
+            background: #fcfbfa;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        details[open] {
+            border-color: var(--luxury-gold);
+            box-shadow: 0 4px 15px rgba(197, 160, 89, 0.1);
+        }
+
+        summary {
+            font-family: 'Playfair Display', serif;
+            color: var(--luxury-dark);
+            font-size: 1.4em;
+            padding: 20px 25px;
+            cursor: pointer;
+            font-weight: 600;
+            list-style: none;
+            position: relative;
+            outline: none;
+            user-select: none;
+        }
+
+        summary::-webkit-details-marker {
+            display: none;
+        }
+
+        summary::after {
+            content: '+';
+            position: absolute;
+            right: 25px;
+            font-size: 1.2em;
+            color: var(--luxury-gold);
+            transition: transform 0.3s ease;
+        }
+
+        details[open] summary::after {
+            transform: rotate(45deg);
+        }
+
+        .trip-content {
+            padding: 0 25px 25px 25px;
+            border-top: 1px solid var(--border-color);
+            background: #ffffff;
+        }
+
+        .trip-meta {
+            background-color: #fcfbfa;
+            border-left: 3px solid var(--luxury-gold);
+            padding: 10px 15px;
+            margin: 20px 0;
+            font-size: 0.95em;
+        }
+
+        /* --- FOTOGALERIE --- */
+        .gallery-section {
+            margin-top: 55px;
+            padding: 40px 30px;
+            background: #fcfbfa;
+            border-radius: 4px;
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .gallery-section h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--luxury-dark);
+            font-size: 2.2em;
+            margin-top: 0;
+            margin-bottom: 25px;
+        }
+
+        .gallery-city-group {
+            margin-bottom: 35px;
+            text-align: left;
+        }
+
+        .gallery-city-group h4 {
+            font-family: 'Playfair Display', serif;
+            color: var(--luxury-gold);
+            font-size: 1.4em;
+            margin-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 5px;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 15px;
+        }
+
+        .gallery-card {
+            background: #1a1a1a;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 22px 12px;
+            text-decoration: none;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+        }
+
+        .gallery-card:hover {
+            border-color: var(--luxury-gold);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(197, 160, 89, 0.25);
+        }
+
+        .gallery-icon {
+            font-size: 1.9em;
+            color: var(--luxury-gold);
+            margin-bottom: 8px;
+        }
+
+        .gallery-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1em;
+            font-weight: 600;
+            color: #ffffff;
+            letter-spacing: 0.5px;
+            text-align: center;
+        }
+
+        .btn-gallery-all {
+            display: inline-block;
+            margin-top: 25px;
+            padding: 14px 32px;
+            background: var(--luxury-gold);
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 2px;
+            font-weight: 700;
+            font-family: 'Lato', sans-serif;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            font-size: 0.85em;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(197, 160, 89, 0.25);
+        }
+
+        .btn-gallery-all:hover {
+            background: var(--luxury-gold-hover);
+            box-shadow: 0 6px 18px rgba(197, 160, 89, 0.4);
+        }
+
+        .btn-back {
+            display: inline-block;
+            margin-top: 35px;
+            padding: 12px 22px;
+            background: var(--luxury-dark);
+            color: var(--luxury-gold);
+            text-decoration: none;
+            border-radius: 2px;
+            font-weight: 700;
+            font-family: 'Lato', sans-serif;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+        }
+
+        .btn-back:hover {
+            background: #2c2c2c;
+            color: #ffffff;
+        }
+    </style>
 </head>
 <body>
+
+    <header>
+        <h1>🇹🇳 Itinerář Tunisko – Djerba</h1>
+        <p>Kouzelný ostrov slunce, tradic a jedinečných zážitků</p>
+    </header>
+
+    <div class="container">
+
+        <h2>O ostrově a výlety</h2>
+        <p>Prozkoumejte informace o ostrově Djerba a rozklikněte si detailní programy výletů.</p>
+
+        <!-- ÚVODNÍ SEKCE O OSTROVĚ -->
+        <div class="city-title">🌴 1. Ostrov Djerba</div>
+
+        <details>
+            <summary>Představení ostrova Djerba</summary>
+            <div class="trip-content">
+                <div class="trip-meta">
+                    <strong>Charakteristika:</strong> Největší ostrov Severní Afriky | <strong>Klima:</strong> Celoroční slunce
+                </div>
+                <p>Djerba je největším ostrovem Severní Afriky a již od starověku okouzluje cestovatele svou jedinečnou atmosférou, jemnými pískovými plážemi a palmami sahajícími až k tyrkysovému moři. Ostrov je proslulý svým mírným klimatem, kdy zde slunce svítí téměř po celý rok, a také neuvěřitelným klidem. Historie Djerby je protkána mnoha legendami – v řecké mitologii byla považována za ostrov lotofágů, kde Odysseus zapomněl na domov. Místní obyvatelé jsou známí svou pohostinností, řemeslnou zručností a uchováním tradičního způsobu života. V bělostných městech a vesnicích najdete typickou architekturu s klenutými střechami a starobylými mešitami. Djerba nabízí také bohatou historii spojenou s židovskou komunitou a slavnou synagogou El Ghriba. Celkově ostrov působí jako klidná oáza, kde se snoubí africký, arabský a středomořský vliv. Je to ideální místo pro ty, kteří chtějí spojit relaxaci na pláži s objevováním autentické tuniské kultury.</p>
+            </div>
+        </details>
+
+
+        <!-- VÝLETY -->
+        <div class="city-title">🛍️ 2. Výlety a zážitky</div>
+
+        <details>
+            <summary>Půldenní výlet do Houmt Souk a atmosféra smlouvání</summary>
+            <div class="trip-content">
+                <div class="trip-meta">
+                    <strong>Typ výletu:</strong> Půldenní trhy & Kultura | <strong>Zážitek:</strong> Tradiční smlouvání
+                </div>
+                <p>Hlavní město ostrova, Houmt Souk, láká návštěvníky svou živou atmosférou, tradiční architekturou a úzkými uličkami plnými života. Název města znamená v překladu „tržní čtvrť“, což přesně vystihuje jeho charakter obchodního a společenského srdce Djerby. Dominantou pobřeží je mohutná pevnost Borj El Kebir, která po staletí chránila ostrov před nájezdy pirátů. Hlavním lákadlem jsou však zdejší kryté bazary a otevřená trhoviště, kde se mísí vůně koření, jasmínu a tradičních parfémů. Procházka trhem je opravdovým smyslovým zážitkem, při kterém narazíte na stánky s ručně tkanými koberci, keramikou, šperky a koženým zbožím.</p>
+                <p>Nedílnou součástí nákupů na orientálních trzích je smlouvání, které zde má dlouhou tradici a bere se jako společenská hra. Prodejci sice na turisty často pokřikují a nadhazují vyšší počáteční ceny, ale vše probíhá s úsměvem a vzájemným respektem. Základním pravidlem úspěšného smlouvání je zachovat klid, usmívat se a nabídnout zhruba třetinu až polovinu původně požadované ceny. Obchodník obvykle cenu s teatrálním povzdechem sníží, vy přihodíte o něco více a postupně se dostanete na částku, která vyhovuje oběma stranám. Smlouvání by nikdy nemělo být nepříjemné – je to způsob, jak navázat kontakt s místními lidmi, často u skleničky silného mátového čaje. Návštěva Houmt Souk a zkouška smlouvání na bazaru tak patří k nejsilnějším a nejautentičtějším zážitkům z celé dovolené na Djerbě.</p>
+            </div>
+        </details>
+
+        <details>
+            <summary>Půldenní výlet na Krokodýlí farmu</summary>
+            <div class="trip-content">
+                <div class="trip-meta">
+                    <strong>Typ výletu:</strong> Půldenní přírodní atrakce | <strong>Vhodné pro:</strong> Rodiny i jednotlivce
+                </div>
+                <p>Krokodýlí farma na Djerbě, která je součástí rozsáhlého zábavního a kulturního komplexu Djerba Explore, představuje fascinující cíl pro celou rodinu. V moderně upraveném areálu obklopeném bujnou subtropickou vegetací a palmami žijí stovky krokodýlů nilských. Zvířata sem byla dovezena přímo z Madagaskaru a v ideálních podmínkách se jim na ostrově skvěle daří. Návštěvníci mohou krokodýly bezpečně pozorovat z vybudovaných dřevěných lávek a vyhlídek, a to jak v klidném stavu, tak během krmení. Součástí areálu je také tradiční djerbské muzeum Guellala, které přibližuje historii, zvyky a lidová řemesla ostrova. Procházka farmou tak nabízí nejen napínavý pohled na tato obří plazí monstra, ale i příjemné poučení a odpočinek v krásném prostředí.</p>
+            </div>
+        </details>
+
+
+        <!-- FOTOGALERIE TUNISKO (Dle struktury složek) -->
+        <div class="gallery-section">
+            <h3>📷 Fotogalerie Tunisko</h3>
+
+            <!-- SLOŽKA: DJERBA -->
+            <div class="gallery-city-group">
+                <h4>🌴 Djerba</h4>
+                <div class="gallery-grid">
+                    <a href="#" class="gallery-card">
+                        <div class="gallery-icon">🏝️</div>
+                        <div class="gallery-title">Djerba</div>[cite: 4]
+                    </a>
+                </div>
+            </div>
+
+            <!-- SLOŽKA: HOUMTSOUK -->
+            <div class="gallery-city-group">
+                <h4>🛍️ Houmt Souk</h4>
+                <div class="gallery-grid">
+                    <a href="#" class="gallery-card">
+                        <div class="gallery-icon">🏺</div>
+                        <div class="gallery-title">Houmt Souk</div>[cite: 4]
+                    </a>
+                </div>
+            </div>
+
+            <!-- SLOŽKA: KROKODYL -->
+            <div class="gallery-city-group">
+                <h4>🐊 Krokodýlí farma</h4>
+                <div class="gallery-grid">
+                    <a href="#" class="gallery-card">
+                        <div class="gallery-icon">🐊</div>
+                        <div class="gallery-title">Krokodýl</div>[cite: 4]
+                    </a>
+                </div>
+            </div>
+
+            <a href="{% url 'galerie' %}" class="btn-gallery-all">Otevřít kompletní fotogalerii</a>
+        </div>
+
+        <p><a href="{% url 'domov' %}" class="btn-back">← Zpět na výběr zemí (Hlavní stránka)</a></p>
+    </div>
 
 </body>
 </html>

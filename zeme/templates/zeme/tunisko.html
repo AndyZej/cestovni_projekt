@@ -145,17 +145,8 @@
             border: 1px solid var(--border-color);
         }
 
-        .foto-box img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 2px;
-            border: 1px solid var(--luxury-gold);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
-        }
-
         .btn-gallery {
             display: inline-block;
-            margin-top: 22px;
             padding: 14px 30px;
             background: var(--luxury-gold);
             color: #ffffff;
@@ -203,7 +194,7 @@
     </header>
 
     <div class="container">
-        <h2>1. Tunisko (Republika Tunisko)</h2>
+        <h2>Tunisko (Republika Tunisko)</h2>
         <p>Tunisko je nejsevernější stát v Africe, ležící na pobřeží Středozemního moře. Spojuje v sobě bohatou historii sahající od starověkého Kartága přes římskou éru až po tradiční arabskou a berberskou kulturu.</p>
 
         <table>
@@ -247,7 +238,7 @@
             <li><strong>Turistika:</strong> Oblíbená destinace pro plážovou dovolenou, historické památky (Koloseum v El Djemu) i výpravy do Sahary.</li>
         </ul>
 
-        <h2>2. Ostrov Djerba</h2>
+        <h2>Ostrov Djerba</h2>
         <p>Djerba je největší ostrov severní Afriky, nacházející se v Malé syrtě při pobřeží Tuniska. V řecké mitologii byl známý jako „ostrov jedlíků lotosu“, kde Odysseus a jeho muži málem zapomněli na svůj domov kvůli omamnému ovoci.</p>
 
         <ul>
@@ -261,7 +252,7 @@
             </li>
         </ul>
 
-        <h2>3. Město Houmt Souk</h2>
+        <h2>Město Houmt Souk</h2>
         <p>Houmt Souk je hlavní město a administrativní centrum ostrova Djerba. Název v překladu znamená „tržní čtvrť“ a město dodnes plně dostává své pověsti díky rušným orientálním trhům.</p>
 
         <ul>
@@ -299,19 +290,13 @@
             <li><strong>El Djem a Kairouan:</strong> Jednodenní výlet k nejzachovalejšímu římskému koloseu v Africe (El Djem) a do svatého muslimského města Kairouan s velkou mešitou.</li>
         </ul>
 
-        <h2>Fotografie</h2>
+        <h2>Galerie</h2>
         <div class="foto-box">
-            {% if zvolena_zeme.hlavni_foto %}
-                <img src="{{ zvolena_zeme.hlavni_foto.url }}" alt="Tunisko - Djerba">
-            {% else %}
-                <p><em>Fotografie není k dispozici.</em></p>
-            {% endif %}
-            <br>
             <a href="{% url 'galerie' %}" class="btn-gallery">📷 Otevřít kompletní fotogalerii</a>
         </div>
 
         <!-- Tlačítko pro návrat na hlavní stránku -->
-        <p><a href="{% url 'domov' %}" class="btn-back">← Zpět na výběr zemí (Hlavní stránka)</a></p>
+        <p><a href="{% url 'domov' %}" class="btn-back">← Zpět na hlavní stránku</a></p>
     </div>
 
 </body>

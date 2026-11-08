@@ -146,17 +146,8 @@
             border: 1px solid var(--border-color);
         }
 
-        .foto-box img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 2px;
-            border: 1px solid var(--luxury-gold);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
-        }
-
         .btn-gallery {
             display: inline-block;
-            margin-top: 22px;
             padding: 14px 30px;
             background: var(--luxury-gold);
             color: #ffffff;
@@ -204,7 +195,7 @@
     </header>
 
     <div class="container">
-        <h2>1. Kapverdy (Republika Kapverdy)</h2>
+        <h2>Kapverdy (Republika Kapverdy)</h2>
         <p>Kapverdy (Cabo Verde) jsou kouzelné ostrovní souostroví v Atlantském oceánu, asi 500 km od západního pobřeží Afriky. Tvoří je deset hlavních sopečných ostrovů a několik menších ostrůvků.</p>
 
         <table>
@@ -248,7 +239,7 @@
             <li><strong>Turistika:</strong> Vyhledávaná destinace pro plážový odpočinek, vodní sporty a objevování neotřelé kultury.</li>
         </ul>
 
-        <h2>2. Ostrov Sal</h2>
+        <h2>Ostrov Sal</h2>
         <p>Zatímco některé kapverdské ostrovy jsou hornaté a zelené, ostrov Sal je rovinatý, zalitý sluncem a obklopený tyrkysovým oceánem. Svůj název získal podle dřívější rozsáhlé těžby soli.</p>
 
         <ul>
@@ -263,7 +254,7 @@
             </li>
         </ul>
 
-        <h2>3. Město Santa Maria</h2>
+        <h2>Město Santa Maria</h2>
         <p>Na samém jižním cípu ostrova Sal leží Santa Maria, nejvýznamnější a nejživější turistické letovisko celých Kapverd. Původně ospalá rybářská vesnice se proměnila v příjemné městečko plné života.</p>
 
         <ul>
@@ -301,19 +292,13 @@
             <li><strong>Večerní Santa Maria:</strong> Procházky městem, poslech živé hudby (Morna & Funaná) a večeře v místních restauracích.</li>
         </ul>
 
-        <h2>Fotografie</h2>
+        <h2>Galerie</h2>
         <div class="foto-box">
-            {% if zvolena_zeme.hlavni_foto %}
-                <img src="{{ zvolena_zeme.hlavni_foto.url }}" alt="Kapverdy - Sal">
-            {% else %}
-                <p><em>Fotografie není k dispozici.</em></p>
-            {% endif %}
-            <br>
             <a href="{% url 'galerie' %}" class="btn-gallery">📷 Otevřít kompletní fotogalerii</a>
         </div>
 
         <!-- Tlačítko pro návrat na hlavní stránku -->
-        <p><a href="{% url 'domov' %}" class="btn-back">← Zpět na výběr zemí (Hlavní stránka)</a></p>
+        <p><a href="{% url 'domov' %}" class="btn-back">← Zpět na hlavní stránku</a></p>
     </div>
 
 </body>

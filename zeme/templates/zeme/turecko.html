@@ -145,17 +145,8 @@
             border: 1px solid var(--border-color);
         }
 
-        .foto-box img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 2px;
-            border: 1px solid var(--luxury-gold);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
-        }
-
         .btn-gallery {
             display: inline-block;
-            margin-top: 22px;
             padding: 14px 30px;
             background: var(--luxury-gold);
             color: #ffffff;
@@ -203,7 +194,7 @@
     </header>
 
     <div class="container">
-        <h2>1. Turecko (Turecká republika)</h2>
+        <h2>Turecko (Turecká republika)</h2>
         <p>Turecko je transkontinentální stát ležící v jihozápadní Asii a z malé části v jihovýchodní Evropě (Thrákie). Je mostem mezi Východem a Západem, zemí s fascinující historií, impérii (Byzantská a Osmanská říše) a rozmanitou přírodou.</p>
 
         <table>
@@ -250,7 +241,7 @@
             <li><strong>Podnebí:</strong> Různorodé – pobřeží má typické středomořské klima s horkými léty, vnitrozemí kontinentální.</li>
         </ul>
 
-        <h2>2. Turecká kuchyně (Gastronomie)</h2>
+        <h2>Turecká kuchyně (Gastronomie)</h2>
         <p>Turecká kuchyně je považována za jednu z nejbohatších a nejchutnějších na světě. Vybavuje se v ní vliv středomořské, blízkovýchodní, balkánské i středoasijské tradice.</p>
 
         <ul>
@@ -266,7 +257,7 @@
             <li><strong>Tradiční nápoje a dezerty:</strong> Černý čaj (Çay) podávaný v typických tulipánových skleničkách, anýzový destilát Rakı ("lví mléko") a sladkosti jako Baklava nebo Lokum (turecký med).</li>
         </ul>
 
-        <h2>3. Istanbul – Srdce na dvou kontinentech</h2>
+        <h2>Istanbul – Srdce na dvou kontinentech</h2>
         <p>Istanbul je největší město Turecka, které se rozkládá na obou březích úžiny Bospor, a spojuje tak Evropu a Asii. Bylo hlavním městem tří mocných říší – Římské, Byzantské a Osmanské.</p>
 
         <ul>
@@ -288,7 +279,7 @@
             <li><strong>Výlet na Princovy ostrovy (Adalar):</strong> Klidné souostroví v Marmarském moři bez aut, ideální pro odpočinek a jízdou na kočárech či kolech.</li>
         </ul>
 
-        <h2>4. Antalie (Antalya) – Perla Turecké riviéry</h2>
+        <h2>Antalie (Antalya) – Perla Turecké riviéry</h2>
         <p>Antalie je hlavní metropolí Turecké riviéry na středomořském pobřeží. Kombinuje moderní letoviska, dlouhé pláže a starobylé římské památky obklopené majestátním pohořím Taurus.</p>
 
         <ul>
@@ -309,7 +300,7 @@
             <li><strong>Rafting v kaňonu Köprülü:</strong> Adrenalinová jízda na divoké vodě v nádherném kaňonu národního parku.</li>
         </ul>
 
-        <h2>5. Bodrum – Egejská riviéra a noční život</h2>
+        <h2>Bodrum – Egejská riviéra a noční život</h2>
         <p>Bodrum je malebné historické město a letovisko na Egejském pobřeží, známé svými bělostnými domky pokrytými popínavými buganvíliemi, jachetními přístavy a rušným kulturním životem.</p>
 
         <ul>
@@ -330,19 +321,13 @@
             <li><strong>Výlet na řecký ostrov Kos:</strong> Trajektová plavba na nedaleký řecký ostrov vzdálený pouhých 20 minut plavby z Bodrumu.</li>
         </ul>
 
-        <h2>Fotografie</h2>
+        <h2>Galerie</h2>
         <div class="foto-box">
-            {% if zvolena_zeme.hlavni_foto %}
-                <img src="{{ zvolena_zeme.hlavni_foto.url }}" alt="Turecko">
-            {% else %}
-                <p><em>Fotografie není k dispozici.</em></p>
-            {% endif %}
-            <br>
             <a href="{% url 'galerie' %}" class="btn-gallery">📷 Otevřít kompletní fotogalerii</a>
         </div>
 
         <!-- Tlačítko pro návrat na hlavní stránku -->
-        <p><a href="{% url 'domov' %}" class="btn-back">← Zpět na výběr zemí (Hlavní stránka)</a></p>
+        <p><a href="{% url 'domov' %}" class="btn-back">← Zpět na hlavní stránku</a></p>
     </div>
 
 </body>

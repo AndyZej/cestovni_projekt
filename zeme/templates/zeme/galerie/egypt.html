@@ -1,0 +1,314 @@
+
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fotogalerie - Egypt</title>
+
+    <style>
+        :root {
+            --luxury-dark: #1a1a1a;
+            --luxury-gold: #c5a059;
+            --luxury-gold-hover: #b08d46;
+            --bg-color: #faf9f6;
+            --card-bg: #ffffff;
+            --text-main: #333333;
+            --border-color: #e2ded5;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            line-height: 1.8;
+        }
+
+        header {
+            background-color: var(--luxury-dark);
+            color: var(--luxury-gold);
+            padding: 60px 20px;
+            text-align: center;
+            border-bottom: 3px solid var(--luxury-gold);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.2em;
+            margin: 0;
+            letter-spacing: 1px;
+        }
+
+        header p {
+            color: #d1ccbe;
+            font-style: italic;
+            font-size: 1.15em;
+            margin-top: 10px;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: -30px auto 50px auto;
+            padding: 40px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.04);
+        }
+
+        .top-nav {
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            font-family: 'Playfair Display', serif;
+            color: var(--luxury-dark);
+            font-size: 2.1em;
+            border-bottom: 2px solid var(--luxury-gold);
+            padding-bottom: 8px;
+            margin-top: 40px;
+            margin-bottom: 25px;
+            letter-spacing: 0.5px;
+        }
+
+        /* Mřížka pro karty v jednotlivých sekcích */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .gallery-card {
+            background: #fff;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .gallery-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(197, 160, 89, 0.2);
+        }
+
+        .gallery-img-wrapper {
+            position: relative;
+            height: 210px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .gallery-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .gallery-card img:hover {
+            transform: scale(1.06);
+        }
+
+        .gallery-content {
+            padding: 18px 20px;
+        }
+
+        .gallery-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2em;
+            color: var(--luxury-dark);
+            margin: 0 0 8px 0;
+            font-weight: 700;
+        }
+
+        .gallery-desc {
+            font-size: 0.9em;
+            color: #666;
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        /* Lightbox (modální okno pro detailní náhled fotky) */
+        #lightbox {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(26, 26, 26, 0.92);
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            padding: 20px;
+            backdrop-filter: blur(6px);
+        }
+
+        #lightbox img {
+            max-width: 85%;
+            max-height: 68vh;
+            border: 2px solid var(--luxury-gold);
+            border-radius: 4px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+        }
+
+        #lightbox-caption-title {
+            color: var(--luxury-gold);
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5em;
+            margin-top: 18px;
+            text-align: center;
+        }
+
+        #lightbox-caption-desc {
+            color: #d1ccbe;
+            font-family: 'Lato', sans-serif;
+            font-size: 1em;
+            margin-top: 5px;
+            text-align: center;
+            max-width: 700px;
+        }
+
+        #lightbox-close {
+            position: absolute;
+            top: 25px; right: 35px;
+            color: var(--luxury-gold);
+            font-size: 2.8em;
+            cursor: pointer;
+            transition: color 0.2s;
+            background: none;
+            border: none;
+        }
+
+        #lightbox-close:hover {
+            color: #fff;
+        }
+
+        .btn-back {
+            display: inline-block;
+            padding: 12px 22px;
+            background: var(--luxury-dark);
+            color: var(--luxury-gold);
+            text-decoration: none;
+            border-radius: 2px;
+            font-weight: 700;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+        }
+
+        .btn-back:hover {
+            background: #2c2c2c;
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>🇪🇬 Fotogalerie - Egypt</h1>
+        <p>Prohlédněte si snímky z jednotlivých oblastí a zážitků v Egyptě</p>
+    </header>
+
+    <div class="container">
+
+        <!-- Tlačítko zpět na detail země -->
+        <div class="top-nav">
+            <a href="{% url 'detail_zeme' 'egypt' %}" class="btn-back">← Zpět na detail země (Egypt)</a>
+        </div>
+
+        <!-- SEKCE: HURGADA -->
+        <h2>Hurgada</h2>
+        <div class="gallery-grid">
+            <div class="gallery-card">
+                <div class="gallery-img-wrapper" onclick="openLightbox('{% static 'galerie/zeme/egypt/hurgada/foto1.jpg' %}', 'Hurgada - pobřeží', 'Pohled na krásné pobřeží a hotely v Hurgadě.')">
+                    <img src="{% static 'galerie/zeme/egypt/hurgada/foto1.jpg' %}" alt="Hurgada">
+                </div>
+                <div class="gallery-content">
+                    <h3 class="gallery-title">Pobřeží Hurgady</h3>
+                    <p class="gallery-desc">Pohled na pobřeží a letovisko.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SEKCE: KULTURA -->
+        <h2>Místní kultura</h2>
+        <div class="gallery-grid">
+            <div class="gallery-card">
+                <div class="gallery-img-wrapper" onclick="openLightbox('{% static 'galerie/zeme/egypt/kultura/foto1.jpg' %}', 'Kultura a tradice', 'Tradiční atmosféra a život v Egyptě.')">
+                    <img src="{% static 'galerie/zeme/egypt/kultura/foto1.jpg' %}" alt="Kultura">
+                </div>
+                <div class="gallery-content">
+                    <h3 class="gallery-title">Tradice a život</h3>
+                    <p class="gallery-desc">Záběry z místního kulturního života.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SEKCE: MOŘE -->
+        <h2>Rudé moře</h2>
+        <div class="gallery-grid">
+            <div class="gallery-card">
+                <div class="gallery-img-wrapper" onclick="openLightbox('{% static 'galerie/zeme/egypt/more/foto1.jpg' %}', 'Podmořský svět', 'Průzračné vody a korálové útesy Rudého moře.')">
+                    <img src="{% static 'galerie/zeme/egypt/more/foto1.jpg' %}" alt="Moře">
+                </div>
+                <div class="gallery-content">
+                    <h3 class="gallery-title">Podmořský svět</h3>
+                    <p class="gallery-desc">Korály a čisté moře.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SEKCE: PAMÁTKY -->
+        <h2>Historické památky</h2>
+        <div class="gallery-grid">
+            <div class="gallery-card">
+                <div class="gallery-img-wrapper" onclick="openLightbox('{% static 'galerie/zeme/egypt/pamatky/foto1.jpg' %}', 'Historické památky', 'Slavné památky a starověká architektura.')">
+                    <img src="{% static 'galerie/zeme/egypt/pamatky/foto1.jpg' %}" alt="Památky">
+                </div>
+                <div class="gallery-content">
+                    <h3 class="gallery-title">Starověké památky</h3>
+                    <p class="gallery-desc">Historická místa a stavby.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Spodní návratové tlačítko -->
+        <div style="margin-top: 40px;">
+            <a href="{% url 'detail_zeme' 'egypt' %}" class="btn-back">← Zpět na detail země (Egypt)</a>
+        </div>
+
+    </div>
+
+    <!-- Lightbox modální okno -->
+    <div id="lightbox" onclick="closeLightbox(event)">
+        <button id="lightbox-close" onclick="closeLightbox(event)">&times;</button>
+        <img id="lightbox-img" src="" alt="Zvětšená fotografie">
+        <div id="lightbox-caption-title"></div>
+        <div id="lightbox-caption-desc"></div>
+    </div>
+
+    <script>
+        function openLightbox(imgSrc, titleText, descText) {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            const lightboxTitle = document.getElementById('lightbox-caption-title');
+            const lightboxDesc = document.getElementById('lightbox-caption-desc');
+
+            lightbox.style.display = 'flex';
+            lightboxImg.src = imgSrc;
+            lightboxTitle.textContent = titleText;
+            lightboxDesc.textContent = descText;
+        }
+
+        function closeLightbox(event) {
+            document.getElementById('lightbox').style.display = 'none';
+        }
+    </script>
+
+</body>
+</html>
