@@ -1,8 +1,9 @@
-from django.contrib import admin
 
-# Register your models here.
 
 from django.contrib import admin
 from .models import Zeme
 
-admin.site.register(Zeme)
+@admin.register(Zeme)
+class ZemeAdmin(admin.ModelAdmin):
+    list_display = ('nazev', 'slug')
+    prepopulated_fields = {'slug': ('nazev',)}

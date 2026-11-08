@@ -22,7 +22,6 @@
         :root {
             --font-script: 'Fairwater Script', 'Charm', cursive;
             --font-sans: 'Montserrat', sans-serif;
-            /* Tmavší skleněné panely pro čitelnost na světlém pozadí */
             --panel-bg: rgba(30, 35, 45, 0.85);
             --panel-border: rgba(197, 160, 89, 0.3);
             --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.25);
@@ -42,7 +41,6 @@
             font-family: var(--font-sans);
             color: var(--text-color);
             overflow-x: hidden;
-            /* Velmi, velmi světlý odstín zlaté/krémové barvy podle stylu nápisu přihlášení */
             background-color: #fbf9f4;
         }
 
@@ -59,7 +57,6 @@
             background-repeat: no-repeat;
         }
 
-        /* Jemný světlý filtr přes pozadí */
         #bg-overlay::before {
             content: '';
             position: absolute;
@@ -67,7 +64,6 @@
             background: rgba(251, 249, 244, 0.85);
         }
 
-        /* Plátno pro animované bubliny */
         #bubble-canvas {
             position: fixed;
             top: 0;
@@ -88,7 +84,6 @@
             transition: background 1.2s ease, border-color 1.2s ease;
         }
 
-        /* 1. Levý horní roh (Přihlášení) */
         .top-left {
             position: absolute;
             top: 24px;
@@ -137,7 +132,6 @@
             transform: translateY(-2px);
         }
 
-        /* 2. Pravý horní roh (Palubní deník) */
         .top-right {
             position: absolute;
             top: 24px;
@@ -167,7 +161,6 @@
             opacity: 0.85;
         }
 
-        /* 3. Střed stránky */
         .center-container {
             position: absolute;
             top: 50%;
@@ -187,7 +180,7 @@
             font-size: 44px;
             line-height: 1.3;
             margin-bottom: 16px;
-            color: #4a3b2c; /* Barva ladící s nadpisem přihlášení */
+            color: #4a3b2c;
             font-weight: 700;
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
         }
@@ -197,12 +190,11 @@
             font-size: 22px;
             line-height: 1.5;
             margin-bottom: 30px;
-            color: #5c4a38; /* Odpovídající tmavší tón textu */
+            color: #5c4a38;
             opacity: 0.95;
             max-width: 850px;
         }
 
-        /* Dvě tlačítka (Seznam zemí a Itineráře) */
         .split-buttons-wrapper {
             display: flex;
             justify-content: center;
@@ -242,41 +234,6 @@
             font-size: 1.2rem;
         }
 
-        /* Rozbalovací výběr konkrétní země pod tlačítky */
-        .country-select-wrapper {
-            display: inline-block;
-            margin-top: 5px;
-        }
-
-        .country-select {
-            appearance: none;
-            background: var(--panel-bg);
-            backdrop-filter: blur(8px);
-            border: 1px solid var(--gold-accent);
-            color: white;
-            padding: 12px 45px 12px 20px;
-            font-size: 0.95rem;
-            border-radius: 25px;
-            cursor: pointer;
-            outline: none;
-            font-family: var(--font-sans);
-            box-shadow: var(--glass-shadow);
-            background-image: url("data:image/svg+xml;utf8,<svg fill='%23c5a059' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
-            background-repeat: no-repeat;
-            background-position: right 14px center;
-            transition: background 0.3s;
-        }
-
-        .country-select:hover {
-            background-color: rgba(45, 50, 65, 0.9);
-        }
-
-        .country-select option {
-            background: #1e293b;
-            color: white;
-        }
-
-        /* 4. Pravý dolní roh - Chat Widget */
         .chat-widget {
             position: fixed;
             bottom: 24px;
@@ -349,10 +306,7 @@
 </head>
 <body>
 
-    <!-- Obrázek pozadí -->
     <div id="bg-overlay"></div>
-
-    <!-- Plátno pro animované bubliny (zlatavý/krémový styl) -->
     <canvas id="bubble-canvas"></canvas>
 
     <!-- 1. Levý horní roh (Přihlášení) -->
@@ -363,7 +317,7 @@
         <div class="top-left-desc">
             Přihlas se ke svému účtu a objevuj uložené zážitky.
         </div>
-        <a href="/accounts/login/" class="btn-login-green">
+        <a href="{% url 'login' %}" class="btn-login-green">
             <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path></svg>
             Přihlásit se
         </a>
@@ -383,27 +337,16 @@
             Nemusíte mít procestovaný celý svět, abyste mohli milovat cestování. Podělím se s vámi o své osobní zážitky, praktické tipy a oblíbená místa, která stojí za to navštívit. Pojďme načerpat inspiraci na vaši příští cestu!
         </p>
 
-        <!-- Hlavní dvě tlačítka nahoře -->
+        <!-- Hlavní dvě tlačítka (Seznam zemí a Itineráře) -->
         <div class="split-buttons-wrapper">
-            <a href="/zeme/" class="split-btn">
+            <a href="{% url 'seznam_zemi' %}" class="split-btn">
                 <span class="btn-icon">🌍</span>
                 <span>Seznam zemí</span>
             </a>
-            <a href="/itinerare/" class="split-btn">
+            <a href="{% url 'seznam_itineraru' %}" class="split-btn">
                 <span class="btn-icon">📅</span>
                 <span>Itineráře cest</span>
             </a>
-        </div>
-
-        <!-- Rozbalovací výběr konkrétní země (Turecko, Kapverdy, Tunisko, Egypt) -->
-        <div class="country-select-wrapper">
-            <select class="country-select" onchange="if(this.value) window.location.href = this.value;">
-                <option value="" disabled selected>Nebo vybrat konkrétní zemi...</option>
-                <option value="/zeme/turecko/">Turecko</option>
-                <option value="/zeme/kapverdy/">Kapverdy</option>
-                <option value="/zeme/tunisko/">Tunisko</option>
-                <option value="/zeme/egypt/">Egypt</option>
-            </select>
         </div>
     </div>
 
@@ -444,7 +387,6 @@
         updateDateTime();
         setInterval(updateDateTime, 1000);
 
-        // --- BUBLINY V ZLATAVÉM / KRÉMOVÉM STYLU ---
         const canvas = document.getElementById('bubble-canvas');
         const ctx = canvas.getContext('2d');
 
@@ -464,7 +406,6 @@
             height = canvas.height = window.innerHeight;
         });
 
-        // Paleta odstínů odpovídající zlatavé barvě textu přihlášení (Hue cca 35 - 50)
         const lightPalettes = [
             { min: 35, max: 50 },
             { min: 40, max: 55 },
