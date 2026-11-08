@@ -1,6 +1,6 @@
 
 
-
+<!DOCTYPE html>
 <html lang="cs">
 <head>
     <meta charset="UTF-8">
@@ -22,9 +22,10 @@
         :root {
             --font-script: 'Fairwater Script', 'Charm', cursive;
             --font-sans: 'Montserrat', sans-serif;
-            --panel-bg: rgba(25, 30, 45, 0.75);
-            --panel-border: rgba(255, 255, 255, 0.2);
-            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            /* Tmavší skleněné panely pro čitelnost na světlém pozadí */
+            --panel-bg: rgba(30, 35, 45, 0.85);
+            --panel-border: rgba(197, 160, 89, 0.3);
+            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.25);
             --text-color: #ffffff;
             --gold-accent: #c5a059;
         }
@@ -41,7 +42,8 @@
             font-family: var(--font-sans);
             color: var(--text-color);
             overflow-x: hidden;
-            background-color: #0f172a;
+            /* Velmi, velmi světlý odstín zlaté/krémové barvy podle stylu nápisu přihlášení */
+            background-color: #fbf9f4;
         }
 
         #bg-overlay {
@@ -57,13 +59,15 @@
             background-repeat: no-repeat;
         }
 
+        /* Jemný světlý filtr přes pozadí */
         #bg-overlay::before {
             content: '';
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(15, 23, 42, 0.35);
+            background: rgba(251, 249, 244, 0.85);
         }
 
+        /* Plátno pro animované bubliny */
         #bubble-canvas {
             position: fixed;
             top: 0;
@@ -180,23 +184,22 @@
 
         .main-heading {
             font-family: var(--font-script);
-            font-size: 42px;
+            font-size: 44px;
             line-height: 1.3;
             margin-bottom: 16px;
-            color: #ffffff;
+            color: #4a3b2c; /* Barva ladící s nadpisem přihlášení */
             font-weight: 700;
-            text-shadow: 0 3px 10px rgba(0, 0, 0, 0.9), 0 0 20px rgba(0, 0, 0, 0.5);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
         }
 
         .sub-heading {
             font-family: var(--font-script);
-            font-size: 20px;
+            font-size: 22px;
             line-height: 1.5;
             margin-bottom: 30px;
-            color: #f1f5f9;
-            opacity: 0.98;
+            color: #5c4a38; /* Odpovídající tmavší tón textu */
+            opacity: 0.95;
             max-width: 850px;
-            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
         }
 
         /* Dvě tlačítka (Seznam zemí a Itineráře) */
@@ -249,7 +252,7 @@
             appearance: none;
             background: var(--panel-bg);
             backdrop-filter: blur(8px);
-            border: 1px solid var(--panel-border);
+            border: 1px solid var(--gold-accent);
             color: white;
             padding: 12px 45px 12px 20px;
             font-size: 0.95rem;
@@ -258,14 +261,14 @@
             outline: none;
             font-family: var(--font-sans);
             box-shadow: var(--glass-shadow);
-            background-image: url("data:image/svg+xml;utf8,<svg fill='white' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='7 10l5 5 5-5z'/></svg>");
+            background-image: url("data:image/svg+xml;utf8,<svg fill='%23c5a059' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
             background-repeat: no-repeat;
             background-position: right 14px center;
             transition: background 0.3s;
         }
 
         .country-select:hover {
-            background-color: rgba(40, 45, 60, 0.85);
+            background-color: rgba(45, 50, 65, 0.9);
         }
 
         .country-select option {
@@ -349,7 +352,7 @@
     <!-- Obrázek pozadí -->
     <div id="bg-overlay"></div>
 
-    <!-- Plátno pro animované bubliny -->
+    <!-- Plátno pro animované bubliny (zlatavý/krémový styl) -->
     <canvas id="bubble-canvas"></canvas>
 
     <!-- 1. Levý horní roh (Přihlášení) -->
@@ -392,14 +395,14 @@
             </a>
         </div>
 
-        <!-- Rozbalovací výběr konkrétní země hned pod nimi -->
+        <!-- Rozbalovací výběr konkrétní země (Turecko, Kapverdy, Tunisko, Egypt) -->
         <div class="country-select-wrapper">
             <select class="country-select" onchange="if(this.value) window.location.href = this.value;">
                 <option value="" disabled selected>Nebo vybrat konkrétní zemi...</option>
                 <option value="/zeme/turecko/">Turecko</option>
-                <option value="/zeme/egypt/">Egypt</option>
                 <option value="/zeme/kapverdy/">Kapverdy</option>
                 <option value="/zeme/tunisko/">Tunisko</option>
+                <option value="/zeme/egypt/">Egypt</option>
             </select>
         </div>
     </div>
@@ -441,7 +444,7 @@
         updateDateTime();
         setInterval(updateDateTime, 1000);
 
-        // --- BUBLINY A DYNAMICKÉ TÓNOVÁNÍ PANELŮ ---
+        // --- BUBLINY V ZLATAVÉM / KRÉMOVÉM STYLU ---
         const canvas = document.getElementById('bubble-canvas');
         const ctx = canvas.getContext('2d');
 
@@ -461,34 +464,14 @@
             height = canvas.height = window.innerHeight;
         });
 
+        // Paleta odstínů odpovídající zlatavé barvě textu přihlášení (Hue cca 35 - 50)
         const lightPalettes = [
-            { min: 200, max: 240 },
-            { min: 320, max: 350 },
-            { min: 160, max: 190 },
-            { min: 35,  max: 55  },
-            { min: 260, max: 290 }
+            { min: 35, max: 50 },
+            { min: 40, max: 55 },
+            { min: 30, max: 45 }
         ];
 
-        let currentPaletteIndex = 0;
         let baseHue = lightPalettes[0];
-
-        function updatePanelTheme(hue) {
-            const panelBg = `hsla(${hue}, 35%, 14%, 0.82)`;
-            const panelBorder = `hsla(${hue}, 45%, 35%, 0.35)`;
-            document.documentElement.style.setProperty('--panel-bg', panelBg);
-            document.documentElement.style.setProperty('--panel-border', panelBorder);
-        }
-
-        updatePanelTheme((baseHue.min + baseHue.max) / 2);
-
-        setInterval(() => {
-            currentPaletteIndex = (currentPaletteIndex + 1) % lightPalettes.length;
-            baseHue = lightPalettes[currentPaletteIndex];
-            const avgHue = (baseHue.min + baseHue.max) / 2;
-
-            updatePanelTheme(avgHue);
-            bubbles.forEach(bubble => bubble.updateColor());
-        }, 5 * 60 * 1000);
 
         class Bubble {
             constructor(x, y, radius) {
@@ -509,9 +492,9 @@
 
             updateColor() {
                 const hue = Math.floor(Math.random() * (baseHue.max - baseHue.min) + baseHue.min);
-                const opacity = Math.random() * 0.35 + 0.15;
-                this.color = `hsla(${hue}, 80%, 90%, ${opacity})`;
-                this.borderColor = `hsla(${hue}, 90%, 95%, ${opacity + 0.25})`;
+                const opacity = Math.random() * 0.25 + 0.10;
+                this.color = `hsla(${hue}, 60%, 75%, ${opacity})`;
+                this.borderColor = `hsla(${hue}, 70%, 85%, ${opacity + 0.2})`;
             }
 
             draw() {
@@ -527,9 +510,9 @@
                     this.y,
                     this.radius
                 );
-                gradient.addColorStop(0, 'rgba(255, 255, 255, 0.75)');
+                gradient.addColorStop(0, 'rgba(255, 255, 255, 0.85)');
                 gradient.addColorStop(0.4, this.color);
-                gradient.addColorStop(1, 'rgba(255, 255, 255, 0.05)');
+                gradient.addColorStop(1, 'rgba(197, 160, 89, 0.05)');
 
                 ctx.fillStyle = gradient;
                 ctx.fill();
@@ -546,7 +529,7 @@
                     Math.PI * 1.2,
                     Math.PI * 1.7
                 );
-                ctx.strokeStyle = 'rgba(255, 255, 255, 0.65)';
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.7)';
                 ctx.lineWidth = Math.max(1, this.radius * 0.08);
                 ctx.stroke();
 
