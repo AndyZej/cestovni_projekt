@@ -4,20 +4,28 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    # 1. Hlavní stránka (rozcestník)
+    # Hlavní stránka / Domů
     path('', views.domovsky_view, name='domovsky'),
 
-    # 2. Hlavní fotogalerie
-    path('galerie/', views.galerie_view, name='galerie'),
+    # Seznamy
+    path('země/', views.seznam_zemi_view, name='seznam_zemi'),
+    path('itinerare/', views.seznam_itineraru_view, name='seznam_itineraru'),
 
-    # 3. Sekce Země (seznam + detail)
-    path('zeme/', views.seznam_zemi_view, name='seznam_zemi'),
+    # Detail jednotlivých zemí
     path('zeme/<slug:slug>/', views.detail_zeme_view, name='detail_zeme'),
 
-    # 4. Samostatná galerie pro konkrétní zemi
-    path('zeme/<slug:slug>/galerie/', views.galerie_zeme, name='galerie_zeme'),
+    # Itineráře zemí (detail)
+    path('itinerare/<slug:slug>/', views.detail_itineraru_view, name='detail_itineraru'),
 
-    # 5. Sekce Itineráře (seznam + detail)
-    path('itinerare/', views.seznam_itineraru_view, name='seznam_itineraru'),
-    path('itinerare/<slug:slug>/', views.detail_itineraru_view, name='detail_itineraru'),  # <-- Zde musí být 'detail_itineraru'
+    # Samostatné galerie jednotlivých zemí (sekce Země)
+    path('galerie/kapverdy/', views.kapverdy_galerie_view, name='kapverdy_galerie'),
+    path('galerie/egypt/', views.egypt_galerie_view, name='egypt_galerie'),
+    path('galerie/tunisko/', views.tunisko_galerie_view, name='tunisko_galerie'),
+    path('galerie/turecko/', views.turecko_galerie_view, name='turecko_galerie'),
+
+    # Samostatné galerie jednotlivých itinerářů (sekce Itinerář)
+    path('itinerare/galerie/kapverdy/', views.kapverdy_itinerar_galerie_view, name='kapverdy_itinerar_galerie'),
+    path('itinerare/galerie/egypt/', views.egypt_itinerar_galerie_view, name='egypt_itinerar_galerie'),
+    path('itinerare/galerie/tunisko/', views.tunisko_itinerar_galerie_view, name='tunisko_itinerar_galerie'),
+    path('itinerare/galerie/turecko/', views.turecko_itinerar_galerie_view, name='turecko_itinerar_galerie'),
 ]

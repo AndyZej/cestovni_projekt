@@ -1,5 +1,6 @@
 
 
+{% load static %}
 <!DOCTYPE html>
 <html lang="cs">
 <head>
@@ -145,84 +146,19 @@
             font-size: 0.95em;
         }
 
-        /* --- ČISTÁ LUXUSNÍ FOTOGALERIE --- */
-        .gallery-section {
-            margin-top: 55px;
-            padding: 40px 30px;
+        /* --- FOTOGALERIE BOX S TLAČÍTKEM --- */
+        .foto-box {
+            text-align: center;
+            margin: 40px 0 25px 0;
+            padding: 30px;
             background: #fcfbfa;
             border-radius: 4px;
             border: 1px solid var(--border-color);
-            text-align: center;
         }
 
-        .gallery-section h3 {
-            font-family: 'Playfair Display', serif;
-            color: var(--luxury-dark);
-            font-size: 2.2em;
-            margin-top: 0;
-            margin-bottom: 25px;
-        }
-
-        .gallery-city-group {
-            margin-bottom: 35px;
-            text-align: left;
-        }
-
-        .gallery-city-group h4 {
-            font-family: 'Playfair Display', serif;
-            color: var(--luxury-gold);
-            font-size: 1.4em;
-            margin-bottom: 15px;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 5px;
-        }
-
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-            gap: 15px;
-        }
-
-        .gallery-card {
-            background: #1a1a1a;
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-            padding: 22px 12px;
-            text-decoration: none;
-            color: #ffffff;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-        }
-
-        .gallery-card:hover {
-            border-color: var(--luxury-gold);
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(197, 160, 89, 0.25);
-        }
-
-        .gallery-icon {
-            font-size: 1.9em;
-            color: var(--luxury-gold);
-            margin-bottom: 8px;
-        }
-
-        .gallery-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 1em;
-            font-weight: 600;
-            color: #ffffff;
-            letter-spacing: 0.5px;
-            text-align: center;
-        }
-
-        .btn-gallery-all {
+        .btn-gallery {
             display: inline-block;
-            margin-top: 25px;
-            padding: 14px 32px;
+            padding: 14px 30px;
             background: var(--luxury-gold);
             color: #ffffff;
             text-decoration: none;
@@ -236,7 +172,7 @@
             box-shadow: 0 4px 12px rgba(197, 160, 89, 0.25);
         }
 
-        .btn-gallery-all:hover {
+        .btn-gallery:hover {
             background: var(--luxury-gold-hover);
             box-shadow: 0 6px 18px rgba(197, 160, 89, 0.4);
         }
@@ -274,7 +210,7 @@
         <p>Vyberte si město a rozklikněte si konkrétní výlety, které v dané oblasti stojí za to navštívit.</p>
 
         <!-- 1. MĚSTO: ISTANBUL -->
-        <div class="city-title">🕌 1. Istanbul</div>
+        <div class="city-title">🕌 Istanbul</div>
 
         <details>
             <summary>Historické srdce: Modrá mešita & Palác Topkapi</summary>
@@ -414,92 +350,13 @@
             </div>
         </details>
 
-
-        <!-- FINÁLNÍ FOTOGALERIE TURECKO -->
-        <div class="gallery-section">
-            <h3>📷 Fotogalerie Turecko</h3>
-
-            <!-- ISTANBUL -->
-            <div class="gallery-city-group">
-                <h4>🕌 Istanbul</h4>
-                <div class="gallery-grid">
-                    <a href="#" class="gallery-card">
-                        <div class="gallery-icon">🕌</div>
-                        <div class="gallery-title">Modrá mešita</div>
-                    </a>
-                    <a href="#" class="gallery-card">
-                        <div class="gallery-icon">🏰</div>
-                        <div class="gallery-title">Palác Topkapi</div>
-                    </a>
-                    <a href="#" class="gallery-card">
-                        <div class="gallery-icon">🌙</div>
-                        <div class="gallery-title">Nová mešita</div>
-                    </a>
-                    <a href="#" class="gallery-card">
-                        <div class="gallery-icon">🛍️</div>
-                        <div class="gallery-title">Bazar</div>
-                    </a>
-                    <a href="#" class="gallery-card">
-                        <div class="gallery-icon">🏙️</div>
-                        <div class="gallery-title">Taksim</div>
-                    </a>
-                    <a href="#" class="gallery-card">
-                        <div class="gallery-icon">📸</div>
-                        <div class="gallery-title">Obecné</div>
-                    </a>
-                </div>
-            </div>
-
-            <!-- BODRUM -->
-            <div class="gallery-city-group">
-                <h4>⚓ Bodrum</h4>
-                <div class="gallery-grid">
-                    <a href="#" class="gallery-card">
-                        <div class="gallery-icon">🏛️</div>
-                        <div class="gallery-title">Město</div>
-                    </a>
-                    <a href="#" class="gallery-card">
-                        <div class="gallery-icon">🏰</div>
-                        <div class="gallery-title">Hrad</div>
-                    </a>
-                    <a href="#" class="gallery-card">
-                        <div class="gallery-icon">📜</div>
-                        <div class="gallery-title">Efes</div>
-                    </a>
-                    <a href="#" class="gallery-card">
-                        <div class="gallery-icon">⛵</div>
-                        <div class="gallery-title">Lodní výlet</div>
-                    </a>
-                    <a href="#" class="gallery-card">
-                        <div class="gallery-icon">🚜</div>
-                        <div class="gallery-title">Jeep Safari</div>
-                    </a>
-                </div>
-            </div>
-
-            <!-- ANTALYA -->
-            <div class="gallery-city-group">
-                <h4>🏖️ Antalya</h4>
-                <div class="gallery-grid">
-                    <a href="#" class="gallery-card">
-                        <div class="gallery-icon">🏙️</div>
-                        <div class="gallery-title">Město</div>
-                    </a>
-                    <a href="#" class="gallery-card">
-                        <div class="gallery-icon">🏴‍☠️</div>
-                        <div class="gallery-title">Lodní výlet</div>
-                    </a>
-                    <a href="#" class="gallery-card">
-                        <div class="gallery-icon">🌲</div>
-                        <div class="gallery-title">Green Canyon</div>
-                    </a>
-                </div>
-            </div>
-
-            <a href="{% url 'galerie' %}" class="btn-gallery-all">Otevřít kompletní fotogalerii</a>
+        <!-- SEKCE GALERIE S TLAČÍTKEM -->
+        <h2>Galerie</h2>
+        <div class="foto-box">
+            <a href="{% url 'turecko_itinerar_galerie' %}" class="btn-gallery">📷 Otevřít kompletní fotogalerii</a>
         </div>
 
-        <p><a href="{% url 'domov' %}" class="btn-back">← Zpět na výběr zemí (Hlavní stránka)</a></p>
+        <p><a href="{% url 'domovsky' %}" class="btn-back">← Zpět na výběr zemí (Hlavní stránka)</a></p>
     </div>
 
 </body>

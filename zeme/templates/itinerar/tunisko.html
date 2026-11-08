@@ -1,5 +1,6 @@
 
 
+{% load static %}
 <!DOCTYPE html>
 <html lang="cs">
 <head>
@@ -145,84 +146,19 @@
             font-size: 0.95em;
         }
 
-        /* --- FOTOGALERIE --- */
-        .gallery-section {
-            margin-top: 55px;
-            padding: 40px 30px;
+        /* --- FOTOGALERIE BOX S TLAČÍTKEM --- */
+        .foto-box {
+            text-align: center;
+            margin: 40px 0 25px 0;
+            padding: 30px;
             background: #fcfbfa;
             border-radius: 4px;
             border: 1px solid var(--border-color);
-            text-align: center;
         }
 
-        .gallery-section h3 {
-            font-family: 'Playfair Display', serif;
-            color: var(--luxury-dark);
-            font-size: 2.2em;
-            margin-top: 0;
-            margin-bottom: 25px;
-        }
-
-        .gallery-city-group {
-            margin-bottom: 35px;
-            text-align: left;
-        }
-
-        .gallery-city-group h4 {
-            font-family: 'Playfair Display', serif;
-            color: var(--luxury-gold);
-            font-size: 1.4em;
-            margin-bottom: 15px;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 5px;
-        }
-
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-            gap: 15px;
-        }
-
-        .gallery-card {
-            background: #1a1a1a;
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-            padding: 22px 12px;
-            text-decoration: none;
-            color: #ffffff;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-        }
-
-        .gallery-card:hover {
-            border-color: var(--luxury-gold);
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(197, 160, 89, 0.25);
-        }
-
-        .gallery-icon {
-            font-size: 1.9em;
-            color: var(--luxury-gold);
-            margin-bottom: 8px;
-        }
-
-        .gallery-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 1em;
-            font-weight: 600;
-            color: #ffffff;
-            letter-spacing: 0.5px;
-            text-align: center;
-        }
-
-        .btn-gallery-all {
+        .btn-gallery {
             display: inline-block;
-            margin-top: 25px;
-            padding: 14px 32px;
+            padding: 14px 30px;
             background: var(--luxury-gold);
             color: #ffffff;
             text-decoration: none;
@@ -236,7 +172,7 @@
             box-shadow: 0 4px 12px rgba(197, 160, 89, 0.25);
         }
 
-        .btn-gallery-all:hover {
+        .btn-gallery:hover {
             background: var(--luxury-gold-hover);
             box-shadow: 0 6px 18px rgba(197, 160, 89, 0.4);
         }
@@ -274,7 +210,7 @@
         <p>Prozkoumejte informace o ostrově Djerba a rozklikněte si detailní programy výletů.</p>
 
         <!-- ÚVODNÍ SEKCE O OSTROVĚ -->
-        <div class="city-title">🌴 1. Ostrov Djerba</div>
+        <div class="city-title">🌴 Ostrov Djerba</div>
 
         <details>
             <summary>Představení ostrova Djerba</summary>
@@ -282,7 +218,7 @@
                 <div class="trip-meta">
                     <strong>Charakteristika:</strong> Největší ostrov Severní Afriky | <strong>Klima:</strong> Celoroční slunce
                 </div>
-                <p>Djerba je největším ostrovem Severní Afriky a již od starověku okouzluje cestovatele svou jedinečnou atmosférou, jemnými pískovými plážemi a palmami sahajícími až k tyrkysovému moři. Ostrov je proslulý svým mírným klimatem, kdy zde slunce svítí téměř po celý rok, a také neuvěřitelným klidem. Historie Djerby je protkána mnoha legendami – v řecké mitologii byla považována za ostrov lotofágů, kde Odysseus zapomněl na domov. Místní obyvatelé jsou známí svou pohostinností, řemeslnou zručností a uchováním tradičního způsobu života. V bělostných městech a vesnicích najdete typickou architekturu s klenutými střechami a starobylými mešitami. Djerba nabízí také bohatou historii spojenou s židovskou komunitou a slavnou synagogou El Ghriba. Celkově ostrov působí jako klidná oáza, kde se snoubí africký, arabský a středomořský vliv. Je to ideální místo pro ty, kteří chtějí spojit relaxaci na pláži s objevováním autentické tuniské kultury.</p>
+                <p>Djerba je největším ostrovem Severní Afriky a již od starověku okouzluje cestovatele svou jedinečnou atmosférou, jemnými pískovými plážemi a palmami sahajícími až k tyrkysovému moři. Ostrov je proslulý svým mírným klimatem, kdy zde slunce svítí téměř po celý rok, a také neuvěřitelným klidem. Historie Djerby je protkána mnoha legendami – v řecké mytologii byla považována za ostrov lotofágů, kde Odysseus zapomněl na domov. Místní obyvatelé jsou známí svou pohostinností, řemeslnou zručností a uchováním tradičního způsobu života. V bělostných městech a vesnicích najdete typickou architekturu s klenutými střechami a starobylými mešitami. Djerba nabízí také bohatou historii spojenou s židovskou komunitou a slavnou synagogou El Ghriba. Celkově ostrov působí jako klidná oáza, kde se snoubí africký, arabský a středomořský vliv. Je to ideální místo pro ty, kteří chtějí spojit relaxaci na pláži s objevováním autentické tuniské kultury.</p>
             </div>
         </details>
 
@@ -311,48 +247,13 @@
             </div>
         </details>
 
-
-        <!-- FOTOGALERIE TUNISKO (Dle struktury složek) -->
-        <div class="gallery-section">
-            <h3>📷 Fotogalerie Tunisko</h3>
-
-            <!-- SLOŽKA: DJERBA -->
-            <div class="gallery-city-group">
-                <h4>🌴 Djerba</h4>
-                <div class="gallery-grid">
-                    <a href="#" class="gallery-card">
-                        <div class="gallery-icon">🏝️</div>
-                        <div class="gallery-title">Djerba</div>[cite: 4]
-                    </a>
-                </div>
-            </div>
-
-            <!-- SLOŽKA: HOUMTSOUK -->
-            <div class="gallery-city-group">
-                <h4>🛍️ Houmt Souk</h4>
-                <div class="gallery-grid">
-                    <a href="#" class="gallery-card">
-                        <div class="gallery-icon">🏺</div>
-                        <div class="gallery-title">Houmt Souk</div>[cite: 4]
-                    </a>
-                </div>
-            </div>
-
-            <!-- SLOŽKA: KROKODYL -->
-            <div class="gallery-city-group">
-                <h4>🐊 Krokodýlí farma</h4>
-                <div class="gallery-grid">
-                    <a href="#" class="gallery-card">
-                        <div class="gallery-icon">🐊</div>
-                        <div class="gallery-title">Krokodýl</div>[cite: 4]
-                    </a>
-                </div>
-            </div>
-
-            <a href="{% url 'galerie' %}" class="btn-gallery-all">Otevřít kompletní fotogalerii</a>
+        <!-- SEKCE GALERIE S TLAČÍTKEM -->
+        <h2>Galerie</h2>
+        <div class="foto-box">
+            <a href="{% url 'tunisko_itinerar_galerie' %}" class="btn-gallery">📷 Otevřít kompletní fotogalerii</a>
         </div>
 
-        <p><a href="{% url 'domov' %}" class="btn-back">← Zpět na výběr zemí (Hlavní stránka)</a></p>
+        <p><a href="{% url 'domovsky' %}" class="btn-back">← Zpět na výběr zemí (Hlavní stránka)</a></p>
     </div>
 
 </body>
