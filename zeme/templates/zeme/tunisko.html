@@ -1,10 +1,318 @@
+
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="cs">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Tunisko - Djerba</title>
+
+    <!-- Google Fonts: Playfair Display (nadpisy) a Lato (text) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --luxury-dark: #1a1a1a;
+            --luxury-gold: #c5a059;
+            --luxury-gold-hover: #b08d46;
+            --bg-color: #faf9f6;
+            --card-bg: #ffffff;
+            --text-main: #333333;
+            --border-color: #e2ded5;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            line-height: 1.8;
+        }
+
+        header {
+            background-color: var(--luxury-dark);
+            color: var(--luxury-gold);
+            padding: 70px 20px;
+            text-align: center;
+            border-bottom: 3px solid var(--luxury-gold);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.4em;
+            margin: 0;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        header p {
+            color: #d1ccbe;
+            font-style: italic;
+            font-size: 1.15em;
+            margin-top: 12px;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: -40px auto 50px auto;
+            padding: 50px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.04);
+            position: relative;
+        }
+
+        h2 {
+            font-family: 'Playfair Display', serif;
+            color: var(--luxury-dark);
+            font-size: 2.3em;
+            border-bottom: 2px solid var(--luxury-gold);
+            padding-bottom: 10px;
+            margin-top: 45px;
+            margin-bottom: 22px;
+            letter-spacing: 0.5px;
+        }
+
+        h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--luxury-gold);
+            font-size: 1.65em;
+            margin-top: 30px;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+            font-family: 'Lato', sans-serif;
+            border: 1px solid var(--border-color);
+        }
+
+        th, td {
+            padding: 14px 18px;
+            text-align: left;
+        }
+
+        th {
+            background-color: var(--luxury-dark);
+            color: var(--luxury-gold);
+            font-family: 'Playfair Display', serif;
+            font-size: 1.15em;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        td {
+            border-bottom: 1px solid var(--border-color);
+            background-color: #fff;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:nth-child(even) td {
+            background-color: #fcfbfa;
+        }
+
+        ul {
+            line-height: 1.8;
+            padding-left: 22px;
+            margin-bottom: 25px;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        li strong {
+            color: var(--luxury-dark);
+        }
+
+        .foto-box {
+            text-align: center;
+            margin: 40px 0 25px 0;
+            padding: 30px;
+            background: #fcfbfa;
+            border-radius: 4px;
+            border: 1px solid var(--border-color);
+        }
+
+        .foto-box img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 2px;
+            border: 1px solid var(--luxury-gold);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+        }
+
+        .btn-gallery {
+            display: inline-block;
+            margin-top: 22px;
+            padding: 14px 30px;
+            background: var(--luxury-gold);
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 2px;
+            font-weight: 700;
+            font-family: 'Lato', sans-serif;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            font-size: 0.85em;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(197, 160, 89, 0.25);
+        }
+
+        .btn-gallery:hover {
+            background: var(--luxury-gold-hover);
+            box-shadow: 0 6px 18px rgba(197, 160, 89, 0.4);
+        }
+
+        .btn-back {
+            display: inline-block;
+            margin-top: 35px;
+            padding: 12px 22px;
+            background: var(--luxury-dark);
+            color: var(--luxury-gold);
+            text-decoration: none;
+            border-radius: 2px;
+            font-weight: 700;
+            font-family: 'Lato', sans-serif;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+        }
+
+        .btn-back:hover {
+            background: #2c2c2c;
+            color: #ffffff;
+        }
+    </style>
 </head>
 <body>
+
+    <header>
+        <h1>🇹🇳 Tunisko - Djerba</h1>
+        <p>Ostrov tisíce palem, bájných Lotofagů a středomořské pohody</p>
+    </header>
+
+    <div class="container">
+        <h2>1. Tunisko (Republika Tunisko)</h2>
+        <p>Tunisko je nejsevernější stát v Africe, ležící na pobřeží Středozemního moře. Spojuje v sobě bohatou historii sahající od starověkého Kartága přes římskou éru až po tradiční arabskou a berberskou kulturu.</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Parametr</th>
+                    <th>Základní údaj</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Hlavní město</td>
+                    <td>Tunis</td>
+                </tr>
+                <tr>
+                    <td>Rozloha</td>
+                    <td>cca 163 610 km²</td>
+                </tr>
+                <tr>
+                    <td>Počet obyvatel</td>
+                    <td>cca 12 milionů</td>
+                </tr>
+                <tr>
+                    <td>Úřední jazyk</td>
+                    <td>Arabština (francouzština je velmi rozšířená)</td>
+                </tr>
+                <tr>
+                    <td>Měna</td>
+                    <td>Tuniský dinár (TND)</td>
+                </tr>
+                <tr>
+                    <td>Náboženství</td>
+                    <td>Islám (státní náboženství)</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <ul>
+            <li><strong>Geografie:</strong> Sever země je úrodný a hornatý (pohoří Atlas), jih a vnitrozemí přecházejí do rozlehlých oblastí Saharské pouště.</li>
+            <li><strong>Podnebí:</strong> Středomořské na pobřeží s horkými léty a mírnými zimami; pouštní klima na jihu.</li>
+            <li><strong>Turistika:</strong> Oblíbená destinace pro plážovou dovolenou, historické památky (Koloseum v El Djemu) i výpravy do Sahary.</li>
+        </ul>
+
+        <h2>2. Ostrov Djerba</h2>
+        <p>Djerba je největší ostrov severní Afriky, nacházející se v Malé syrtě při pobřeží Tuniska. V řecké mitologii byl známý jako „ostrov jedlíků lotosu“, kde Odysseus a jeho muži málem zapomněli na svůj domov kvůli omamnému ovoci.</p>
+
+        <ul>
+            <li><strong>Proč navštívit Djerbu:</strong> Ostrov nabízí skvělé písčité pláže, palmami lemované pobřeží, velmi mírné klima a jedinečnou poklidnou atmosféru odlišující se od pevninského Tuniska. S pevninou je spojen historickým římským násypem a mezinárodním letištěm (DJE).</li>
+            <li><strong>Hlavní lákadla:</strong>
+                <ul>
+                    <li><strong>Djerbahood (Erriadh):</strong> Unikátní venkovní galerie v malebné vesničce, kde desítky světových umělců vytvořily úchvatné graffiti a street art díla na tradičních domcích.</li>
+                    <li><strong>Synagoga El Ghriba:</strong> Jedna z nejstarších a nejvýznamnějších židovských svatyní v Africe, cíl poutníků již po staletí.</li>
+                    <li><strong>Krokodýlí farmu (Djerba Explore):</strong> Největší krokodýlí farma ve Středomoří, kde žije přes 400 krokodýlů nilských.</li>
+                </ul>
+            </li>
+        </ul>
+
+        <h2>3. Město Houmt Souk</h2>
+        <p>Houmt Souk je hlavní město a administrativní centrum ostrova Djerba. Název v překladu znamená „tržní čtvrť“ a město dodnes plně dostává své pověsti díky rušným orientálním trhům.</p>
+
+        <ul>
+            <li><strong>Atmosféra a architektura:</strong> Město se vyznačuje tradiční bělostnou architekturou (tzv. menzoly), úzkými uličkami, stinnými náměstími a poklidným rázem.</li>
+            <li><strong>Hlavní zajímavosti:</strong>
+                <ul>
+                    <li><strong>Tradiční trhy (Souky):</strong> Místo, kde koupíte koření, ručně tkané koberce, tradiční keramiku z Guellesty, šperky a kožené výrobky. Tradiční smlouvání je zde samozřejmostí.</li>
+                    <li><strong>Pevnost Borj El Kebir:</strong> Impozantní pobřežní pevnost ze 15. století tyčící se nad starým přístavem, odkud je krásný výhled na moře.</li>
+                    <li><strong>Přístav:</strong> Místo, odkud vyplouvají vyhlídkové lodě za pirátskými plavbami a pozorováním delfínů.</li>
+                </ul>
+            </li>
+        </ul>
+
+        <h2>Nabídka výletů z Djerby</h2>
+        <p>Djerba je skvělým výchozím bodem jak pro objevování ostrovních koutů, tak pro nezapomenutelné výpravy hluboko do tuniského vnitrozemí a pouště.</p>
+
+        <h3>1. Okružní jízda ostrovem (Djerba Tour)</h3>
+        <ul>
+            <li><strong>Kulturní okruh:</strong> Návštěva umělecké vesničky <em>Djerbahood</em>, historické synagogy <em>El Ghriba</em> a hrnčířské vesnice <em>Guellala</em>, kde se tradiční metodou vyrábí hliněná keramika.</li>
+        </ul>
+
+        <h3>2. Výlety za zvířaty a zábavou</h3>
+        <ul>
+            <li><strong>Djerba Explore a krokodýli:</strong> Návštěva komplexu s krokodýlí farmou, tradičním berberským domem a muzeem lidové tvořivosti.</li>
+            <li><strong>Pirátská plavba na Ostrov flamingů (Ras Rmel):</strong> Celodenní plavba tradiční dřevěnou lodí na poloostrov Flamingo, spojená s obědem na palubě, hudbou a možností vidět plameňáky.</li>
+        </ul>
+
+        <h3>3. Dvoudenní výlet do Sahary (Jižní Tunisko)</h3>
+        <ul>
+            <li><strong>Expedice do pouště:</strong> Dvoudenní dobrodružný výlet z Djerby na pevninu. Zahrnuje návštěvu podzemních obydlí v <em>Matmata</em> (troglodyti, kde se natáčely Hvězdné války), městečka <em>Tataouine</em>, starobylých opevněných sýpek (ksarů) a nocleh v pouštním táboře v oáze <em>Ksar Ghilane</em> s možností jízdy na velbloudech nebo čtyřkolkách.</li>
+        </ul>
+
+        <h3>4. Historické skvosty pevniny</h3>
+        <ul>
+            <li><strong>El Djem a Kairouan:</strong> Jednodenní výlet k nejzachovalejšímu římskému koloseu v Africe (El Djem) a do svatého muslimského města Kairouan s velkou mešitou.</li>
+        </ul>
+
+        <h2>Fotografie</h2>
+        <div class="foto-box">
+            {% if zvolena_zeme.hlavni_foto %}
+                <img src="{{ zvolena_zeme.hlavni_foto.url }}" alt="Tunisko - Djerba">
+            {% else %}
+                <p><em>Fotografie není k dispozici.</em></p>
+            {% endif %}
+            <br>
+            <a href="{% url 'galerie' %}" class="btn-gallery">📷 Otevřít kompletní fotogalerii</a>
+        </div>
+
+        <!-- Tlačítko pro návrat na hlavní stránku -->
+        <p><a href="{% url 'domov' %}" class="btn-back">← Zpět na výběr zemí (Hlavní stránka)</a></p>
+    </div>
 
 </body>
 </html>

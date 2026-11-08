@@ -1,10 +1,349 @@
+
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="cs">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Turecko - Istanbul, Antalie a Bodrum</title>
+
+    <!-- Google Fonts: Playfair Display (nadpisy) a Lato (text) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --luxury-dark: #1a1a1a;
+            --luxury-gold: #c5a059;
+            --luxury-gold-hover: #b08d46;
+            --bg-color: #faf9f6;
+            --card-bg: #ffffff;
+            --text-main: #333333;
+            --border-color: #e2ded5;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            line-height: 1.8;
+        }
+
+        header {
+            background-color: var(--luxury-dark);
+            color: var(--luxury-gold);
+            padding: 70px 20px;
+            text-align: center;
+            border-bottom: 3px solid var(--luxury-gold);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.4em;
+            margin: 0;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        header p {
+            color: #d1ccbe;
+            font-style: italic;
+            font-size: 1.15em;
+            margin-top: 12px;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: -40px auto 50px auto;
+            padding: 50px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.04);
+            position: relative;
+        }
+
+        h2 {
+            font-family: 'Playfair Display', serif;
+            color: var(--luxury-dark);
+            font-size: 2.3em;
+            border-bottom: 2px solid var(--luxury-gold);
+            padding-bottom: 10px;
+            margin-top: 45px;
+            margin-bottom: 22px;
+            letter-spacing: 0.5px;
+        }
+
+        h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--luxury-gold);
+            font-size: 1.65em;
+            margin-top: 30px;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+            font-family: 'Lato', sans-serif;
+            border: 1px solid var(--border-color);
+        }
+
+        th, td {
+            padding: 14px 18px;
+            text-align: left;
+        }
+
+        th {
+            background-color: var(--luxury-dark);
+            color: var(--luxury-gold);
+            font-family: 'Playfair Display', serif;
+            font-size: 1.15em;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        td {
+            border-bottom: 1px solid var(--border-color);
+            background-color: #fff;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:nth-child(even) td {
+            background-color: #fcfbfa;
+        }
+
+        ul {
+            line-height: 1.8;
+            padding-left: 22px;
+            margin-bottom: 25px;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        li strong {
+            color: var(--luxury-dark);
+        }
+
+        .foto-box {
+            text-align: center;
+            margin: 40px 0 25px 0;
+            padding: 30px;
+            background: #fcfbfa;
+            border-radius: 4px;
+            border: 1px solid var(--border-color);
+        }
+
+        .foto-box img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 2px;
+            border: 1px solid var(--luxury-gold);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+        }
+
+        .btn-gallery {
+            display: inline-block;
+            margin-top: 22px;
+            padding: 14px 30px;
+            background: var(--luxury-gold);
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 2px;
+            font-weight: 700;
+            font-family: 'Lato', sans-serif;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            font-size: 0.85em;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(197, 160, 89, 0.25);
+        }
+
+        .btn-gallery:hover {
+            background: var(--luxury-gold-hover);
+            box-shadow: 0 6px 18px rgba(197, 160, 89, 0.4);
+        }
+
+        .btn-back {
+            display: inline-block;
+            margin-top: 35px;
+            padding: 12px 22px;
+            background: var(--luxury-dark);
+            color: var(--luxury-gold);
+            text-decoration: none;
+            border-radius: 2px;
+            font-weight: 700;
+            font-family: 'Lato', sans-serif;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+        }
+
+        .btn-back:hover {
+            background: #2c2c2c;
+            color: #ffffff;
+        }
+    </style>
 </head>
 <body>
+
+    <header>
+        <h1>🇹🇷 Turecko – Istanbul, Antalie a Bodrum</h1>
+        <p>Křižovatka kontinentů, antických památek a slunečného pobřeží Egejského a Středozemního moře</p>
+    </header>
+
+    <div class="container">
+        <h2>1. Turecko (Turecká republika)</h2>
+        <p>Turecko je transkontinentální stát ležící v jihozápadní Asii a z malé části v jihovýchodní Evropě (Thrákie). Je mostem mezi Východem a Západem, zemí s fascinující historií, impérii (Byzantská a Osmanská říše) a rozmanitou přírodou.</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Parametr</th>
+                    <th>Základní údaj</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Hlavní město</td>
+                    <td>Ankara</td>
+                </tr>
+                <tr>
+                    <td>Největší město</td>
+                    <td>Istanbul</td>
+                </tr>
+                <tr>
+                    <td>Rozloha</td>
+                    <td>cca 783 356 km²</td>
+                </tr>
+                <tr>
+                    <td>Počet obyvatel</td>
+                    <td>cca 85 milionů</td>
+                </tr>
+                <tr>
+                    <td>Úřední jazyk</td>
+                    <td>Turečtina</td>
+                </tr>
+                <tr>
+                    <td>Měna</td>
+                    <td>Turecká lira (TRY)</td>
+                </tr>
+                <tr>
+                    <td>Náboženství</td>
+                    <td>Islám (převážně sunnitský)</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <ul>
+            <li><strong>Geografie:</strong> Turecko je obklopeno čtyřmi moři (Středozemní, Egejské, Černé a Marmarské). Vnitrozemí tvoří rozlehlé náhorní plošiny a pohoří Taurus.</li>
+            <li><strong>Podnebí:</strong> Různorodé – pobřeží má typické středomořské klima s horkými léty, vnitrozemí kontinentální.</li>
+        </ul>
+
+        <h2>2. Turecká kuchyně (Gastronomie)</h2>
+        <p>Turecká kuchyně je považována za jednu z nejbohatších a nejchutnějších na světě. Vybavuje se v ní vliv středomořské, blízkovýchodní, balkánské i středoasijské tradice.</p>
+
+        <ul>
+            <li><strong>Základní suroviny:</strong> Čerstvá zelenina (lilek, rajčata, papriky), jehněčí a kuřecí maso, olivový olej, rýže, luštěniny a aromatičtí bylinky a koření (mátový kmín, sumak).</li>
+            <li><strong>Snídaně (Kahvaltı):</strong> Bohatá a pestrá událost obsahující sýry, olivy, med, vajíčka (menemen), čerstvý chléb a neomezené množství černého tureckého čaje.</li>
+            <li><strong>Slavné pokrmy:</strong>
+                <ul>
+                    <li><strong>Kebab:</strong> Různé druhy grilovaného masa (İskender kebab, Adana kebab, Şish kebab).</li>
+                    <li><strong>Meze:</strong> Malé předkrmy podávané před hlavním jídlem (hummus, tzatziki, plněné vinné listy).</li>
+                    <li><strong>Lahmacun a Pide:</strong> Turecké varianty "pizzy" – tenké křupavé těsto s mletým masem a kořením.</li>
+                </ul>
+            </li>
+            <li><strong>Tradiční nápoje a dezerty:</strong> Černý čaj (Çay) podávaný v typických tulipánových skleničkách, anýzový destilát Rakı ("lví mléko") a sladkosti jako Baklava nebo Lokum (turecký med).</li>
+        </ul>
+
+        <h2>3. Istanbul – Srdce na dvou kontinentech</h2>
+        <p>Istanbul je největší město Turecka, které se rozkládá na obou březích úžiny Bospor, a spojuje tak Evropu a Asii. Bylo hlavním městem tří mocných říší – Římské, Byzantské a Osmanské.</p>
+
+        <ul>
+            <li><strong>Hlavní lákadla:</strong>
+                <ul>
+                    <li><strong>Hagia Sofia (Ayasofya):</strong> Architektonický skvost s obrovskou kopulí, sloužící jako chrám i mešita.</li>
+                    <li><strong>Modrá mešita (Sultanahmet):</strong> Proslulá svými šesti minarety a tisíci modrými iznickými dlaždicemi v interiéru.</li>
+                    <li><strong>Palác Topkapi:</strong> Honosné sídlo osmanských sultánů s pokladnicí a harémem.</li>
+                    <li><strong>Velký bazar (Kapalıçarşı):</strong> Jeden z největších a nejstarších krytých trhů světa s tisíci obchůdků.</li>
+                </ul>
+            </li>
+        </ul>
+
+        <h3>Výlety a aktivity v Istanbulu</h3>
+        <ul>
+            <li><strong>Plavba lodí po Bosporu:</strong> Vyhlídková plavba úžinou oddělující Evropu od Asie s výhledem na paláce, pevnosti a historické vily.</li>
+            <li><strong>Návštěva Egyptského (kořenového) bazaru:</strong> Trh plný vůní, orientálního koření, čajů a tureckých cukrovinek.</li>
+            <li><strong>Procházka čtvrtí Sultanahmet a Hippodrom:</strong> Objevování antických památek v historickém centru.</li>
+            <li><strong>Výlet na Princovy ostrovy (Adalar):</strong> Klidné souostroví v Marmarském moři bez aut, ideální pro odpočinek a jízdou na kočárech či kolech.</li>
+        </ul>
+
+        <h2>4. Antalie (Antalya) – Perla Turecké riviéry</h2>
+        <p>Antalie je hlavní metropolí Turecké riviéry na středomořském pobřeží. Kombinuje moderní letoviska, dlouhé pláže a starobylé římské památky obklopené majestátním pohořím Taurus.</p>
+
+        <ul>
+            <li><strong>Hlavní lákadla:</strong>
+                <ul>
+                    <li><strong>Kaleiçi (Staré Město):</strong> Historické centrum s úzkými uličkami, osmanskými domy a římskou Hadriánovou bránou.</li>
+                    <li><strong>Vodopády Düden:</strong> Působivé vodopády padající přímo do Středozemního moře.</li>
+                    <li><strong>Pláže Lara a Konyaaltı:</strong> Vyhlášené písečné a oblázkové pláže s prvotřídními resorty.</li>
+                </ul>
+            </li>
+        </ul>
+
+        <h3>Výlety z Antalie</h3>
+        <ul>
+            <li><strong>Antické město Side a Aspendos:</strong> Výlet za jedním z nejlépe zachovalých římských divadel na světě (Aspendos) a ruinami antického přístavu v Side.</li>
+            <li><strong>Výlet k vodopádům Kurşunlu a do pohoří Taurus:</strong> Přírodní scenérie, borové lesy a osvěžující vodopády v národním parku.</li>
+            <li><strong>Lanovka na Olympos (Tahtalı):</strong> Vyjížďka moderní kabinovou lanovkou do výšky 2 365 m n. m. s panoramatickým výhledem na celé pobřeží.</li>
+            <li><strong>Rafting v kaňonu Köprülü:</strong> Adrenalinová jízda na divoké vodě v nádherném kaňonu národního parku.</li>
+        </ul>
+
+        <h2>5. Bodrum – Egejská riviéra a noční život</h2>
+        <p>Bodrum je malebné historické město a letovisko na Egejském pobřeží, známé svými bělostnými domky pokrytými popínavými buganvíliemi, jachetními přístavy a rušným kulturním životem.</p>
+
+        <ul>
+            <li><strong>Hlavní lákadla:</strong>
+                <ul>
+                    <li><strong>Hrad svatého Petra (Bodrumský hrad):</strong> Impozantní křižácká pevnost tyčící se nad mořem, v níž sídlí Muzeum podmořské archeologie.</li>
+                    <li><strong>Ruiny Mausolea v Halikarnasu:</strong> Jeden ze sedmi divů starověkého světa.</li>
+                    <li><strong>Přístav Marina:</strong> Luxusní jachetní přístav plný špičkových restaurací a butiků.</li>
+                </ul>
+            </li>
+        </ul>
+
+        <h3>Výlety z Bodrumu</h3>
+        <ul>
+            <li><strong>Celodenní plavba katamaránem nebo guletem:</strong> Plavba tradičními tureckými dřevěnými loděmi po egejských zátokách a ostrovech spojená se šnorchlováním.</li>
+            <li><strong>Výlet do antického Efezu (Efes):</strong> Návštěva jednoho z nejvýznamnějších a nejlépe zachovalých antických archeologických nalezišť světa (Celsusova knihovna, chrám bohyně Artemis).</li>
+            <li><strong>Termální prameny v Pamukkale:</strong> Výlet k proslulým sněhově bílým travertinovým terasám s termální vodou a ruinám antického města Hierapolis.</li>
+            <li><strong>Výlet na řecký ostrov Kos:</strong> Trajektová plavba na nedaleký řecký ostrov vzdálený pouhých 20 minut plavby z Bodrumu.</li>
+        </ul>
+
+        <h2>Fotografie</h2>
+        <div class="foto-box">
+            {% if zvolena_zeme.hlavni_foto %}
+                <img src="{{ zvolena_zeme.hlavni_foto.url }}" alt="Turecko">
+            {% else %}
+                <p><em>Fotografie není k dispozici.</em></p>
+            {% endif %}
+            <br>
+            <a href="{% url 'galerie' %}" class="btn-gallery">📷 Otevřít kompletní fotogalerii</a>
+        </div>
+
+        <!-- Tlačítko pro návrat na hlavní stránku -->
+        <p><a href="{% url 'domov' %}" class="btn-back">← Zpět na výběr zemí (Hlavní stránka)</a></p>
+    </div>
 
 </body>
 </html>
