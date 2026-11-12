@@ -1,12 +1,12 @@
 
 
 
-{% extends 'zeme/vzhledzeme.html' %}
+{% extends 'zeme/galerie/zeme.html' %}
 {% load static %}
 
 {% block title %}Fotogalerie - Turecko (Země){% endblock %}
 
-{% block header_title %}🇹🇷 Turecko - Země{% endblock %}
+{% block header_title %}🇹🇷 Turecko - Fotogalerie{% endblock %}
 {% block header_subtitle %}Prohlédněte si hlavní tematické galerie z Turecka: kultura, města, moře a památky{% endblock %}
 
 {% block back_url %}{% url 'detail_zeme' 'turecko' %}{% endblock %}
@@ -14,6 +14,7 @@
 {% block gallery_content %}
     <h2>Turecko - Galerie země</h2>
     <div class="gallery-grid">
+        <!-- Karta: Kultura -->
         <div class="gallery-card"
              data-images="{% static 'galerie/zeme/turecko/kultura/1.jpg' %},{% static 'galerie/zeme/turecko/kultura/2.jpg' %},{% static 'galerie/zeme/turecko/kultura/3.jpg' %},{% static 'galerie/zeme/turecko/kultura/4.jpg' %},{% static 'galerie/zeme/turecko/kultura/5.jpg' %},{% static 'galerie/zeme/turecko/kultura/6.jpg' %},{% static 'galerie/zeme/turecko/kultura/7.jpg' %},{% static 'galerie/zeme/turecko/kultura/8.jpg' %},{% static 'galerie/zeme/turecko/kultura/9.jpg' %},{% static 'galerie/zeme/turecko/kultura/10.jpg' %}"
              data-title="Kultura"
@@ -23,6 +24,7 @@
             <div class="card-label">Kultura</div>
         </div>
 
+        <!-- Karta: Města -->
         <div class="gallery-card"
              data-images="{% static 'galerie/zeme/turecko/mesta/1.jpg' %},{% static 'galerie/zeme/turecko/mesta/2.jpg' %},{% static 'galerie/zeme/turecko/mesta/3.jpg' %},{% static 'galerie/zeme/turecko/mesta/4.jpg' %},{% static 'galerie/zeme/turecko/mesta/5.jpg' %},{% static 'galerie/zeme/turecko/mesta/6.jpg' %},{% static 'galerie/zeme/turecko/mesta/7.jpg' %},{% static 'galerie/zeme/turecko/mesta/8.jpg' %},{% static 'galerie/zeme/turecko/mesta/9.jpg' %},{% static 'galerie/zeme/turecko/mesta/10.jpg' %}"
              data-title="Města"
@@ -32,6 +34,7 @@
             <div class="card-label">Města</div>
         </div>
 
+        <!-- Karta: Moře -->
         <div class="gallery-card"
              data-images="{% static 'galerie/zeme/turecko/more/1.jpg' %},{% static 'galerie/zeme/turecko/more/2.jpg' %},{% static 'galerie/zeme/turecko/more/3.jpg' %},{% static 'galerie/zeme/turecko/more/4.jpg' %},{% static 'galerie/zeme/turecko/more/5.jpg' %},{% static 'galerie/zeme/turecko/more/6.jpg' %},{% static 'galerie/zeme/turecko/more/7.jpg' %},{% static 'galerie/zeme/turecko/more/8.jpg' %},{% static 'galerie/zeme/turecko/more/9.jpg' %},{% static 'galerie/zeme/turecko/more/10.jpg' %}"
              data-title="Moře"
@@ -41,6 +44,7 @@
             <div class="card-label">Moře</div>
         </div>
 
+        <!-- Karta: Památky -->
         <div class="gallery-card"
              data-images="{% static 'galerie/zeme/turecko/pamatky/1.jpg' %},{% static 'galerie/zeme/turecko/pamatky/2.jpg' %},{% static 'galerie/zeme/turecko/pamatky/3.jpg' %},{% static 'galerie/zeme/turecko/pamatky/4.jpg' %},{% static 'galerie/zeme/turecko/pamatky/5.jpg' %},{% static 'galerie/zeme/turecko/pamatky/6.jpg' %},{% static 'galerie/zeme/turecko/pamatky/7.jpg' %},{% static 'galerie/zeme/turecko/pamatky/8.jpg' %},{% static 'galerie/zeme/turecko/pamatky/9.jpg' %},{% static 'galerie/zeme/turecko/pamatky/10.jpg' %}"
              data-title="Památky"

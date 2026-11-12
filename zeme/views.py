@@ -5,6 +5,8 @@ from django.http import Http404
 from .models import Zeme
 
 
+# --- HLAVNÍ STRÁNKY A SEZNAMY ---
+
 def domovsky_view(request):
     """Úvodní domovská stránka"""
     return render(request, 'zeme/domovsky.html')
@@ -21,22 +23,6 @@ def seznam_zemi_view(request):
     return render(request, 'zeme/seznam_zemi.html', {'zemes': zemes})
 
 
-def detail_zeme_view(request, slug):
-    """Dynamicky otevře HTML šablonu země podle slugu"""
-    template_map = {
-        'turecko': 'zeme/turecko.html',
-        'kapverdy': 'zeme/Kapverdy.html',
-        'tunisko': 'zeme/tunisko.html',
-        'egypt': 'zeme/egypt.html',
-    }
-
-    template_name = template_map.get(slug)
-    if not template_name:
-        raise Http404("Země nebyla nalezena")
-
-    return render(request, template_name)
-
-
 def seznam_itineraru_view(request):
     """Stránka se seznamem itinerářů s ručně definovanými kartami"""
     itinerare = [
@@ -48,10 +34,7 @@ def seznam_itineraru_view(request):
     return render(request, 'itinerar/domovsky.html', {'itinerare': itinerare})
 
 
-from django.shortcuts import render
-from django.http import Http404
-
-# --- POHLEDY PRO ZEMĚ ---
+# --- POHLEDY PRO ZEMĚ (DETAILY A GALERIE) ---
 
 def detail_zeme_view(request, slug):
     """Dynamicky otevře HTML šablonu pro zemi podle slugu"""
@@ -69,7 +52,6 @@ def detail_zeme_view(request, slug):
     return render(request, template_name)
 
 
-# Samostatné fotogalerie pro jednotlivé země (sekce Země)
 def kapverdy_galerie_view(request):
     return render(request, 'zeme/galerie/kapverdy.html')
 
@@ -86,15 +68,15 @@ def turecko_galerie_view(request):
     return render(request, 'zeme/galerie/turecko.html')
 
 
-# --- POHLEDY PRO ITINERÁŘE ---
+# --- POHLEDY PRO ITINERÁŘE (DETAILY A GALERIE) ---
 
 def detail_itineraru_view(request, slug):
     """Dynamicky otevře HTML šablonu pro itinerář podle slugu"""
     template_map = {
-        'turecko': 'itinerar/turecko.html',      # Opraveno (zrušena duplicitní složka)
-        'kapverdy': 'itinerar/kapverdy.html',    # Opraveno
-        'tunisko': 'itinerar/tunisko.html',      # Opraveno
-        'egypt': 'itinerar/egypt.html',          # Opraveno
+        'turecko': 'itinerar/turecko.html',
+        'kapverdy': 'itinerar/kapverdy.html',
+        'tunisko': 'itinerar/tunisko.html',
+        'egypt': 'itinerar/egypt.html',
     }
 
     template_name = template_map.get(slug)
@@ -103,25 +85,18 @@ def detail_itineraru_view(request, slug):
 
     return render(request, template_name)
 
-    template_name = template_map.get(slug)
-    if not template_name:
-        raise Http404("Itinerář nebyl nalezen")
 
-    return render(request, template_name)
-
-
-# Samostatné fotogalerie pro jednotlivé itineráře (sekce Itinerář)[cite: 1]
 def kapverdy_itinerar_galerie_view(request):
-    return render(request, 'itinerar/itinerar/galerie/kapverdy.html')
+    return render(request, 'itinerar/galerie/kapverdy.html')
 
 
 def egypt_itinerar_galerie_view(request):
-    return render(request, 'itinerar/itinerar/galerie/egypt.html')
+    return render(request, 'itinerar/galerie/egypt.html')
 
 
 def tunisko_itinerar_galerie_view(request):
-    return render(request, 'itinerar/itinerar/galerie/tunisko.html')
+    return render(request, 'itinerar/galerie/tunisko.html')
 
 
 def turecko_itinerar_galerie_view(request):
-    return render(request, 'itinerar/itinerar/galerie/turecko.html')
+    return render(request, 'itinerar/galerie/turecko.html')
