@@ -1,10 +1,370 @@
+
+
+
+{% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="cs">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fotogalerie - Turecko (Země)</title>
+
+    <!-- Google Fonts: Playfair Display a Lato -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --luxury-dark: #1a1a1a;
+            --luxury-gold: #c5a059;
+            --luxury-gold-hover: #b08d46;
+            --bg-color: #faf9f6;
+            --card-bg: #222222;
+            --card-bg-hover: #2c2c2c;
+            --text-main: #333333;
+            --border-color: #e2ded5;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            line-height: 1.8;
+        }
+
+        header {
+            background-color: var(--luxury-dark);
+            color: var(--luxury-gold);
+            padding: 60px 20px;
+            text-align: center;
+            border-bottom: 3px solid var(--luxury-gold);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.2em;
+            margin: 0;
+            letter-spacing: 1px;
+        }
+
+        header p {
+            color: #d1ccbe;
+            font-style: italic;
+            font-size: 1.15em;
+            margin-top: 10px;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: -30px auto 50px auto;
+            padding: 40px;
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.04);
+        }
+
+        .top-nav {
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            font-family: 'Playfair Display', serif;
+            color: var(--luxury-dark);
+            font-size: 2.1em;
+            border-bottom: 2px solid var(--luxury-gold);
+            padding-bottom: 8px;
+            margin-top: 40px;
+            margin-bottom: 25px;
+            letter-spacing: 0.5px;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+        }
+
+        .gallery-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            height: 160px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .gallery-card:hover {
+            transform: translateY(-4px);
+            background: var(--card-bg-hover);
+            box-shadow: 0 8px 25px rgba(197, 160, 89, 0.25);
+            border-color: var(--luxury-gold);
+        }
+
+        .card-icon {
+            font-size: 3em;
+            margin-bottom: 8px;
+        }
+
+        .card-label {
+            font-family: 'Playfair Display', serif;
+            color: #ffffff;
+            font-size: 1.1em;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-align: center;
+            padding: 0 10px;
+        }
+
+        #lightbox {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(26, 26, 26, 0.92);
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            padding: 20px;
+            backdrop-filter: blur(6px);
+        }
+
+        #lightbox img {
+            max-width: 85%;
+            max-height: 68vh;
+            border: 2px solid var(--luxury-gold);
+            border-radius: 4px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+        }
+
+        #lightbox-caption-title {
+            color: var(--luxury-gold);
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5em;
+            margin-top: 18px;
+            text-align: center;
+        }
+
+        #lightbox-caption-desc {
+            color: #d1ccbe;
+            font-family: 'Lato', sans-serif;
+            font-size: 1em;
+            margin-top: 5px;
+            text-align: center;
+            max-width: 700px;
+        }
+
+        #lightbox-close {
+            position: absolute;
+            top: 25px; right: 35px;
+            color: var(--luxury-gold);
+            font-size: 2.8em;
+            cursor: pointer;
+            transition: color 0.2s;
+            background: none;
+            border: none;
+        }
+
+        #lightbox-close:hover {
+            color: #fff;
+        }
+
+        /* Styly pro šipky na listování */
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(26, 26, 26, 0.6);
+            color: var(--luxury-gold);
+            border: 2px solid var(--luxury-gold);
+            font-size: 2.5em;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.3s;
+            user-select: none;
+        }
+
+        .lightbox-nav:hover {
+            background: var(--luxury-gold);
+            color: #1a1a1a;
+        }
+
+        #lightbox-prev { left: 40px; }
+        #lightbox-next { right: 40px; }
+
+        .btn-back {
+            display: inline-block;
+            padding: 12px 22px;
+            background: var(--luxury-dark);
+            color: var(--luxury-gold);
+            text-decoration: none;
+            border-radius: 2px;
+            font-weight: 700;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+        }
+
+        .btn-back:hover {
+            background: #2c2c2c;
+            color: #ffffff;
+        }
+
+        @media (max-width: 900px) {
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (max-width: 500px) {
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
+
+    <header>
+        <h1>🇹🇷 Turecko - Země</h1>
+        <p>Prohlédněte si hlavní tematické galerie z Turecka: kultura, města, moře a památky</p>
+    </header>
+
+    <div class="container">
+
+        <div class="top-nav">
+            <a href="{% url 'detail_zeme' 'turecko' %}" class="btn-back">← Zpět na detail země</a>
+        </div>
+
+        <!-- SEKCE: TURECKO - ZEMĚ -->
+        <h2>Turecko - Galerie země</h2>
+        <div class="gallery-grid">
+            <div class="gallery-card"
+                 data-images="{% static 'galerie/zeme/turecko/kultura/1.jpg' %},{% static 'galerie/zeme/turecko/kultura/2.jpg' %},{% static 'galerie/zeme/turecko/kultura/3.jpg' %},{% static 'galerie/zeme/turecko/kultura/4.jpg' %},{% static 'galerie/zeme/turecko/kultura/5.jpg' %},{% static 'galerie/zeme/turecko/kultura/6.jpg' %},{% static 'galerie/zeme/turecko/kultura/7.jpg' %},{% static 'galerie/zeme/turecko/kultura/8.jpg' %},{% static 'galerie/zeme/turecko/kultura/9.jpg' %},{% static 'galerie/zeme/turecko/kultura/10.jpg' %}"
+                 data-title="Kultura"
+                 data-desc="Tradiční turecká kultura, zvyky a atmosféra."
+                 onclick="openLightbox(this)">
+                <div class="card-icon">🏺</div>
+                <div class="card-label">Kultura</div>
+            </div>
+
+            <div class="gallery-card"
+                 data-images="{% static 'galerie/zeme/turecko/mesta/1.jpg' %},{% static 'galerie/zeme/turecko/mesta/2.jpg' %},{% static 'galerie/zeme/turecko/mesta/3.jpg' %},{% static 'galerie/zeme/turecko/mesta/4.jpg' %},{% static 'galerie/zeme/turecko/mesta/5.jpg' %},{% static 'galerie/zeme/turecko/mesta/6.jpg' %},{% static 'galerie/zeme/turecko/mesta/7.jpg' %},{% static 'galerie/zeme/turecko/mesta/8.jpg' %},{% static 'galerie/zeme/turecko/mesta/9.jpg' %},{% static 'galerie/zeme/turecko/mesta/10.jpg' %}"
+                 data-title="Města"
+                 data-desc="Poznejte dynamický život a architekturu tureckých měst."
+                 onclick="openLightbox(this)">
+                <div class="card-icon">🌆</div>
+                <div class="card-label">Města</div>
+            </div>
+
+            <div class="gallery-card"
+                 data-images="{% static 'galerie/zeme/turecko/more/1.jpg' %},{% static 'galerie/zeme/turecko/more/2.jpg' %},{% static 'galerie/zeme/turecko/more/3.jpg' %},{% static 'galerie/zeme/turecko/more/4.jpg' %},{% static 'galerie/zeme/turecko/more/5.jpg' %},{% static 'galerie/zeme/turecko/more/6.jpg' %},{% static 'galerie/zeme/turecko/more/7.jpg' %},{% static 'galerie/zeme/turecko/more/8.jpg' %},{% static 'galerie/zeme/turecko/more/9.jpg' %},{% static 'galerie/zeme/turecko/more/10.jpg' %}"
+                 data-title="Moře"
+                 data-desc="Krásná pobřeží, pláže a tyrkysové moře."
+                 onclick="openLightbox(this)">
+                <div class="card-icon">🌊</div>
+                <div class="card-label">Moře</div>
+            </div>
+
+            <div class="gallery-card"
+                 data-images="{% static 'galerie/zeme/turecko/pamatky/1.jpg' %},{% static 'galerie/zeme/turecko/pamatky/2.jpg' %},{% static 'galerie/zeme/turecko/pamatky/3.jpg' %},{% static 'galerie/zeme/turecko/pamatky/4.jpg' %},{% static 'galerie/zeme/turecko/pamatky/5.jpg' %},{% static 'galerie/zeme/turecko/pamatky/6.jpg' %},{% static 'galerie/zeme/turecko/pamatky/7.jpg' %},{% static 'galerie/zeme/turecko/pamatky/8.jpg' %},{% static 'galerie/zeme/turecko/pamatky/9.jpg' %},{% static 'galerie/zeme/turecko/pamatky/10.jpg' %}"
+                 data-title="Památky"
+                 data-desc="Historické památky a antické skvosty Turecka."
+                 onclick="openLightbox(this)">
+                <div class="card-icon">🏛️</div>
+                <div class="card-label">Památky</div>
+            </div>
+        </div>
+
+        <div style="margin-top: 40px;">
+            <a href="{% url 'domovsky' %}" class="btn-back">← Zpět na hlavní stránku</a>
+        </div>
+
+    </div>
+
+    <!-- Lightbox modální okno -->
+    <div id="lightbox" onclick="closeLightbox(event)">
+        <button id="lightbox-close" onclick="closeLightbox(event)">&times;</button>
+        <div id="lightbox-prev" class="lightbox-nav" onclick="changeImage(-1, event)">&#10094;</div>
+        <div id="lightbox-next" class="lightbox-nav" onclick="changeImage(1, event)">&#10095;</div>
+
+        <img id="lightbox-img" src="" alt="Zvětšená fotografie">
+        <div id="lightbox-caption-title"></div>
+        <div id="lightbox-caption-desc"></div>
+    </div>
+
+    <script>
+        let currentImages = [];
+        let currentIndex = 0;
+
+        function openLightbox(cardElement) {
+            const imagesAttr = cardElement.getAttribute('data-images');
+            currentImages = imagesAttr.split(',');
+            currentIndex = 0;
+
+            const titleText = cardElement.getAttribute('data-title');
+            const descText = cardElement.getAttribute('data-desc');
+
+            document.getElementById('lightbox-caption-title').textContent = titleText;
+            document.getElementById('lightbox-caption-desc').textContent = descText;
+
+            showImage();
+            document.getElementById('lightbox').style.display = 'flex';
+        }
+
+        function showImage() {
+            const lightboxImg = document.getElementById('lightbox-img');
+            const imgSrc = currentImages[currentIndex];
+
+            lightboxImg.onerror = function() {
+                console.error("Chyba při načítání:", imgSrc);
+            };
+
+            lightboxImg.src = imgSrc;
+        }
+
+        function changeImage(direction, event) {
+            event.stopPropagation();
+            currentIndex += direction;
+            if (currentIndex < 0) {
+                currentIndex = currentImages.length - 1;
+            } else if (currentIndex >= currentImages.length) {
+                currentIndex = 0;
+            }
+            showImage();
+        }
+
+        function closeLightbox(event) {
+            if (event.target.id === 'lightbox' || event.target.id === 'lightbox-close') {
+                document.getElementById('lightbox').style.display = 'none';
+            }
+        }
+
+        // Ovládání šipkami na klávesnici (vlevo / vpravo / Esc)
+        document.addEventListener('keydown', function(event) {
+            const lightbox = document.getElementById('lightbox');
+            if (lightbox.style.display === 'flex') {
+                if (event.key === 'Escape') {
+                    lightbox.style.display = 'none';
+                } else if (event.key === 'ArrowLeft') {
+                    currentIndex = (currentIndex - 1 + currentImages.length) % currentImages.length;
+                    showImage();
+                } else if (event.key === 'ArrowRight') {
+                    currentIndex = (currentIndex + 1) % currentImages.length;
+                    showImage();
+                }
+            }
+        });
+    </script>
 
 </body>
 </html>
