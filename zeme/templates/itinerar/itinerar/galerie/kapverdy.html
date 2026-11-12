@@ -19,7 +19,7 @@
             --luxury-gold: #c5a059;
             --luxury-gold-hover: #b08d46;
             --bg-color: #faf9f6;
-            --card-bg: #222222; /* Tmavá luxusní barva pro dlaždice */
+            --card-bg: #222222;
             --card-bg-hover: #2c2c2c;
             --text-main: #333333;
             --border-color: #e2ded5;
@@ -83,14 +83,12 @@
             letter-spacing: 0.5px;
         }
 
-        /* Pevně 4 sloupce – dlaždice vedle sebe */
         .gallery-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 25px;
         }
 
-        /* Styl pro samotnou dlaždici (čistá ikona a text v centru) */
         .gallery-card {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
@@ -112,13 +110,11 @@
             border-color: var(--luxury-gold);
         }
 
-        /* Velká grafická ikona v centru dlaždice */
         .card-icon {
             font-size: 3em;
             margin-bottom: 8px;
         }
 
-        /* Název v dlaždici */
         .card-label {
             font-family: 'Playfair Display', serif;
             color: #ffffff;
@@ -129,7 +125,6 @@
             padding: 0 10px;
         }
 
-        /* Lightbox (modální okno pro detailní náhled fotky) */
         #lightbox {
             display: none;
             position: fixed;
@@ -183,6 +178,30 @@
             color: #fff;
         }
 
+        /* Styly pro šipky na listování */
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(26, 26, 26, 0.6);
+            color: var(--luxury-gold);
+            border: 2px solid var(--luxury-gold);
+            font-size: 2.5em;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.3s;
+            user-select: none;
+        }
+
+        .lightbox-nav:hover {
+            background: var(--luxury-gold);
+            color: #1a1a1a;
+        }
+
+        #lightbox-prev { left: 40px; }
+        #lightbox-next { right: 40px; }
+
         .btn-back {
             display: inline-block;
             padding: 12px 22px;
@@ -200,7 +219,6 @@
             color: #ffffff;
         }
 
-        /* Responzivita pro menší obrazovky */
         @media (max-width: 900px) {
             .gallery-grid {
                 grid-template-columns: repeat(2, 1fr);
@@ -222,49 +240,74 @@
 
     <div class="container">
 
-        <!-- Tlačítko zpět na detail země -->
         <div class="top-nav">
             <a href="{% url 'detail_zeme' 'kapverdy' %}" class="btn-back">← Zpět na detail země</a>
         </div>
 
-        <!-- ================= 1. SANTA MARIA ================= -->
         <h2>Santa Maria</h2>
         <div class="gallery-grid">
-            <div class="gallery-card" onclick="openLightbox('{% static 'galerie/itinerar/kapverdy/santa maria/foto1.jpg' %}', 'Santa Maria', 'Bílé pláže, pobřeží a atmosféra letoviska.')">
+            <!-- Příklad pro složku santamaria, kde vyjmenujeme víc fotek oddělených čárkou -->
+            <div class="gallery-card"
+                 data-images="{% static 'galerie/itinerar/kapverdy/santamaria/1.jpg' %},{% static 'galerie/itinerar/kapverdy/santamaria/2.jpg' %},{% static 'galerie/itinerar/kapverdy/santamaria/3.jpg' %},{% static 'galerie/itinerar/kapverdy/santamaria/4.jpg' %},{% static 'galerie/itinerar/kapverdy/santamaria/5.jpg' %},{% static 'galerie/itinerar/kapverdy/santamaria/6.jpg' %},{% static 'galerie/itinerar/kapverdy/santamaria/7.jpg' %},{% static 'galerie/itinerar/kapverdy/santamaria/8.jpg' %},{% static 'galerie/itinerar/kapverdy/santamaria/9.jpg' %},{% static 'galerie/itinerar/kapverdy/santamaria/10.jpg' %},{% static 'galerie/itinerar/kapverdy/santamaria/11.jpg' %},{% static 'galerie/itinerar/kapverdy/santamaria/molo.jpg' %},{% static 'galerie/itinerar/kapverdy/santamaria/promenada.jpg' %}"
+                 data-title="Santa Maria"
+                 data-desc="Bílé pláže, pobřeží a atmosféra letoviska."
+                 onclick="openLightbox(this)">
                 <div class="card-icon">🏖️</div>
                 <div class="card-label">Santa Maria</div>
             </div>
         </div>
 
-        <!-- ================= 2. LODNÍ VÝLET ================= -->
         <h2>Lodní výlet</h2>
         <div class="gallery-grid">
-            <div class="gallery-card" onclick="openLightbox('{% static 'galerie/itinerar/kapverdy/lodnivylet/foto1.jpg' %}', 'Lodní výlet a katamarány', 'Zážitky na vlnách tyrkysového oceánu.')">
+            <div class="gallery-card"
+                 data-images="{% static 'galerie/itinerar/kapverdy/lodnivylet/1.jpg' %},{% static 'galerie/itinerar/kapverdy/lodnivylet/2.jpg' %},{% static 'galerie/itinerar/kapverdy/lodnivylet/lvihora.jpg' %},{% static 'galerie/itinerar/kapverdy/lodnivylet/palmeira.jpg' %},{% static 'galerie/itinerar/kapverdy/lodnivylet/pristav.jpg' %},{% static 'galerie/itinerar/kapverdy/lodnivylet/suvenyr.jpg' %}"
+                 data-title="Lodní výlet a katamarány"
+                 data-desc="Zážitky na vlnách tyrkysového oceánu."
+                 onclick="openLightbox(this)">
                 <div class="card-icon">⛵</div>
                 <div class="card-label">Lodní výlet</div>
             </div>
         </div>
 
-        <!-- ================= 3. CELODENNÍ VÝLET ================= -->
         <h2>Celodenní výlet</h2>
         <div class="gallery-grid">
-            <div class="gallery-card" onclick="openLightbox('{% static 'galerie/itinerar/kapverdy/vylet/zralok/foto1.jpg' %}', 'Žraločí zátoka', 'Bezpečné pozorování malých žraloků v mělké vodě.')">
-                <div class="card-icon">🦈</div>
-                <div class="card-label">Žraločí zátoka</div>
+            <div class="gallery-card"
+                 data-images="{% static 'galerie/itinerar/kapverdy/vylet/obecne/1.jpg' %},{% static 'galerie/itinerar/kapverdy/vylet/obecne/2.jpg' %},{% static 'galerie/itinerar/kapverdy/vylet/obecne/3.jpg' %},{% static 'galerie/itinerar/kapverdy/vylet/obecne/fatamorgana.jpg' %},{% static 'galerie/itinerar/kapverdy/vylet/obecne/lod.jpg' %},{% static 'galerie/itinerar/kapverdy/vylet/obecne/sopka.jpg' %}"
+                 data-title="Obecné z výletu"
+                 data-desc="Záżejry z cest a atmosféra výletů."
+                 onclick="openLightbox(this)">
+                <div class="card-icon">📸</div>
+                <div class="card-label">Obecné</div>
             </div>
 
-            <div class="gallery-card" onclick="openLightbox('{% static 'galerie/itinerar/kapverdy/vylet/oko/foto1.jpg' %}', 'Modré oko', 'Přírodní lávová jeskyně a zářivě modrá voda.')">
+            <div class="gallery-card"
+                 data-images="{% static 'galerie/itinerar/kapverdy/vylet/oko/oko.jpg' %},{% static 'galerie/itinerar/kapverdy/vylet/oko/oko2.jpg' %}"
+                 data-title="Modré oko"
+                 data-desc="Přírodní lávová jeskyně a zářivě modrá voda."
+                 onclick="openLightbox(this)">
                 <div class="card-icon">👁️</div>
                 <div class="card-label">Modré oko</div>
             </div>
 
-            <div class="gallery-card" onclick="openLightbox('{% static 'galerie/itinerar/kapverdy/vylet/sul/foto2.jpg' %}', 'Solný důl a jezero', 'Malebné scenérie solného jezera a okolí.')">
+            <div class="gallery-card"
+                 data-images="{% static 'galerie/itinerar/kapverdy/vylet/sul/sul.jpg' %},{% static 'galerie/itinerar/kapverdy/vylet/sul/sul2.jpg' %},{% static 'galerie/itinerar/kapverdy/vylet/sul/sul3.jpg' %}"
+                 data-title="Solný důl a jezero"
+                 data-desc="Malebné scenérie solného jezera a okolí."
+                 onclick="openLightbox(this)">
                 <div class="card-icon">🌊</div>
                 <div class="card-label">Solný důl a jezero</div>
             </div>
+
+            <div class="gallery-card"
+                 data-images="{% static 'galerie/itinerar/kapverdy/vylet/zralok/zralok.jpg' %},{% static 'galerie/itinerar/kapverdy/vylet/zralok/zralok2.jpg' %},{% static 'galerie/itinerar/kapverdy/vylet/zralok/zralok3.jpg' %}"
+                 data-title="Žraločí zátoka"
+                 data-desc="Bezpečné pozorování malých žraloků v mělké vodě."
+                 onclick="openLightbox(this)">
+                <div class="card-icon">🦈</div>
+                <div class="card-label">Žraločí zátoka</div>
+            </div>
         </div>
 
-        <!-- Spodní návratové tlačítko -->
         <div style="margin-top: 40px;">
             <a href="{% url 'domovsky' %}" class="btn-back">← Zpět na hlavní stránku</a>
         </div>
@@ -274,27 +317,76 @@
     <!-- Lightbox modální okno -->
     <div id="lightbox" onclick="closeLightbox(event)">
         <button id="lightbox-close" onclick="closeLightbox(event)">&times;</button>
+        <div id="lightbox-prev" class="lightbox-nav" onclick="changeImage(-1, event)">&#10094;</div>
+        <div id="lightbox-next" class="lightbox-nav" onclick="changeImage(1, event)">&#10095;</div>
+
         <img id="lightbox-img" src="" alt="Zvětšená fotografie">
         <div id="lightbox-caption-title"></div>
         <div id="lightbox-caption-desc"></div>
     </div>
 
     <script>
-        function openLightbox(imgSrc, titleText, descText) {
-            const lightbox = document.getElementById('lightbox');
-            const lightboxImg = document.getElementById('lightbox-img');
-            const lightboxTitle = document.getElementById('lightbox-caption-title');
-            const lightboxDesc = document.getElementById('lightbox-caption-desc');
+        let currentImages = [];
+        let currentIndex = 0;
 
-            lightbox.style.display = 'flex';
+        function openLightbox(cardElement) {
+            const imagesAttr = cardElement.getAttribute('data-images');
+            currentImages = imagesAttr.split(',');
+            currentIndex = 0;
+
+            const titleText = cardElement.getAttribute('data-title');
+            const descText = cardElement.getAttribute('data-desc');
+
+            document.getElementById('lightbox-caption-title').textContent = titleText;
+            document.getElementById('lightbox-caption-desc').textContent = descText;
+
+            showImage();
+            document.getElementById('lightbox').style.display = 'flex';
+        }
+
+        function showImage() {
+            const lightboxImg = document.getElementById('lightbox-img');
+            const imgSrc = currentImages[currentIndex];
+
+            lightboxImg.onerror = function() {
+                console.error("Chyba při načítání:", imgSrc);
+            };
+
             lightboxImg.src = imgSrc;
-            lightboxTitle.textContent = titleText;
-            lightboxDesc.textContent = descText;
+        }
+
+        function changeImage(direction, event) {
+            event.stopPropagation();
+            currentIndex += direction;
+            if (currentIndex < 0) {
+                currentIndex = currentImages.length - 1;
+            } else if (currentIndex >= currentImages.length) {
+                currentIndex = 0;
+            }
+            showImage();
         }
 
         function closeLightbox(event) {
-            document.getElementById('lightbox').style.display = 'none';
+            if (event.target.id === 'lightbox' || event.target.id === 'lightbox-close') {
+                document.getElementById('lightbox').style.display = 'none';
+            }
         }
+
+        // Ovládání šipkami na klávesnici (vlevo / vpravo / Esc)
+        document.addEventListener('keydown', function(event) {
+            const lightbox = document.getElementById('lightbox');
+            if (lightbox.style.display === 'flex') {
+                if (event.key === 'Escape') {
+                    lightbox.style.display = 'none';
+                } else if (event.key === 'ArrowLeft') {
+                    currentIndex = (currentIndex - 1 + currentImages.length) % currentImages.length;
+                    showImage();
+                } else if (event.key === 'ArrowRight') {
+                    currentIndex = (currentIndex + 1) % currentImages.length;
+                    showImage();
+                }
+            }
+        });
     </script>
 
 </body>

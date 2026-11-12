@@ -19,7 +19,7 @@
             --luxury-gold: #c5a059;
             --luxury-gold-hover: #b08d46;
             --bg-color: #faf9f6;
-            --card-bg: #222222; /* Tmavá luxusní barva pro dlaždice */
+            --card-bg: #222222;
             --card-bg-hover: #2c2c2c;
             --text-main: #333333;
             --border-color: #e2ded5;
@@ -83,14 +83,12 @@
             letter-spacing: 0.5px;
         }
 
-        /* Pevně 4 sloupce – dlaždice vedle sebe */
         .gallery-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 25px;
         }
 
-        /* Styl pro samotnou dlaždici (čistá ikona a text v centru) */
         .gallery-card {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
@@ -112,13 +110,11 @@
             border-color: var(--luxury-gold);
         }
 
-        /* Velká grafická ikona v centru dlaždice */
         .card-icon {
             font-size: 3em;
             margin-bottom: 8px;
         }
 
-        /* Název v dlaždici */
         .card-label {
             font-family: 'Playfair Display', serif;
             color: #ffffff;
@@ -129,7 +125,6 @@
             padding: 0 10px;
         }
 
-        /* Lightbox (modální okno pro detailní náhled fotky) */
         #lightbox {
             display: none;
             position: fixed;
@@ -183,6 +178,30 @@
             color: #fff;
         }
 
+        /* Styly pro šipky na listování */
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(26, 26, 26, 0.6);
+            color: var(--luxury-gold);
+            border: 2px solid var(--luxury-gold);
+            font-size: 2.5em;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.3s;
+            user-select: none;
+        }
+
+        .lightbox-nav:hover {
+            background: var(--luxury-gold);
+            color: #1a1a1a;
+        }
+
+        #lightbox-prev { left: 40px; }
+        #lightbox-next { right: 40px; }
+
         .btn-back {
             display: inline-block;
             padding: 12px 22px;
@@ -200,7 +219,6 @@
             color: #ffffff;
         }
 
-        /* Responzivita pro menší obrazovky */
         @media (max-width: 900px) {
             .gallery-grid {
                 grid-template-columns: repeat(2, 1fr);
@@ -217,60 +235,86 @@
 
     <header>
         <h1>🇪🇬 Fotogalerie - Egypt</h1>
-        <p>Prohlédněte si snímky z Hurghady, podmořského akvária a historických památek v Luxoru</p>
+        <p>Prohlédněte si snímky z Hurghady, Akvária, Luxoru a historických památek</p>
     </header>
 
     <div class="container">
 
-        <!-- Tlačítko zpět na detail země -->
         <div class="top-nav">
             <a href="{% url 'detail_zeme' 'egypt' %}" class="btn-back">← Zpět na detail země</a>
         </div>
 
-        <!-- ================= HURGHADA & AKVÁRIUM ================= -->
+        <!-- SEKCE: OBECNÉ / HURGADA & AKVÁRIUM -->
         <h2>Hurghada a okolí</h2>
         <div class="gallery-grid">
-            <div class="gallery-card" onclick="openLightbox('{% static 'galerie/itinerar/egypt/hurgada/foto1.jpg' %}', 'Hurghada', 'Pobřeží, pláže a atmosféra známého letoviska.')">
-                <div class="card-icon">🏖️</div>
-                <div class="card-label">Hurghada</div>
-            </div>
-
-            <div class="gallery-card" onclick="openLightbox('{% static 'galerie/itinerar/egypt/aquarium/foto1.jpg' %}', 'Grand Aquarium', 'Prosklený podmořský tunel a život v Rudém moři.')">
+            <div class="gallery-card"
+                 data-images="{% static 'galerie/itinerar/egypt/aquarium/1.jpg' %},{% static 'galerie/itinerar/egypt/aquarium/2.jpg' %},{% static 'galerie/itinerar/egypt/aquarium/3.jpg' %},{% static 'galerie/itinerar/egypt/aquarium/4.jpg' %},{% static 'galerie/itinerar/egypt/aquarium/5.jpg' %},{% static 'galerie/itinerar/egypt/aquarium/6.jpg' %},{% static 'galerie/itinerar/egypt/aquarium/7.jpg' %}"
+                 data-title="Grand Aquarium"
+                 data-desc="Podmořský svět a mořská fauna v Hurghadě."
+                 onclick="openLightbox(this)">
                 <div class="card-icon">🐠</div>
                 <div class="card-label">Akvárium</div>
             </div>
+
+            <div class="gallery-card"
+                 data-images="{% static 'galerie/itinerar/egypt/hurgada/1.jpg' %},{% static 'galerie/itinerar/egypt/hurgada/2.jpg' %},{% static 'galerie/itinerar/egypt/hurgada/3.jpg' %},{% static 'galerie/itinerar/egypt/hurgada/4.jpg' %},{% static 'galerie/itinerar/egypt/hurgada/5.jpg' %},{% static 'galerie/itinerar/egypt/hurgada/6.jpg' %},{% static 'galerie/itinerar/egypt/hurgada/7.jpg' %},{% static 'galerie/itinerar/egypt/hurgada/8.jpg' %}"
+                 data-title="Hurghada"
+                 data-desc="Město, pobřeží a atmosféra letoviska."
+                 onclick="openLightbox(this)">
+                <div class="card-icon">🌴</div>
+                <div class="card-label">Hurghada</div>
+            </div>
         </div>
 
-        <!-- ================= LUXOR A PAMÁTKY ================= -->
-        <h2>Luxor a starověké památky</h2>
+        <!-- SEKCE: LUXOR -->
+        <h2>Luxor</h2>
         <div class="gallery-grid">
-            <div class="gallery-card" onclick="openLightbox('{% static 'galerie/itinerar/egypt/luxor/karnak/foto1.jpg' %}', 'Chrám Karnak', 'Monumentální sloupořadí a chrámový komplex v Luxoru.')">
+            <div class="gallery-card"
+                 data-images="{% static 'galerie/itinerar/egypt/Luxor/hatsepsut/1.jpg' %},{% static 'galerie/itinerar/egypt/Luxor/hatsepsut/2.jpg' %},{% static 'galerie/itinerar/egypt/Luxor/hatsepsut/3.jpg' %},{% static 'galerie/itinerar/egypt/Luxor/hatsepsut/4.jpg' %},{% static 'galerie/itinerar/egypt/Luxor/hatsepsut/5.jpg' %},{% static 'galerie/itinerar/egypt/Luxor/hatsepsut/6.jpg' %}"
+                 data-title="Chrám královny Hatšepsut"
+                 data-desc="Monumentální terasovitý zádušní chrám v Dér el-Bahri."
+                 onclick="openLightbox(this)">
                 <div class="card-icon">🏛️</div>
-                <div class="card-label">Chrám Karnak</div>
+                <div class="card-label">Hatšepsut</div>
             </div>
 
-            <div class="gallery-card" onclick="openLightbox('{% static 'galerie/itinerar/egypt/luxor/udolikralu/foto1.jpg' %}', 'Údolí králů', 'Skalní hrobky faraonů na západním břehu Nilu.')">
-                <div class="card-icon">📜</div>
-                <div class="card-label">Údolí králů</div>
+            <div class="gallery-card"
+                 data-images="{% static 'galerie/itinerar/egypt/Luxor/karnak/1.jpg' %},{% static 'galerie/itinerar/egypt/Luxor/karnak/2.jpg' %},{% static 'galerie/itinerar/egypt/Luxor/karnak/3.jpg' %},{% static 'galerie/itinerar/egypt/Luxor/karnak/4.jpg' %},{% static 'galerie/itinerar/egypt/Luxor/karnak/5.jpg' %},{% static 'galerie/itinerar/egypt/Luxor/karnak/6.jpg' %},{% static 'galerie/itinerar/egypt/Luxor/karnak/7.jpg' %},{% static 'galerie/itinerar/egypt/Luxor/karnak/8.jpg' %},{% static 'galerie/itinerar/egypt/Luxor/karnak/9.jpg' %},{% static 'galerie/itinerar/egypt/Luxor/karnak/10.jpg' %}"
+                 data-title="Karnak"
+                 data-desc="Obrovský chrámový komplex zasvěcený bohu Amonovi."
+                 onclick="openLightbox(this)">
+                <div class="card-icon">🏺</div>
+                <div class="card-label">Karnak</div>
             </div>
 
-            <div class="gallery-card" onclick="openLightbox('{% static 'galerie/itinerar/egypt/luxor/hatsepsut/foto1.jpg' %}', 'Chrám královny Hatšepsut', 'Fascinující terasovitý chrám vytesaný do skály.')">
-                <div class="card-icon">👑</div>
-                <div class="card-label">Chrám Hatšepsut</div>
-            </div>
-
-            <div class="gallery-card" onclick="openLightbox('{% static 'galerie/itinerar/egypt/luxor/memnonokolosy/foto1.jpg' %}', 'Memnonovy kolosy', 'Dvě obří kamenné sochy střežící zádušní chrám.')">
+            <div class="gallery-card"
+                 data-images="{% static 'galerie/itinerar/egypt/Luxor/memnonkolosy/1.jpg' %},{% static 'galerie/itinerar/egypt/Luxor/memnonkolosy/2.jpg' %},{% static 'galerie/itinerar/egypt/Luxor/memnonkolosy/3.jpg' %},{% static 'galerie/itinerar/egypt/Luxor/memnonkolosy/4.jpg' %},{% static 'galerie/itinerar/egypt/Luxor/memnonkolosy/5.jpg' %},{% static 'galerie/itinerar/egypt/Luxor/memnonkolosy/6.jpg' %}"
+                 data-title="Memnonovy kolosy"
+                 data-desc="Dvě obří kamenné sochy faraona Amenhotepa III."
+                 onclick="openLightbox(this)">
                 <div class="card-icon">🗿</div>
                 <div class="card-label">Memnonovy kolosy</div>
             </div>
 
-            <div class="gallery-card" onclick="openLightbox('{% static 'galerie/itinerar/egypt/luxor/nil/foto1.jpg' %}', 'Řeka Nil', 'Plavba po bájné řece a zelené oázy podél břehů.')">
-                <div class="card-icon">🌊</div>
-                <div class="card-label">Řeka Nil</div>
+            <div class="gallery-card"
+                 data-images="{% static 'galerie/itinerar/egypt/Luxor/nil/1.jpg' %},{% static 'galerie/itinerar/egypt/Luxor/nil/2.jpg' %},{% static 'galerie/itinerar/egypt/Luxor/nil/3.jpg' %},{% static 'galerie/itinerar/egypt/Luxor/nil/4.jpg' %},{% static 'galerie/itinerar/egypt/Luxor/nil/5.jpg' %},{% static 'galerie/itinerar/egypt/Luxor/nil/6.jpg' %}"
+                 data-title="Plavba po Nilu"
+                 data-desc="Malebné scenérie podél nejdelší řeky světa."
+                 onclick="openLightbox(this)">
+                <div class="card-icon">⛵</div>
+                <div class="card-label">Nil</div>
+            </div>
+
+            <div class="gallery-card"
+                 data-images="{% static 'galerie/itinerar/egypt/Luxor/udolikralu/1.jpg' %},{% static 'galerie/itinerar/egypt/Luxor/udolikralu/2.jpg' %},{% static 'galerie/itinerar/egypt/Luxor/udolikralu/3.jpg' %},{% static 'galerie/itinerar/egypt/Luxor/udolikralu/4.jpg' %},{% static 'galerie/itinerar/egypt/Luxor/udolikralu/5.jpg' %},{% static 'galerie/itinerar/egypt/Luxor/udolikralu/6.jpg' %}"
+                 data-title="Údolí králů"
+                 data-desc="Skalní hrobky starověkých egyptských panovníků."
+                 onclick="openLightbox(this)">
+                <div class="card-icon">👑</div>
+                <div class="card-label">Údolí králů</div>
             </div>
         </div>
 
-        <!-- Spodní návratové tlačítko -->
         <div style="margin-top: 40px;">
             <a href="{% url 'domovsky' %}" class="btn-back">← Zpět na hlavní stránku</a>
         </div>
@@ -280,27 +324,76 @@
     <!-- Lightbox modální okno -->
     <div id="lightbox" onclick="closeLightbox(event)">
         <button id="lightbox-close" onclick="closeLightbox(event)">&times;</button>
+        <div id="lightbox-prev" class="lightbox-nav" onclick="changeImage(-1, event)">&#10094;</div>
+        <div id="lightbox-next" class="lightbox-nav" onclick="changeImage(1, event)">&#10095;</div>
+
         <img id="lightbox-img" src="" alt="Zvětšená fotografie">
         <div id="lightbox-caption-title"></div>
         <div id="lightbox-caption-desc"></div>
     </div>
 
     <script>
-        function openLightbox(imgSrc, titleText, descText) {
-            const lightbox = document.getElementById('lightbox');
-            const lightboxImg = document.getElementById('lightbox-img');
-            const lightboxTitle = document.getElementById('lightbox-caption-title');
-            const lightboxDesc = document.getElementById('lightbox-caption-desc');
+        let currentImages = [];
+        let currentIndex = 0;
 
-            lightbox.style.display = 'flex';
+        function openLightbox(cardElement) {
+            const imagesAttr = cardElement.getAttribute('data-images');
+            currentImages = imagesAttr.split(',');
+            currentIndex = 0;
+
+            const titleText = cardElement.getAttribute('data-title');
+            const descText = cardElement.getAttribute('data-desc');
+
+            document.getElementById('lightbox-caption-title').textContent = titleText;
+            document.getElementById('lightbox-caption-desc').textContent = descText;
+
+            showImage();
+            document.getElementById('lightbox').style.display = 'flex';
+        }
+
+        function showImage() {
+            const lightboxImg = document.getElementById('lightbox-img');
+            const imgSrc = currentImages[currentIndex];
+
+            lightboxImg.onerror = function() {
+                console.error("Chyba při načítání:", imgSrc);
+            };
+
             lightboxImg.src = imgSrc;
-            lightboxTitle.textContent = titleText;
-            lightboxDesc.textContent = descText;
+        }
+
+        function changeImage(direction, event) {
+            event.stopPropagation();
+            currentIndex += direction;
+            if (currentIndex < 0) {
+                currentIndex = currentImages.length - 1;
+            } else if (currentIndex >= currentImages.length) {
+                currentIndex = 0;
+            }
+            showImage();
         }
 
         function closeLightbox(event) {
-            document.getElementById('lightbox').style.display = 'none';
+            if (event.target.id === 'lightbox' || event.target.id === 'lightbox-close') {
+                document.getElementById('lightbox').style.display = 'none';
+            }
         }
+
+        // Ovládání šipkami na klávesnici (vlevo / vpravo / Esc)
+        document.addEventListener('keydown', function(event) {
+            const lightbox = document.getElementById('lightbox');
+            if (lightbox.style.display === 'flex') {
+                if (event.key === 'Escape') {
+                    lightbox.style.display = 'none';
+                } else if (event.key === 'ArrowLeft') {
+                    currentIndex = (currentIndex - 1 + currentImages.length) % currentImages.length;
+                    showImage();
+                } else if (event.key === 'ArrowRight') {
+                    currentIndex = (currentIndex + 1) % currentImages.length;
+                    showImage();
+                }
+            }
+        });
     </script>
 
 </body>

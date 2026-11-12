@@ -19,7 +19,7 @@
             --luxury-gold: #c5a059;
             --luxury-gold-hover: #b08d46;
             --bg-color: #faf9f6;
-            --card-bg: #222222; /* Tmavá luxusní barva pro dlaždice */
+            --card-bg: #222222;
             --card-bg-hover: #2c2c2c;
             --text-main: #333333;
             --border-color: #e2ded5;
@@ -83,14 +83,12 @@
             letter-spacing: 0.5px;
         }
 
-        /* Pevně 4 sloupce – dlaždice vedle sebe */
         .gallery-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 25px;
         }
 
-        /* Styl pro samotnou dlaždici (čistá ikona a text v centru) */
         .gallery-card {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
@@ -112,13 +110,11 @@
             border-color: var(--luxury-gold);
         }
 
-        /* Velká grafická ikona v centru dlaždice */
         .card-icon {
             font-size: 3em;
             margin-bottom: 8px;
         }
 
-        /* Název v dlaždici */
         .card-label {
             font-family: 'Playfair Display', serif;
             color: #ffffff;
@@ -129,7 +125,6 @@
             padding: 0 10px;
         }
 
-        /* Lightbox (modální okno pro detailní náhled fotky) */
         #lightbox {
             display: none;
             position: fixed;
@@ -183,6 +178,30 @@
             color: #fff;
         }
 
+        /* Styly pro šipky na listování */
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(26, 26, 26, 0.6);
+            color: var(--luxury-gold);
+            border: 2px solid var(--luxury-gold);
+            font-size: 2.5em;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.3s;
+            user-select: none;
+        }
+
+        .lightbox-nav:hover {
+            background: var(--luxury-gold);
+            color: #1a1a1a;
+        }
+
+        #lightbox-prev { left: 40px; }
+        #lightbox-next { right: 40px; }
+
         .btn-back {
             display: inline-block;
             padding: 12px 22px;
@@ -200,7 +219,6 @@
             color: #ffffff;
         }
 
-        /* Responzivita pro menší obrazovky */
         @media (max-width: 900px) {
             .gallery-grid {
                 grid-template-columns: repeat(2, 1fr);
@@ -217,99 +235,162 @@
 
     <header>
         <h1>🇹🇷 Fotogalerie - Turecko</h1>
-        <p>Prohlédněte si snímky z Istanbulu, Bodrumu, Antalye a jejich výletů</p>
+        <p>Prohlédněte si snímky z Antalye, Bodrumu, Istanbulu a místních památek</p>
     </header>
 
     <div class="container">
 
-        <!-- Tlačítko zpět na detail země -->
         <div class="top-nav">
             <a href="{% url 'detail_zeme' 'turecko' %}" class="btn-back">← Zpět na detail země</a>
         </div>
 
-        <!-- ================= ISTANBUL ================= -->
-        <h2>Istanbul</h2>
+        <!-- SEKCE: ANTALYA -->
+        <h2>Antalya</h2>
         <div class="gallery-grid">
-            <div class="gallery-card" onclick="openLightbox('{% static 'galerie/itinerar/turecko/istanbul/modnamesita/foto1.jpg' %}', 'Modrá mešita', 'Impozantní interiéry a modré dlaždice jedné z dominant Istanbulu.')">
-                <div class="card-icon">🕌</div>
-                <div class="card-label">Modrá mešita</div>
+            <div class="gallery-card"
+                 data-images="{% static 'galerie/itinerar/turecko/antalya/greencanyon/1.jpg' %},{% static 'galerie/itinerar/turecko/antalya/greencanyon/2.jpg' %},{% static 'galerie/itinerar/turecko/antalya/greencanyon/3.jpg' %},{% static 'galerie/itinerar/turecko/antalya/greencanyon/4.jpg' %},{% static 'galerie/itinerar/turecko/antalya/greencanyon/5.jpg' %},{% static 'galerie/itinerar/turecko/antalya/greencanyon/6.jpg' %},{% static 'galerie/itinerar/turecko/antalya/greencanyon/7.jpg' %},{% static 'galerie/itinerar/turecko/antalya/greencanyon/8.jpg' %}"
+                 data-title="Green Canyon"
+                 data-desc="nádherná příroda a zelený kaňon v Antalyi."
+                 onclick="openLightbox(this)">
+                <div class="card-icon">🌲</div>
+                <div class="card-label">Green Canyon</div>
             </div>
 
-            <div class="gallery-card" onclick="openLightbox('{% static 'galerie/itinerar/turecko/istanbul/topkapi/foto1.jpg' %}', 'Palác Topkapi', 'Luxusní sídlo osmanských sultánů s výhledem na Bospor.')">
-                <div class="card-icon">🏰</div>
-                <div class="card-label">Palác Topkapi</div>
-            </div>
-
-            <div class="gallery-card" onclick="openLightbox('{% static 'galerie/itinerar/turecko/istanbul/novamesita/foto1.jpg' %}', 'Nová mešita', 'Krásná mešita na břehu Zlatého rohu.')">
-                <div class="card-icon">🌙</div>
-                <div class="card-label">Nová mešita</div>
-            </div>
-
-            <div class="gallery-card" onclick="openLightbox('{% static 'galerie/itinerar/turecko/istanbul/bazar/foto1.jpg' %}', 'Velký bazar', 'Pestrý svět plný koření, koberců a tradičních řemesel.')">
-                <div class="card-icon">🛍️</div>
-                <div class="card-label">Bazar</div>
-            </div>
-
-            <div class="gallery-card" onclick="openLightbox('{% static 'galerie/itinerar/turecko/istanbul/taksim/foto1.jpg' %}', 'Náměstí Taksim', 'Tepající srdce moderního Istanbulu.')">
-                <div class="card-icon">🏙️</div>
-                <div class="card-label">Taksim</div>
-            </div>
-
-            <div class="gallery-card" onclick="openLightbox('{% static 'galerie/itinerar/turecko/istanbul/obecne/foto1.jpg' %}', 'Istanbul - atmosféra', 'Pohledy na ulice a kouzlo celého města.')">
-                <div class="card-icon">📷</div>
-                <div class="card-label">Obecné</div>
-            </div>
-        </div>
-
-        <!-- ================= BODRUM ================= -->
-        <h2>Bodrum</h2>
-        <div class="gallery-grid">
-            <div class="gallery-card" onclick="openLightbox('{% static 'galerie/itinerar/turecko/bodrum/mesto/foto1.jpg' %}', 'Město Bodrum', 'Bělostné domy a křivolaké uličky egejského pobřeží.')">
-                <div class="card-icon">🏛️</div>
-                <div class="card-label">Město</div>
-            </div>
-
-            <div class="gallery-card" onclick="openLightbox('{% static 'galerie/itinerar/turecko/bodrum/hrad/foto1.jpg' %}', 'Hrad svatého Petra', 'Impozantní pevnost tyčící se nad přístavem.')">
-                <div class="card-icon">🏰</div>
-                <div class="card-label">Hrad</div>
-            </div>
-
-            <div class="gallery-card" onclick="openLightbox('{% static 'galerie/itinerar/turecko/bodrum/efes/foto1.jpg' %}', 'Antický Efes', 'Fascinující pozůstatky antického města a Celsova knihovna.')">
-                <div class="card-icon">📜</div>
-                <div class="card-label">Efes</div>
-            </div>
-
-            <div class="gallery-card" onclick="openLightbox('{% static 'galerie/itinerar/turecko/bodrum/lodnivylet/foto1.jpg' %}', 'Lodní výlet', 'Plavba podél egejského pobřeží a křišťálové zátoky.')">
+            <div class="gallery-card"
+                 data-images="{% static 'galerie/itinerar/turecko/antalya/lodnivylet/1.jpg' %},{% static 'galerie/itinerar/turecko/antalya/lodnivylet/2.jpg' %},{% static 'galerie/itinerar/turecko/antalya/lodnivylet/3.jpg' %},{% static 'galerie/itinerar/turecko/antalya/lodnivylet/lod.jpg' %},{% static 'galerie/itinerar/turecko/antalya/lodnivylet/lod2.jpg' %},{% static 'galerie/itinerar/turecko/antalya/lodnivylet/lod3.jpg' %}"
+                 data-title="Lodní výlet - Antalya"
+                 data-desc="Plavba podél pobřeží a výhledy z moře."
+                 onclick="openLightbox(this)">
                 <div class="card-icon">⛵</div>
                 <div class="card-label">Lodní výlet</div>
             </div>
 
-            <div class="gallery-card" onclick="openLightbox('{% static 'galerie/itinerar/turecko/bodrum/jepp/foto1.jpg' %}', 'Jeep Safari', 'Dobrodružná jízda venkovem a tureckou přírodou.')">
-                <div class="card-icon">🚜</div>
-                <div class="card-label">Jeep Safari</div>
+            <div class="gallery-card"
+                 data-images="{% static 'galerie/itinerar/turecko/antalya/mesto/1.jpeg' %},{% static 'galerie/itinerar/turecko/antalya/mesto/cervenavez.jpg' %},{% static 'galerie/itinerar/turecko/antalya/mesto/cervenavez2.jpg' %},{% static 'galerie/itinerar/turecko/antalya/mesto/hrad.jpg' %},{% static 'galerie/itinerar/turecko/antalya/mesto/hrad2.jpg' %}"
+                 data-title="Město a památky"
+                 data-desc="Historické centrum, Červená věž a hrad."
+                 onclick="openLightbox(this)">
+                <div class="card-icon">🏰</div>
+                <div class="card-label">Město</div>
             </div>
         </div>
 
-        <!-- ================= ANTALYA ================= -->
-        <h2>Antalya</h2>
+        <!-- SEKCE: BODRUM -->
+        <h2>Bodrum</h2>
         <div class="gallery-grid">
-            <div class="gallery-card" onclick="openLightbox('{% static 'galerie/itinerar/turecko/antalya/mesto/foto1.jpg' %}', 'Město Antalya', 'Historická čtvrť Kaleiçi a starý přístav.')">
-                <div class="card-icon">🏙️</div>
-                <div class="card-label">Město</div>
+            <div class="gallery-card"
+                 data-images="{% static 'galerie/itinerar/turecko/bodrum/efes/dumpannymarie/1.jpg' %},{% static 'galerie/itinerar/turecko/bodrum/efes/dumpannymarie/2.jpg' %},{% static 'galerie/itinerar/turecko/bodrum/efes/dumpannymarie/3.jpg' %},{% static 'galerie/itinerar/turecko/bodrum/efes/dumpannymarie/4.jpg' %},{% static 'galerie/itinerar/turecko/bodrum/efes/dumpannymarie/5.jpg' %}"
+                 data-title="Dům Panny Marie"
+                 data-desc="Poutní místo v historickém Efezu."
+                 onclick="openLightbox(this)">
+                <div class="card-icon">🕊️</div>
+                <div class="card-label">Dům Panny Marie</div>
             </div>
 
-            <div class="gallery-card" onclick="openLightbox('{% static 'galerie/itinerar/turecko/antalya/lodnivylet/foto1.jpg' %}', 'Lodní výlet Antalya', 'Plavba podél útesů a vodopádů v Antalyi.')">
-                <div class="card-icon">🏴‍☠️</div>
+            <div class="gallery-card"
+                 data-images="{% static 'galerie/itinerar/turecko/bodrum/efes/1.jpg' %},{% static 'galerie/itinerar/turecko/bodrum/efes/2.jpg' %},{% static 'galerie/itinerar/turecko/bodrum/efes/3.jpg' %},{% static 'galerie/itinerar/turecko/bodrum/efes/4.jpg' %},{% static 'galerie/itinerar/turecko/bodrum/efes/5.jpg' %},{% static 'galerie/itinerar/turecko/bodrum/efes/6.jpg' %}"
+                 data-title="Efes"
+                 data-desc="Antické město a jeho archeologické skvosty."
+                 onclick="openLightbox(this)">
+                <div class="card-icon">🏛️</div>
+                <div class="card-label">Efes</div>
+            </div>
+
+            <div class="gallery-card"
+                 data-images="{% static 'galerie/itinerar/turecko/bodrum/hrad/1.jpg' %},{% static 'galerie/itinerar/turecko/bodrum/hrad/2.jpg' %},{% static 'galerie/itinerar/turecko/bodrum/hrad/3.jpg' %},{% static 'galerie/itinerar/turecko/bodrum/hrad/4.jpg' %},{% static 'galerie/itinerar/turecko/bodrum/hrad/5.jpg' %}"
+                 data-title="Hrad v Bodrumu"
+                 data-desc="Impozantní hrad tyčící se nad přístavem."
+                 onclick="openLightbox(this)">
+                <div class="card-icon">🛡️</div>
+                <div class="card-label">Hrad</div>
+            </div>
+
+            <div class="gallery-card"
+                 data-images="{% static 'galerie/itinerar/turecko/bodrum/jepp/1.jpg' %},{% static 'galerie/itinerar/turecko/bodrum/jepp/2.jpg' %},{% static 'galerie/itinerar/turecko/bodrum/jepp/3.jpg' %},{% static 'galerie/itinerar/turecko/bodrum/jepp/4.jpg' %},{% static 'galerie/itinerar/turecko/bodrum/jepp/5.jpg' %},{% static 'galerie/itinerar/turecko/bodrum/jepp/6.jpg' %}"
+                 data-title="Jeep Safari"
+                 data-desc="Dobrodružná jízda krajinou v okolí Bodrumu."
+                 onclick="openLightbox(this)">
+                <div class="card-icon">🚙</div>
+                <div class="card-label">Jeep Safari</div>
+            </div>
+
+            <div class="gallery-card"
+                 data-images="{% static 'galerie/itinerar/turecko/bodrum/lodnivylet/1.jpg' %},{% static 'galerie/itinerar/turecko/bodrum/lodnivylet/2.jpg' %},{% static 'galerie/itinerar/turecko/bodrum/lodnivylet/3.jpg' %},{% static 'galerie/itinerar/turecko/bodrum/lodnivylet/4.jpg' %},{% static 'galerie/itinerar/turecko/bodrum/lodnivylet/5.jpg' %}"
+                 data-title="Lodní výlet - Bodrum"
+                 data-desc="Plavba podél egejského pobřeží."
+                 onclick="openLightbox(this)">
+                <div class="card-icon">🛥️</div>
                 <div class="card-label">Lodní výlet</div>
             </div>
 
-            <div class="gallery-card" onclick="openLightbox('{% static 'galerie/itinerar/turecko/antalya/greencanyon/foto1.jpg' %}', 'Green Canyon', 'Nádherná zelená přehrada obklopená pohořím Taurus.')">
-                <div class="card-icon">🌲</div>
-                <div class="card-label">Green Canyon</div>
+            <div class="gallery-card"
+                 data-images="{% static 'galerie/itinerar/turecko/bodrum/mesto/1.jpg' %},{% static 'galerie/itinerar/turecko/bodrum/mesto/2.jpg' %},{% static 'galerie/itinerar/turecko/bodrum/mesto/3.jpg' %},{% static 'galerie/itinerar/turecko/bodrum/mesto/4.jpg' %},{% static 'galerie/itinerar/turecko/bodrum/mesto/bazar.jpg' %},{% static 'galerie/itinerar/turecko/bodrum/mesto/marina.jpg' %},{% static 'galerie/itinerar/turecko/bodrum/mesto/marina2.jpg' %},{% static 'galerie/itinerar/turecko/bodrum/mesto/mlyn.jpg' %},{% static 'galerie/itinerar/turecko/bodrum/mesto/promenade.jpg' %}"
+                 data-title="Město Bodrum"
+                 data-desc="Uličky, bazar, marina a větrné mlýny."
+                 onclick="openLightbox(this)">
+                <div class="card-icon">🌆</div>
+                <div class="card-label">Město</div>
             </div>
         </div>
 
-        <!-- Spodní návratové tlačítko -->
+        <!-- SEKCE: ISTANBUL -->
+        <h2>Istanbul</h2>
+        <div class="gallery-grid">
+            <div class="gallery-card"
+                 data-images="{% static 'galerie/itinerar/turecko/istanbul/bazar/1.jpg' %},{% static 'galerie/itinerar/turecko/istanbul/bazar/2.jpg' %},{% static 'galerie/itinerar/turecko/istanbul/bazar/3.jpg' %},{% static 'galerie/itinerar/turecko/istanbul/bazar/4.jpg' %},{% static 'galerie/itinerar/turecko/istanbul/bazar/5.jpg' %},{% static 'galerie/itinerar/turecko/istanbul/bazar/6.jpg' %},{% static 'galerie/itinerar/turecko/istanbul/bazar/7.jpg' %},{% static 'galerie/itinerar/turecko/istanbul/bazar/8.jpg' %},{% static 'galerie/itinerar/turecko/istanbul/bazar/9.jpg' %},{% static 'galerie/itinerar/turecko/istanbul/bazar/bazar.jpg' %}"
+                 data-title="Bazar v Istanbulu"
+                 data-desc="Tržiště plné vůní, barev a koření."
+                 onclick="openLightbox(this)">
+                <div class="card-icon">🛍️</div>
+                <div class="card-label">Bazar</div>
+            </div>
+
+            <div class="gallery-card"
+                 data-images="{% static 'galerie/itinerar/turecko/istanbul/modnamesita/1.jpg' %},{% static 'galerie/itinerar/turecko/istanbul/modnamesita/2.jpg' %},{% static 'galerie/itinerar/turecko/istanbul/modnamesita/3.jpg' %},{% static 'galerie/itinerar/turecko/istanbul/modnamesita/4.jpg' %},{% static 'galerie/itinerar/turecko/istanbul/modnamesita/5.jpg' %},{% static 'galerie/itinerar/turecko/istanbul/modnamesita/6.jpg' %},{% static 'galerie/itinerar/turecko/istanbul/modnamesita/8.jpg' %},{% static 'galerie/itinerar/turecko/istanbul/modnamesita/modrapiramida.jpg' %}"
+                 data-title="Modrá mešita"
+                 data-desc="Jedna z nejvýznamnějších dominant Istanbulu."
+                 onclick="openLightbox(this)">
+                <div class="card-icon">🕌</div>
+                <div class="card-label">Modrá mešita</div>
+            </div>
+
+            <div class="gallery-card"
+                 data-images="{% static 'galerie/itinerar/turecko/istanbul/novamesita/1.jpg' %},{% static 'galerie/itinerar/turecko/istanbul/novamesita/2.jpg' %},{% static 'galerie/itinerar/turecko/istanbul/novamesita/4.jpg' %},{% static 'galerie/itinerar/turecko/istanbul/novamesita/5.jpg' %},{% static 'galerie/itinerar/turecko/istanbul/novamesita/novamesita.jpg' %}"
+                 data-title="Nová mešita"
+                 data-desc="Impozantní mešita poblíž Galatského mostu."
+                 onclick="openLightbox(this)">
+                <div class="card-icon">🏛️</div>
+                <div class="card-label">Nová mešita</div>
+            </div>
+
+            <div class="gallery-card"
+                 data-images="{% static 'galerie/itinerar/turecko/istanbul/obecne/1.jpg' %},{% static 'galerie/itinerar/turecko/istanbul/obecne/istanbulkart.jpg' %},{% static 'galerie/itinerar/turecko/istanbul/obecne/istanbulkart.png' %},{% static 'galerie/itinerar/turecko/istanbul/obecne/metro.jpg' %},{% static 'galerie/itinerar/turecko/istanbul/obecne/pier.jpg' %},{% static 'galerie/itinerar/turecko/istanbul/obecne/terminal.jpg' %}"
+                 data-title="Obecné a doprava"
+                 data-desc="Záběry z metra, přístavů a cestování po městě."
+                 onclick="openLightbox(this)">
+                <div class="card-icon">🚇</div>
+                <div class="card-label">Obecné</div>
+            </div>
+
+            <div class="gallery-card"
+                 data-images="{% static 'galerie/itinerar/turecko/istanbul/taksim/1.jpg' %},{% static 'galerie/itinerar/turecko/istanbul/taksim/2.jpg' %},{% static 'galerie/itinerar/turecko/istanbul/taksim/3.jpg' %},{% static 'galerie/itinerar/turecko/istanbul/taksim/4.jpg' %},{% static 'galerie/itinerar/turecko/istanbul/taksim/5.jpg' %}"
+                 data-title="Náměstí Taksim"
+                 data-desc="Srdce moderního Istanbulu a známá třída."
+                 onclick="openLightbox(this)">
+                <div class="card-icon">🏙️</div>
+                <div class="card-label">Taksim</div>
+            </div>
+
+            <div class="gallery-card"
+                 data-images="{% static 'galerie/itinerar/turecko/istanbul/topkapi/1.jpg' %},{% static 'galerie/itinerar/turecko/istanbul/topkapi/2.jpg' %},{% static 'galerie/itinerar/turecko/istanbul/topkapi/3.jpg' %},{% static 'galerie/itinerar/turecko/istanbul/topkapi/4.jpg' %},{% static 'galerie/itinerar/turecko/istanbul/topkapi/5.jpg' %},{% static 'galerie/itinerar/turecko/istanbul/topkapi/6.jpg' %},{% static 'galerie/itinerar/turecko/istanbul/topkapi/7.jpg' %},{% static 'galerie/itinerar/turecko/istanbul/topkapi/8.jpg' %},{% static 'galerie/itinerar/turecko/istanbul/topkapi/9.jpg' %},{% static 'galerie/itinerar/turecko/istanbul/topkapi/10.jpg' %}"
+                 data-title="Palác Topkapi"
+                 data-desc="Sídlo osmanských sultánů plné historie."
+                 onclick="openLightbox(this)">
+                <div class="card-icon">👑</div>
+                <div class="card-label">Topkapi</div>
+            </div>
+        </div>
+
         <div style="margin-top: 40px;">
             <a href="{% url 'domovsky' %}" class="btn-back">← Zpět na hlavní stránku</a>
         </div>
@@ -319,27 +400,76 @@
     <!-- Lightbox modální okno -->
     <div id="lightbox" onclick="closeLightbox(event)">
         <button id="lightbox-close" onclick="closeLightbox(event)">&times;</button>
+        <div id="lightbox-prev" class="lightbox-nav" onclick="changeImage(-1, event)">&#10094;</div>
+        <div id="lightbox-next" class="lightbox-nav" onclick="changeImage(1, event)">&#10095;</div>
+
         <img id="lightbox-img" src="" alt="Zvětšená fotografie">
         <div id="lightbox-caption-title"></div>
         <div id="lightbox-caption-desc"></div>
     </div>
 
     <script>
-        function openLightbox(imgSrc, titleText, descText) {
-            const lightbox = document.getElementById('lightbox');
-            const lightboxImg = document.getElementById('lightbox-img');
-            const lightboxTitle = document.getElementById('lightbox-caption-title');
-            const lightboxDesc = document.getElementById('lightbox-caption-desc');
+        let currentImages = [];
+        let currentIndex = 0;
 
-            lightbox.style.display = 'flex';
+        function openLightbox(cardElement) {
+            const imagesAttr = cardElement.getAttribute('data-images');
+            currentImages = imagesAttr.split(',');
+            currentIndex = 0;
+
+            const titleText = cardElement.getAttribute('data-title');
+            const descText = cardElement.getAttribute('data-desc');
+
+            document.getElementById('lightbox-caption-title').textContent = titleText;
+            document.getElementById('lightbox-caption-desc').textContent = descText;
+
+            showImage();
+            document.getElementById('lightbox').style.display = 'flex';
+        }
+
+        function showImage() {
+            const lightboxImg = document.getElementById('lightbox-img');
+            const imgSrc = currentImages[currentIndex];
+
+            lightboxImg.onerror = function() {
+                console.error("Chyba při načítání:", imgSrc);
+            };
+
             lightboxImg.src = imgSrc;
-            lightboxTitle.textContent = titleText;
-            lightboxDesc.textContent = descText;
+        }
+
+        function changeImage(direction, event) {
+            event.stopPropagation();
+            currentIndex += direction;
+            if (currentIndex < 0) {
+                currentIndex = currentImages.length - 1;
+            } else if (currentIndex >= currentImages.length) {
+                currentIndex = 0;
+            }
+            showImage();
         }
 
         function closeLightbox(event) {
-            document.getElementById('lightbox').style.display = 'none';
+            if (event.target.id === 'lightbox' || event.target.id === 'lightbox-close') {
+                document.getElementById('lightbox').style.display = 'none';
+            }
         }
+
+        // Ovládání šipkami na klávesnici (vlevo / vpravo / Esc)
+        document.addEventListener('keydown', function(event) {
+            const lightbox = document.getElementById('lightbox');
+            if (lightbox.style.display === 'flex') {
+                if (event.key === 'Escape') {
+                    lightbox.style.display = 'none';
+                } else if (event.key === 'ArrowLeft') {
+                    currentIndex = (currentIndex - 1 + currentImages.length) % currentImages.length;
+                    showImage();
+                } else if (event.key === 'ArrowRight') {
+                    currentIndex = (currentIndex + 1) % currentImages.length;
+                    showImage();
+                }
+            }
+        });
     </script>
 
 </body>
