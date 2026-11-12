@@ -1,363 +1,152 @@
 
 
-{% load static %}
-<!DOCTYPE html>
-<html lang="cs">
-<head>
-    <meta charset="UTF-8">
-    <title>Itinerář Turecko - Výlety a Průvodce</title>
+{% extends 'itinerar/itinerar/itinerar.html' %}
 
-    <!-- Google Fonts: Playfair Display a Lato -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+{% block title %}Itinerář Turecko - Výlety a Průvodce{% endblock %}
+{% block header_title %}🇹🇷 Itinerář Turecko{% endblock %}
+{% block header_subtitle %}Průvodce výlety rozdělený podle hlavních měst a oblastí{% endblock %}
+{% block gallery_url %}{% url 'turecko_itinerar_galerie' %}{% endblock %}
 
-    <style>
-        :root {
-            --luxury-dark: #1a1a1a;
-            --luxury-gold: #c5a059;
-            --luxury-gold-hover: #b08d46;
-            --bg-color: #faf9f6;
-            --card-bg: #ffffff;
-            --text-main: #333333;
-            --border-color: #e2ded5;
-        }
+{% block main_content %}
+    <h2>Výlety a průvodce podle měst</h2>
+    <p>Vyberte si město a rozklikněte si konkrétní výlety, které v dané oblasti stojí za to navštívit.</p>
 
-        body {
-            font-family: 'Lato', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            margin: 0;
-            padding: 0;
-            line-height: 1.8;
-        }
+    <!-- 1. MĚSTO: ISTANBUL -->
+    <div class="city-title">🕌 Istanbul</div>
 
-        header {
-            background-color: var(--luxury-dark);
-            color: var(--luxury-gold);
-            padding: 70px 20px;
-            text-align: center;
-            border-bottom: 3px solid var(--luxury-gold);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-        }
-
-        header h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 3.4em;
-            margin: 0;
-            font-weight: 700;
-            letter-spacing: 1px;
-        }
-
-        header p {
-            color: #d1ccbe;
-            font-style: italic;
-            font-size: 1.15em;
-            margin-top: 12px;
-            font-family: 'Playfair Display', serif;
-        }
-
-        .container {
-            max-width: 850px;
-            margin: -40px auto 50px auto;
-            padding: 50px;
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.04);
-            position: relative;
-        }
-
-        h2 {
-            font-family: 'Playfair Display', serif;
-            color: var(--luxury-dark);
-            font-size: 2.3em;
-            border-bottom: 2px solid var(--luxury-gold);
-            padding-bottom: 10px;
-            margin-top: 45px;
-            margin-bottom: 22px;
-            letter-spacing: 0.5px;
-        }
-
-        .city-title {
-            font-family: 'Playfair Display', serif;
-            color: var(--luxury-gold);
-            font-size: 1.8em;
-            margin-top: 40px;
-            margin-bottom: 15px;
-            border-left: 4px solid var(--luxury-gold);
-            padding-left: 12px;
-        }
-
-        details {
-            background: #fcfbfa;
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-            margin-bottom: 20px;
-            transition: all 0.3s ease;
-        }
-
-        details[open] {
-            border-color: var(--luxury-gold);
-            box-shadow: 0 4px 15px rgba(197, 160, 89, 0.1);
-        }
-
-        summary {
-            font-family: 'Playfair Display', serif;
-            color: var(--luxury-dark);
-            font-size: 1.4em;
-            padding: 20px 25px;
-            cursor: pointer;
-            font-weight: 600;
-            list-style: none;
-            position: relative;
-            outline: none;
-            user-select: none;
-        }
-
-        summary::-webkit-details-marker {
-            display: none;
-        }
-
-        summary::after {
-            content: '+';
-            position: absolute;
-            right: 25px;
-            font-size: 1.2em;
-            color: var(--luxury-gold);
-            transition: transform 0.3s ease;
-        }
-
-        details[open] summary::after {
-            transform: rotate(45deg);
-        }
-
-        .trip-content {
-            padding: 0 25px 25px 25px;
-            border-top: 1px solid var(--border-color);
-            background: #ffffff;
-        }
-
-        .trip-meta {
-            background-color: #fcfbfa;
-            border-left: 3px solid var(--luxury-gold);
-            padding: 10px 15px;
-            margin: 20px 0;
-            font-size: 0.95em;
-        }
-
-        /* --- FOTOGALERIE BOX S TLAČÍTKEM --- */
-        .foto-box {
-            text-align: center;
-            margin: 40px 0 25px 0;
-            padding: 30px;
-            background: #fcfbfa;
-            border-radius: 4px;
-            border: 1px solid var(--border-color);
-        }
-
-        .btn-gallery {
-            display: inline-block;
-            padding: 14px 30px;
-            background: var(--luxury-gold);
-            color: #ffffff;
-            text-decoration: none;
-            border-radius: 2px;
-            font-weight: 700;
-            font-family: 'Lato', sans-serif;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-            font-size: 0.85em;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 12px rgba(197, 160, 89, 0.25);
-        }
-
-        .btn-gallery:hover {
-            background: var(--luxury-gold-hover);
-            box-shadow: 0 6px 18px rgba(197, 160, 89, 0.4);
-        }
-
-        .btn-back {
-            display: inline-block;
-            margin-top: 35px;
-            padding: 12px 22px;
-            background: var(--luxury-dark);
-            color: var(--luxury-gold);
-            text-decoration: none;
-            border-radius: 2px;
-            font-weight: 700;
-            font-family: 'Lato', sans-serif;
-            font-size: 0.9em;
-            transition: all 0.3s ease;
-        }
-
-        .btn-back:hover {
-            background: #2c2c2c;
-            color: #ffffff;
-        }
-    </style>
-</head>
-<body>
-
-    <header>
-        <h1>🇹🇷 Itinerář Turecko</h1>
-        <p>Průvodce výlety rozdělený podle hlavních měst a oblastí</p>
-    </header>
-
-    <div class="container">
-
-        <h2>Výlety a průvodce podle měst</h2>
-        <p>Vyberte si město a rozklikněte si konkrétní výlety, které v dané oblasti stojí za to navštívit.</p>
-
-        <!-- 1. MĚSTO: ISTANBUL -->
-        <div class="city-title">🕌 Istanbul</div>
-
-        <details>
-            <summary>Historické srdce: Modrá mešita & Palác Topkapi</summary>
-            <div class="trip-content">
-                <div class="trip-meta">
-                    <strong>Typ výletu:</strong> Pěší prohlídka památek | <strong>Časová náročnost:</strong> Celodenní
-                </div>
-                <p>Prohlídka historického centra začíná na náměstí Sultanahmet u majestátní <strong>Modré mešity</strong>, která se pyšní šesti minarety a interiérem zdobeným tisíci modrých ručně malovaných dlaždiček Iznik. Jen kousek odtud leží rozsáhlý palácový komplex <strong>Topkapi</strong>, bývalé sídlo osmanských sultánů s bohatě zdobeným harémem a vzácnou klenotnicí ukrývající slavnou sultánovu dýku i obří diamant. Z palácových teras se navíc otevírá dechberoucí panorama na Bosporskou úžinu a Zlatý roh.</p>
+    <details>
+        <summary>Historické srdce: Modrá mešita & Palác Topkapi</summary>
+        <div class="trip-content">
+            <div class="trip-meta">
+                <strong>Typ výletu:</strong> Pěší prohlídka památek | <strong>Časová náročnost:</strong> Celodenní
             </div>
-        </details>
-
-        <details>
-            <summary>Život u Zlatého rohu: Nová mešita & Egyptský bazar</summary>
-            <div class="trip-content">
-                <div class="trip-meta">
-                    <strong>Typ výletu:</strong> Kultura, Trhy & Gastronomie | <strong>Časová náročnost:</strong> Půldenní
-                </div>
-                <p>U nábřeží ve čtvrti Eminönü vás přivítá <strong>Nová mešita</strong> se svou klidnou atmosférou a nádhernou kaligrafií. Hned v jejím sousedství vstoupíte do slavného <strong>Egyptského bazaru</strong> (Bazaru koření), kde vás obklopí intenzivní vůně šafránu, kardamomu a čerstvě pražené kávy. Prodejci zde nabízejí nejkvalitnější koření, sušené ovoce a tradiční sladkosti jako baklavu či lokum. Návštěvu je ideální zakončit v nábřežní kavárně s hrnkem silného tureckého čaje a výhledem na křižující lodě.</p>
-            </div>
-        </details>
-
-        <details>
-            <summary>Trhy a moderní tepna: Velký bazar, Taksim & Istiklal</summary>
-            <div class="trip-content">
-                <div class="trip-meta">
-                    <strong>Typ výletu:</strong> Nákupy & Procházka městem | <strong>Časová náročnost:</strong> Půldenní
-                </div>
-                <p>Nedaleko odtud leží <strong>Velký bazar (Grand Bazar)</strong>, obrovský labyrint více než šedesáti krytých uliček plných obchůdků s ručně tkanými koberci, koženým zbožím, zlatem a malovanými lampami. Přes ikonický Galatský most se pak přesunete do moderního centra na náměstí <strong>Taksim</strong>. Odtud vychází živá pěší třída <strong>Istiklal Caddesi</strong>, lemovaná obchody a kavárnami, po níž projíždí slavná červená historická tramvaj.</p>
-            </div>
-        </details>
-
-        <details>
-            <summary>Bospor a levný trajekt mezi kontinenty</summary>
-            <div class="trip-content">
-                <div class="trip-meta">
-                    <strong>Typ výletu:</strong> Lodní výlet (MHD trajekt) | <strong>Časová náročnost:</strong> Půldenní
-                </div>
-                <p>Pro plavbu po Bosporské úžině nemusíte platit drahé vyhliadkové lodě – stačí využít <strong>běžný městský trajekt</strong> na kartu <em>Istanbulkart</em>, který funguje jako levná MHD. Nasedněte v přístavu Eminönü na evropské straně a přeplavte se do asijského <strong>Üsküdaru</strong>. Během plavby si užijete nádherné výhledy na sultánské paláce a mešity. Na asijském břehu vás pak čeká romantická procházka s výhledem na Dívčí věž a nezapomenutelný západ slunce nad evropskou siluetou města.</p>
-            </div>
-        </details>
-
-
-        <!-- 2. MĚSTO: BODRUM -->
-        <div class="city-title">⚓ 2. Bodrum</div>
-
-        <details>
-            <summary>Město, Hrad sv. Petra, Div světa & Bazar</summary>
-            <div class="trip-content">
-                <div class="trip-meta">
-                    <strong>Typ výletu:</strong> Historie & Nákupy | <strong>Časová náročnost:</strong> Celodenní / flexibilní
-                </div>
-                <p>Dominantou města je majestátní středověký <strong>Hrad sv. Petra</strong>, postavený johanity u jachtového přístavu. Uvnitř sídlí světově proslulé Muzeum podmořské archeologie s unikátními vraky starověkých lodí a z hradních bašt se otevírá úchvatný výhled na moře. Na úbočí nad městem leží skvěle zachovalý <strong>Antický amfiteátr</strong> ze 4. století př. n. l., ideální místo pro sledování západu slunce. Přímo v srdci Bodrumu navštívíte základy <strong>Mauzolea v Halikarnasu</strong> – jednoho ze sedmi divů starověkého světa. Návštěvu města skvěle zakončíte v tradičním <strong>Bodrumském bazaru</strong> v uličkách u přístavu, kde se proplétá vůně koření, čajů a ručně vyráběného zboží.</p>
-            </div>
-        </details>
-
-        <details>
-            <summary>Celodenní výlet do Efezu & Dům Panny Marie</summary>
-            <div class="trip-content">
-                <div class="trip-meta">
-                    <strong>Typ výletu:</strong> Antická historie & Posvátné místo | <strong>Časová náročnost:</strong> Celodenní
-                </div>
-                <p>Celodenní výlet vás zavede do jednoho z nejvýznamnějších antických měst světa – <strong>Efezu</strong>. Projdete se po mramorových ulicích k ikonické <strong>Celsově knihovně</strong> a Velkému divadlu pro 25 000 diváků. Spatříte zde také pozůstatky Artemidina chrámu, dalšího ze sedmi divů starověku. Součástí výletu je i návštěva posvátného <strong>Domu Panny Marie</strong> na hoře Solmissos, kde podle tradice strávila své poslední roky. Malý kamenný domek uprostřed lesů nabízí tiché prostředí, možnost zapálit svíčku či zanechat přání na zdi přání.</p>
-            </div>
-        </details>
-
-        <details>
-            <summary>Výlet na řecký ostrov Kos</summary>
-            <div class="trip-content">
-                <div class="trip-meta">
-                    <strong>Typ výletu:</strong> Mezinárodní výlet loďou | <strong>Časová náročnost:</strong> Celodenní
-                </div>
-                <p>Z Bodrumu se rychlým katamaránem dostanete za necelých 45 minut na řecký ostrov <strong>Kos</strong>. Hlavní město nabízí mix antických ruin, středověkou pevnost i slavný <strong>Hippokratův strom</strong>, pod nímž podle legendy učil zakladatel moderní medicíny. Během dne si užijete odpočinek v tradiční řecké taverně u gyrosu či mořských plodů a nákupy řeckého oleje a medu.</p>
-            </div>
-        </details>
-
-        <details>
-            <summary>Lodní výlet kolem pobřeží Bodrumu</summary>
-            <div class="trip-content">
-                <div class="trip-meta">
-                    <strong>Typ výletu:</strong> Plavba & Koupání | <strong>Časová náročnost:</strong> Celodenní
-                </div>
-                <p>Pohodová plavba tradiční dřevěnou plachetnicí (<em>gület</em>) vás zavede do tyrkysových zátok přístupných pouze z moře. Hlavní zastávkou je <strong>Černý ostrov (Kara Ada)</strong>, proslulý minerálními prameny a léčivým bahnem. Během výletu vás čeká šnorchlování, koupání i čerstvě připravený oběd přímo na palubě.</p>
-            </div>
-        </details>
-
-        <details>
-            <summary>Jeep Safari & Olivová továrna</summary>
-            <div class="trip-content">
-                <div class="trip-meta">
-                    <strong>Typ výletu:</strong> Off-road adrenalin & Zábava | <strong>Časová náročnost:</strong> Celodenní
-                </div>
-                <p>Pro milovníky adrenalinu je připraveno <strong>Jeep Safari</strong> v komorní atmosféře dvou otevřených jeepů napříč vnitrozemím. Cesta vás provede borovicovými lesy k <strong>olivové továrně</strong> s ochutnávkou oleje a do tradiční vesničky na domácí oběd. Nejzábavnější částí výletu je legendární <strong>vodní bitva s vodními pistolemi</strong> mezi dvěma jeepy, kdy po sobě posádky střílejí a užívají si spoustu zábavy i osvěžení.</p>
-            </div>
-        </details>
-
-        <details>
-            <summary>Výlet do přírodní rezervace Dalyan</summary>
-            <div class="trip-content">
-                <div class="trip-meta">
-                    <strong>Typ výletu:</strong> Příroda, Bahenní koupele & Želvy | <strong>Časová náročnost:</strong> Celodenní
-                </div>
-                <p>Vydejte se na jedinečný výlet do přírodního ráje <strong>Dalyan</strong>. Výlet začíná osvěžující návštěvou vyhlášených <strong>přírodních bahenních koupelí</strong>, které mají díky minerálům omlazující a léčivé účinky na pokožku. Následuje romantická <strong>plavba říční lodí</strong> rákosovým labyrintem kolem majestátních lykijských skalních hrobů vytesaných vysoko ve skalách. Loď vás doveze až k deltě řeky a slavné <strong>pláži Iztuzu (Želví pláž)</strong>, kde budete mít možnost koupání a při trochou štěstí i pozorování vzácných obřích mořských želv <strong>Caretta caretta</strong> v jejich přirozeném prostředí.</p>
-            </div>
-        </details>
-
-
-        <!-- 3. MĚSTO: ANTALYA -->
-        <div class="city-title">🏖️ 3. Antalya</div>
-
-        <details>
-            <summary>Město, Hrad Alanya, Vyhlídkový vláček & Bazar</summary>
-            <div class="trip-content">
-                <div class="trip-meta">
-                    <strong>Typ výletu:</strong> Procházka městem & Historie | <strong>Časová náročnost:</strong> Půldenní až celodenní
-                </div>
-                <p>Dominantou města je monumentální středověký <strong>Hrad Alanya (Alanya Kalesi)</strong> se slavnou Červenou věží (Kızıl Kule), ze kterého je nádherný výhled na celé pobřeží i Kleopatřinu pláž. Pro pohodový průzkum můžete využít oblíbený <strong>turistický vláček</strong>, který vás proveze nejkrásnějšími zákoutími města, podél nábřeží i kolem historického přístavu. Návštěvu města skvěle doplňuje rušný <strong>místní bazar</strong>, kde vás obklopí vůně čerstvého koření, čajů, sladkostí a nabídka ručně vyráběných suvenýrů a textilu v autentické atmosféře orientálního nakupování.</p>
-            </div>
-        </details>
-
-        <details>
-            <summary>Celodenní plavba na pirátské lodi kolem pobřeží</summary>
-            <div class="trip-content">
-                <div class="trip-meta">
-                    <strong>Typ výletu:</strong> Tematická plavba & Jeskyně | <strong>Časová náročnost:</strong> Celodenní
-                </div>
-                <p>Zažijte nezapomenutelný den na palubě tematické <strong>pirátské lodi</strong>, která se plaví podél dramatických skalnatých útesů poloostrova. Během plavby uvidíte z moře tajemné mořské jeskyně, jako je Jeskyně pirátů, Jeskyně milenců či Světélkující jeskyně. Loď pravidelně zastavuje v průzračných zátokách s možností koupání a šnorchlování v tyrkysové vodě. Na palubě na vás čeká zábavný program, pěnová párty a čerstvě připravený oběd přímo od posádky.</p>
-            </div>
-        </details>
-
-        <details>
-            <summary>Celodenní výlet do Green Canyonu, Mešita & Bazar v Manavgatu</summary>
-            <div class="trip-content">
-                <div class="trip-meta">
-                    <strong>Typ výletu:</strong> Kaňon, Příroda & Trhy | <strong>Časová náročnost:</strong> Celodenní
-                </div>
-                <p>Vydejte se do srdce pohoří Taurus k úchvatnému <strong>Green Canyonu (Zelenému kaňonu)</strong>, kde se rozkládá jedno z největších přehradních jezer Turecka s neuvěřitelně smaragdově zelenou vodou. Plavba lodí mezi vysokými skalními stěnami obklopenými panenskou přírodou nabízí dokonalý klid, odpočinek i koupání v chladivé sladké vodě. Součástí výletu je také návštěva městečka <strong>Manavgat</strong>, kde si prohlédnete monumentální mešitu s čtyřmi minarety a velkolepým interiérem. Výlet zakončíte na slavném tradičním bazaru v Manavgatu, který patří k největším v regionu a nabízí nepřeberné množství lokálních produktů, čerstvého ovoce a suvenýrů.</p>
-            </div>
-        </details>
-
-        <!-- SEKCE GALERIE S TLAČÍTKEM -->
-        <h2>Galerie</h2>
-        <div class="foto-box">
-            <a href="{% url 'turecko_itinerar_galerie' %}" class="btn-gallery">📷 Otevřít kompletní fotogalerii</a>
+            <p>Prohlídka historického centra začíná na náměstí Sultanahmet u majestátní <strong>Modré mešity</strong>, která se pyšní šesti minarety a interiérem zdobeným tisíci modrých ručně malovaných dlaždiček Iznik. Jen kousek odtud leží rozsáhlý palácový komplex <strong>Topkapi</strong>, bývalé sídlo osmanských sultánů s bohatě zdobeným harémem a vzácnou klenotnicí ukrývající slavnou sultánovu dýku i obří diamant. Z palácových teras se navíc otevírá dechberoucí panorama na Bosporskou úžinu a Zlatý roh.</p>
         </div>
+    </details>
 
-        <p><a href="{% url 'domovsky' %}" class="btn-back">← Zpět na výběr zemí (Hlavní stránka)</a></p>
-    </div>
+    <details>
+        <summary>Život u Zlatého rohu: Nová mešita & Egyptský bazar</summary>
+        <div class="trip-content">
+            <div class="trip-meta">
+                <strong>Typ výletu:</strong> Kultura, Trhy & Gastronomie | <strong>Časová náročnost:</strong> Půldenní
+            </div>
+            <p>U nábřeží ve čtvrti Eminönü vás přivítá <strong>Nová mešita</strong> se svou klidnou atmosférou a nádhernou kaligrafií. Hned v jejím sousedství vstoupíte do slavného <strong>Egyptského bazaru</strong> (Bazaru koření), kde vás obklopí intenzivní vůně šafránu, kardamomu a čerstvě pražené kávy. Prodejci zde nabízejí nejkvalitnější koření, sušené ovoce a tradiční sladkosti jako baklavu či lokum. Návštěvu je ideální zakončit v nábřežní kavárně s hrnkem silného tureckého čaje a výhledem na křižující lodě.</p>
+        </div>
+    </details>
 
-</body>
-</html>
+    <details>
+        <summary>Trhy a moderní tepna: Velký bazar, Taksim & Istiklal</summary>
+        <div class="trip-content">
+            <div class="trip-meta">
+                <strong>Typ výletu:</strong> Nákupy & Procházka městem | <strong>Časová náročnost:</strong> Půldenní
+            </div>
+            <p>Nedaleko odtud leží <strong>Velký bazar (Grand Bazar)</strong>, obrovský labyrint více než šedesáti krytých uliček plných obchůdků s ručně tkanými koberci, koženým zbožím, zlatem a malovanými lampami. Přes ikonický Galatský most se pak přesunete do moderního centra na náměstí <strong>Taksim</strong>. Odtud vychází živá pěší třída <strong>Istiklal Caddesi</strong>, lemovaná obchody a kavárnami, po níž projíždí slavná červená historická tramvaj.</p>
+        </div>
+    </details>
+
+    <details>
+        <summary>Bospor a levný trajekt mezi kontinenty</summary>
+        <div class="trip-content">
+            <div class="trip-meta">
+                <strong>Typ výletu:</strong> Lodní výlet (MHD trajekt) | <strong>Časová náročnost:</strong> Půldenní
+            </div>
+            <p>Pro plavbu po Bosporské úžině nemusíte platit drahé vyhliadkové lodě – stačí využít <strong>běžný městský trajekt</strong> na kartu <em>Istanbulkart</em>, který funguje jako levná MHD. Nasedněte v přístavu Eminönü na evropské straně a přeplavte se do asijského <strong>Üsküdaru</strong>. Během plavby si užijete nádherné výhledy na sultánské paláce a mešity. Na asijském břehu vás pak čeká romantická procházka s výhledem na Dívčí věž a nezapomenutelný západ slunce nad evropskou siluetou města.</p>
+        </div>
+    </details>
+
+    <!-- 2. MĚSTO: BODRUM -->
+    <div class="city-title">⚓ 2. Bodrum</div>
+
+    <details>
+        <summary>Město, Hrad sv. Petra, Div světa & Bazar</summary>
+        <div class="trip-content">
+            <div class="trip-meta">
+                <strong>Typ výletu:</strong> Historie & Nákupy | <strong>Časová náročnost:</strong> Celodenní / flexibilní
+            </div>
+            <p>Dominantou města je majestátní středověký <strong>Hrad sv. Petra</strong>, postavený johanity u jachtového přístavu. Uvnitř sídlí světově proslulé Muzeum podmořské archeologie s unikátními vraky starověkých lodí a z hradních bašt se otevírá úchvatný výhled na moře. Na úbočí nad městem leží skvěle zachovalý <strong>Antický amfiteátr</strong> ze 4. století př. n. l., ideální místo pro sledování západu slunce. Přímo v srdci Bodrumu navštívíte základy <strong>Mauzolea v Halikarnasu</strong> – jednoho ze sedmi divů starověkého světa. Návštěvu města skvěle zakončíte v tradičním <strong>Bodrumském bazaru</strong> v uličkách u přístavu, kde se proplétá vůně koření, čajů a ručně vyráběného zboží.</p>
+        </div>
+    </details>
+
+    <details>
+        <summary>Celodenní výlet do Efezu & Dům Panny Marie</summary>
+        <div class="trip-content">
+            <div class="trip-meta">
+                <strong>Typ výletu:</strong> Antická historie & Posvátné místo | <strong>Časová náročnost:</strong> Celodenní
+            </div>
+            <p>Celodenní výlet vás zavede do jednoho z nejvýznamnějších antických měst světa – <strong>Efezu</strong>. Projdete se po mramorových ulicích k ikonické <strong>Celsově knihovně</strong> a Velkému divadlu pro 25 000 diváků. Spatříte zde také pozůstatky Artemidina chrámu, dalšího ze sedmi divů starověku. Součástí výletu je i návštěva posvátného <strong>Domu Panny Marie</strong> na hoře Solmissos, kde podle tradice strávila své poslední roky. Malý kamenný domek uprostřed lesů nabízí tiché prostředí, možnost zapálit svíčku či zanechat přání na zdi přání.</p>
+        </div>
+    </details>
+
+    <details>
+        <summary>Výlet na řecký ostrov Kos</summary>
+        <div class="trip-content">
+            <div class="trip-meta">
+                <strong>Typ výletu:</strong> Mezinárodní výlet loďou | <strong>Časová náročnost:</strong> Celodenní
+            </div>
+            <p>Z Bodrumu se rychlým katamaránem dostanete za necelých 45 minut na řecký ostrov <strong>Kos</strong>. Hlavní město nabízí mix antických ruin, středověkou pevnost i slavný <strong>Hippokratův strom</strong>, pod nímž podle legendy učil zakladatel moderní medicíny. Během dne si užijete odpočinek v tradiční řecké taverně u gyrosu či mořských plodů a nákupy řeckého oleje a medu.</p>
+        </div>
+    </details>
+
+    <details>
+        <summary>Lodní výlet kolem pobřeží Bodrumu</summary>
+        <div class="trip-content">
+            <div class="trip-meta">
+                <strong>Typ výletu:</strong> Plavba & Koupání | <strong>Časová náročnost:</strong> Celodenní
+            </div>
+            <p>Pohodová plavba tradiční dřevěnou plachetnicí (<em>gület</em>) vás zavede do tyrkysových zátok přístupných pouze z moře. Hlavní zastávkou je <strong>Černý ostrov (Kara Ada)</strong>, proslulý minerálními prameny a léčivým bahnem. Během výletu vás čeká šnorchlování, koupání i čerstvě připravený oběd přímo na palubě.</p>
+        </div>
+    </details>
+
+    <details>
+        <summary>Jeep Safari & Olivová továrna</summary>
+        <div class="trip-content">
+            <div class="trip-meta">
+                <strong>Typ výletu:</strong> Off-road adrenalin & Zábava | <strong>Časová náročnost:</strong> Celodenní
+            </div>
+            <p>Pro milovníky adrenalinu je připraveno <strong>Jeep Safari</strong> v komorní atmosféře dvou otevřených jeepů napříč vnitrozemím. Cesta vás provede borovicovými lesy k <strong>olivové továrně</strong> s ochutnávkou oleje a do tradiční vesničky na domácí oběd. Nejzábavnější částí výletu je legendární <strong>vodní bitva s vodními pistolemi</strong> mezi dvěma jeepy, kdy po sobě posádky střílejí a užívají si spoustu zábavy i osvěžení.</p>
+        </div>
+    </details>
+
+    <details>
+        <summary>Výlet do přírodní rezervace Dalyan</summary>
+        <div class="trip-content">
+            <div class="trip-meta">
+                <strong>Typ výletu:</strong> Příroda, Bahenní koupele & Želvy | <strong>Časová náročnost:</strong> Celodenní
+            </div>
+            <p>Vydejte se na jedinečný výlet do přírodního ráje <strong>Dalyan</strong>. Výlet začíná osvěžující návštěvou vyhlášených <strong>přírodních bahenních koupelí</strong>, které mají díky minerálům omlazující a léčivé účinky na pokožku. Následuje romantická <strong>plavba říční lodí</strong> rákosovým labyrintem kolem majestátních lykijských skalních hrobů vytesaných vysoko ve skalách. Loď vás doveze až k deltě řeky a slavné <strong>pláži Iztuzu (Želví pláž)</strong>, kde budete mít možnost koupání a při trochou štěstí i pozorování vzácných obřích mořských želv <strong>Caretta caretta</strong> v jejich přirozeném prostředí.</p>
+        </div>
+    </details>
+
+    <!-- 3. MĚSTO: ANTALYA -->
+    <div class="city-title">🏖️ 3. Antalya</div>
+
+    <details>
+        <summary>Město, Hrad Alanya, Vyhlídkový vláček & Bazar</summary>
+        <div class="trip-content">
+            <div class="trip-meta">
+                <strong>Typ výletu:</strong> Procházka městem & Historie | <strong>Časová náročnost:</strong> Půldenní až celodenní
+            </div>
+            <p>Dominantou města je monumentální středověký <strong>Hrad Alanya (Alanya Kalesi)</strong> se slavnou Červenou věží (Kızıl Kule), ze kterého je nádherný výhled na celé pobřeží i Kleopatřinu pláž. Pro pohodový průzkum můžete využít oblíbený <strong>turistický vláček</strong>, který vás proveze nejkrásnějšími zákoutími města, podél nábřeží i kolem historického přístavu. Návštěvu města skvěle doplňuje rušný <strong>místní bazar</strong>, kde vás obklopí vůně čerstvého koření, čajů, sladkostí a nabídka ručně vyráběných suvenýrů a textilu v autentické atmosféře orientálního nakupování.</p>
+        </div>
+    </details>
+
+    <details>
+        <summary>Celodenní plavba na pirátské lodi kolem pobřeží</summary>
+        <div class="trip-content">
+            <div class="trip-meta">
+                <strong>Typ výletu:</strong> Tematická plavba & Jeskyně | <strong>Časová náročnost:</strong> Celodenní
+            </div>
+            <p>Zažijte nezapomenutelný den na palubě tematické <strong>pirátské lodi</strong>, která se plaví podél dramatických skalnatých útesů poloostrova. Během plavby uvidíte z moře tajemné mořské jeskyně, jako je Jeskyně pirátů, Jeskyně milenců či Světélkující jeskyně. Loď pravidelně zastavuje v průzračných zátokách s možností koupání a šnorchlování v tyrkysové vodě. Na palubě na vás čeká zábavný program, pěnová párty a čerstvě připravený oběd přímo od posádky.</p>
+        </div>
+    </details>
+
+    <details>
+        <summary>Celodenní výlet do Green Canyonu, Mešita & Bazar v Manavgatu</summary>
+        <div class="trip-content">
+            <div class="trip-meta">
+                <strong>Typ výletu:</strong> Kaňon, Příroda & Trhy | <strong>Časová náročnost:</strong> Celodenní
+            </div>
+            <p>Vydejte se do srdce pohoří Taurus k úchvatnému <strong>Green Canyonu (Zelenému kaňonu)</strong>, kde se rozkládá jedno z největších přehradních jezer Turecka s neuvěřitelně smaragdově zelenou vodou. Plavba lodí mezi vysokými skalními stěnami obklopenými panenskou přírodou nabízí dokonalý klid, odpočinek i koupání v chladivé sladké vodě. Součástí výletu je také návštěva městečka <strong>Manavgat</strong>, kde si prohlédnete monumentální mešitu s čtyřmi minarety a velkolepým interiérem. Výlet zakončíte na slavném tradičním bazaru v Manavgatu, který patří k největším v regionu a nabízí nepřeberné množství lokálních produktů, čerstvého ovoce a suvenýrů.</p>
+        </div>
+    </details>
+{% endblock %}

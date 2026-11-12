@@ -1,18 +1,16 @@
 
 
 
-<!DOCTYPE html>
-<html lang="cs">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Itineráře cest - Cestovatelské radosti</title>
+{% extends './itinerar/itinerar.html' %}
 
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+{% block title %}Itineráře cest - Cestovatelské radosti{% endblock %}
+
+{% block extra_head %}
+    <!-- Google Fonts pro domovskou stránku (Charm & Montserrat) -->
     <link href="https://fonts.googleapis.com/css2?family=Charm:wght@400;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+{% endblock %}
 
+{% block extra_css %}
     <style>
         @font-face {
             font-family: 'Fairwater Script';
@@ -27,7 +25,7 @@
             --panel-border: rgba(197, 160, 89, 0.3);
             --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.25);
             --text-color: #ffffff;
-            --gold-accent: #c5a059;
+            --gold-accent: var(--luxury-gold);
         }
 
         * {
@@ -167,9 +165,9 @@
             transform: translateY(-2px);
         }
     </style>
-</head>
-<body>
+{% endblock %}
 
+{% block body %}
     <div id="bg-overlay"></div>
     <canvas id="bubble-canvas"></canvas>
 
@@ -342,7 +340,5 @@
             bubbles.push(new Bubble(e.clientX, e.clientY, Math.random() * 30 + 15));
         });
     </script>
-</body>
-</html>
-
+{% endblock %}
 

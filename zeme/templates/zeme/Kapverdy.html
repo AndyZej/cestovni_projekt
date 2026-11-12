@@ -1,306 +1,108 @@
 
 
 
-<!DOCTYPE html>
-<html lang="cs">
-<head>
-    <meta charset="UTF-8">
-    <title>Kapverdy - Sal & Santa Maria</title>
+{% extends 'zeme/zeme.html' %}
 
-    <!-- Google Fonts: Playfair Display (nadpisy) a Lato (text) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+{% block title %}Kapverdy - Sal & Santa Maria{% endblock %}
+{% block header_title %}🇨🇻 Kapverdy - Sal & Santa Maria{% endblock %}
+{% block header_subtitle %}Oáza klidu, nekonečných bílých pláží a rytmů v Atlantském oceánu{% endblock %}
+{% block gallery_url %}{% url 'kapverdy_galerie' %}{% endblock %}
 
-    <style>
-        :root {
-            --luxury-dark: #1a1a1a;
-            --luxury-gold: #c5a059;
-            --luxury-gold-hover: #b08d46;
-            --bg-color: #faf9f6;
-            --card-bg: #ffffff;
-            --text-main: #333333;
-            --border-color: #e2ded5;
-        }
+{% block main_content %}
+    <h2>Kapverdy (Republika Kapverdy)</h2>
+    <p>Kapverdy (Cabo Verde) jsou kouzelné ostrovní souostroví v Atlantském oceánu, asi 500 km od západního pobřeží Afriky. Tvoří je deset hlavních sopečných ostrovů a několik menších ostrůvků.</p>
 
-        body {
-            font-family: 'Lato', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            margin: 0;
-            padding: 0;
-            line-height: 1.8;
-        }
+    <table>
+        <thead>
+            <tr>
+                <th>Parametr</th>
+                <th>Základní údaj</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Hlavní město</td>
+                <td>Praia (na ostrově Santiago)</td>
+            </tr>
+            <tr>
+                <td>Rozloha</td>
+                <td>cca 4 033 km²</td>
+            </tr>
+            <tr>
+                <td>Počet obyvatel</td>
+                <td>cca 580 tisíc</td>
+            </tr>
+            <tr>
+                <td>Úřední jazyk</td>
+                <td>Portugalština (běžně se mluví kreolsky)</td>
+            </tr>
+            <tr>
+                <td>Měna</td>
+                <td>Kapverdské escudo (CVE) – pevně vázané na Euro</td>
+            </tr>
+            <tr>
+                <td>Náboženství</td>
+                <td>Křesťanství (převážně římskokatolické)</td>
+            </tr>
+        </tbody>
+    </table>
 
-        header {
-            background-color: var(--luxury-dark);
-            color: var(--luxury-gold);
-            padding: 70px 20px;
-            text-align: center;
-            border-bottom: 3px solid var(--luxury-gold);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-        }
+    <ul>
+        <li><strong>Kultura a atmosféra:</strong> Stát je jedinečnou křižovatkou africké a evropské (portugalské) kultury. Vyznačuje se pohodovou atmosférou zvanou <em>No Stress</em>, stálým slunečným počasím a krásnými písčitými plážemi.</li>
+        <li><strong>Geografie:</strong> Souostroví se dělí na návětrné a závětrné ostrovy sopečného původu.</li>
+        <li><strong>Turistika:</strong> Vyhledávaná destinace pro plážový odpočinek, vodní sporty a objevování neotřelé kultury.</li>
+    </ul>
 
-        header h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 3.4em;
-            margin: 0;
-            font-weight: 700;
-            letter-spacing: 1px;
-        }
+    <h2>Ostrov Sal</h2>
+    <p>Zatímco některé kapverdské ostrovy jsou hornaté a zelené, ostrov Sal je rovinatý, zalitý sluncem a obklopený tyrkysovým oceánem. Svůj název získal podle dřívější rozsáhlé těžby soli.</p>
 
-        header p {
-            color: #d1ccbe;
-            font-style: italic;
-            font-size: 1.15em;
-            margin-top: 12px;
-            font-family: 'Playfair Display', serif;
-        }
+    <ul>
+        <li><strong>Proč je Sal tak oblíbený:</strong> Je to hlavní centrum turistiky na Kapverdách. Nabízí ideální klimatické podmínky s minimem srážek a stálým oceánským vánkem.</li>
+        <li><strong>Hlavní lákadla ostrova:</strong>
+            <ul>
+                <li><strong>Solné doly v kráteru Pedra de Luma:</strong> Unikátní možnost vykoupat se a vznášet se v silně slaném jezírku v kaldeře vyhaslé sopky.</li>
+                <li><strong>Buracona (Modré oko):</strong> Přírodní lávová jeskyně, kde sluneční paprsky v poledne rozzáří vodu do zářivě modré barvy.</li>
+                <li><strong>Shark Bay:</strong> Zátoka, kde můžete v křišťálově čisté mělké vodě bezpečně pozorovat malé žraloky citronové.</li>
+                <li><strong>Vodní sporty:</strong> Sal (především pláž Kite Beach) patří k nejlepším místům na světě pro windsurfing a kitesurfing.</li>
+            </ul>
+        </li>
+    </ul>
 
-        .container {
-            max-width: 850px;
-            margin: -40px auto 50px auto;
-            padding: 50px;
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.04);
-            position: relative;
-        }
+    <h2>Město Santa Maria</h2>
+    <p>Na samém jižním cípu ostrova Sal leží Santa Maria, nejvýznamnější a nejživější turistické letovisko celých Kapverd. Původně ospalá rybářská vesnice se proměnila v příjemné městečko plné života.</p>
 
-        h2 {
-            font-family: 'Playfair Display', serif;
-            color: var(--luxury-dark);
-            font-size: 2.3em;
-            border-bottom: 2px solid var(--luxury-gold);
-            padding-bottom: 10px;
-            margin-top: 45px;
-            margin-bottom: 22px;
-            letter-spacing: 0.5px;
-        }
+    <ul>
+        <li><strong>Atmosféra a architektura:</strong> Santa Maria si i přes rozvoj turistiky zachovala svůj osobitý šarm. Najdete tu pestrobarevné domky, úzké uličky, přátelské místní obyvatele a spoustu pouličních hudebníků hrajících tradiční melancholickou hudbu <em>Morna</em>.</li>
+        <li><strong>Hlavní přednosti a místa v Santa Marii:</strong>
+            <ul>
+                <li><strong>Pláž Santa Maria:</strong> Dlouhá, několik kilometrů se táhnoucí pláž s jemným bílým pískem a pozvolným vstupem do průzračného oceánu.</li>
+                <li><strong>Dřevěné molo (Pontão):</strong> Historické molo, kam se každé ráno vracejí místní rybáři s čerstvými úlovky. Skvělé místo na sledování ruchu a focení.</li>
+                <li><strong>Restaurace a bary:</strong> Podniky nabízející čerstvé ryby, mořské plody, národní jídlo <em>Cachupa</em> i ochutnávku místního grogu (<em>Grogue</em>).</li>
+                <li><strong>Nákupy a suvenýry:</strong> Obchůdky s tradičním africkým uměním, ručně vyráběnými šperky a suvenýry.</li>
+            </ul>
+        </li>
+    </ul>
 
-        h3 {
-            font-family: 'Playfair Display', serif;
-            color: var(--luxury-gold);
-            font-size: 1.65em;
-            margin-top: 30px;
-            margin-bottom: 12px;
-            font-weight: 600;
-        }
+    <h2>Nabídka výletů z ostrova Sal</h2>
+    <p>Výlety na Kapverdách kombinují objevování měsíční krajiny ostrova, vodní radovánky a zážitky s místní hudbou.</p>
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 30px 0;
-            font-family: 'Lato', sans-serif;
-            border: 1px solid var(--border-color);
-        }
+    <h3>1. Okružní jízda ostrovem (Sal Island Tour)</h3>
+    <ul>
+        <li><strong>Celodenní safari v džípech:</strong> Prohlídka nejzajímavějších míst – solné doly v Pedra de Luma, pláž Shark Bay se žraloky, Fata Morgána v poušti Terra Boa a bazénky Buracona.</li>
+    </ul>
 
-        th, td {
-            padding: 14px 18px;
-            text-align: left;
-        }
+    <h3>2. Výlety po moři a katamarány</h3>
+    <ul>
+        <li><strong>Plavba katamaránem:</strong> Odpočinková plavba podél jižního pobřeží s hudbou, grilem na palubě a zastávkou na šnorchlování.</li>
+    </ul>
 
-        th {
-            background-color: var(--luxury-dark);
-            color: var(--luxury-gold);
-            font-family: 'Playfair Display', serif;
-            font-size: 1.15em;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-        }
+    <h3>3. Adrenalin v poušti</h3>
+    <ul>
+        <li><strong>Půldenní safari na čtyřkolkách:</strong> Průzkum písečných dun, vyschlých koryt a pobřežních cest s větrem v zádech.</li>
+    </ul>
 
-        td {
-            border-bottom: 1px solid var(--border-color);
-            background-color: #fff;
-        }
-
-        tr:last-child td {
-            border-bottom: none;
-        }
-
-        tr:nth-child(even) td {
-            background-color: #fcfbfa;
-        }
-
-        ul {
-            line-height: 1.8;
-            padding-left: 22px;
-            margin-bottom: 25px;
-        }
-
-        li {
-            margin-bottom: 10px;
-        }
-
-        li strong {
-            color: var(--luxury-dark);
-        }
-
-        .foto-box {
-            text-align: center;
-            margin: 40px 0 25px 0;
-            padding: 30px;
-            background: #fcfbfa;
-            border-radius: 4px;
-            border: 1px solid var(--border-color);
-        }
-
-        .btn-gallery {
-            display: inline-block;
-            padding: 14px 30px;
-            background: var(--luxury-gold);
-            color: #ffffff;
-            text-decoration: none;
-            border-radius: 2px;
-            font-weight: 700;
-            font-family: 'Lato', sans-serif;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-            font-size: 0.85em;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 12px rgba(197, 160, 89, 0.25);
-        }
-
-        .btn-gallery:hover {
-            background: var(--luxury-gold-hover);
-            box-shadow: 0 6px 18px rgba(197, 160, 89, 0.4);
-        }
-
-        .btn-back {
-            display: inline-block;
-            margin-top: 35px;
-            padding: 12px 22px;
-            background: var(--luxury-dark);
-            color: var(--luxury-gold);
-            text-decoration: none;
-            border-radius: 2px;
-            font-weight: 700;
-            font-family: 'Lato', sans-serif;
-            font-size: 0.9em;
-            transition: all 0.3s ease;
-        }
-
-        .btn-back:hover {
-            background: #2c2c2c;
-            color: #ffffff;
-        }
-    </style>
-</head>
-<body>
-
-    <header>
-        <h1>🇨🇻 Kapverdy - Sal & Santa Maria</h1>
-        <p>Oáza klidu, nekonečných bílých pláží a rytmů v Atlantském oceánu</p>
-    </header>
-
-    <div class="container">
-        <h2>Kapverdy (Republika Kapverdy)</h2>
-        <p>Kapverdy (Cabo Verde) jsou kouzelné ostrovní souostroví v Atlantském oceánu, asi 500 km od západního pobřeží Afriky. Tvoří je deset hlavních sopečných ostrovů a několik menších ostrůvků.</p>
-
-        <table>
-            <thead>
-                <tr>
-                    <th>Parametr</th>
-                    <th>Základní údaj</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Hlavní město</td>
-                    <td>Praia (na ostrově Santiago)</td>
-                </tr>
-                <tr>
-                    <td>Rozloha</td>
-                    <td>cca 4 033 km²</td>
-                </tr>
-                <tr>
-                    <td>Počet obyvatel</td>
-                    <td>cca 580 tisíc</td>
-                </tr>
-                <tr>
-                    <td>Úřední jazyk</td>
-                    <td>Portugalština (běžně se mluví kreolsky)</td>
-                </tr>
-                <tr>
-                    <td>Měna</td>
-                    <td>Kapverdské escudo (CVE) – pevně vázané na Euro</td>
-                </tr>
-                <tr>
-                    <td>Náboženství</td>
-                    <td>Křesťanství (převážně římskokatolické)</td>
-                </tr>
-            </tbody>
-        </table>
-
-        <ul>
-            <li><strong>Kultura a atmosféra:</strong> Stát je jedinečnou křižovatkou africké a evropské (portugalské) kultury. Vyznačuje se pohodovou atmosférou zvanou <em>No Stress</em>, stálým slunečným počasím a krásnými písčitými plážemi.</li>
-            <li><strong>Geografie:</strong> Souostroví se dělí na návětrné a závětrné ostrovy sopečného původu.</li>
-            <li><strong>Turistika:</strong> Vyhledávaná destinace pro plážový odpočinek, vodní sporty a objevování neotřelé kultury.</li>
-        </ul>
-
-        <h2>Ostrov Sal</h2>
-        <p>Zatímco některé kapverdské ostrovy jsou hornaté a zelené, ostrov Sal je rovinatý, zalitý sluncem a obklopený tyrkysovým oceánem. Svůj název získal podle dřívější rozsáhlé těžby soli.</p>
-
-        <ul>
-            <li><strong>Proč je Sal tak oblíbený:</strong> Je to hlavní centrum turistiky na Kapverdách. Nabízí ideální klimatické podmínky s minimem srážek a stálým oceánským vánkem.</li>
-            <li><strong>Hlavní lákadla ostrova:</strong>
-                <ul>
-                    <li><strong>Solné doly v kráteru Pedra de Luma:</strong> Unikátní možnost vykoupat se a vznášet se v silně slaném jezírku v kaldeře vyhaslé sopky.</li>
-                    <li><strong>Buracona (Modré oko):</strong> Přírodní lávová jeskyně, kde sluneční paprsky v poledne rozzáří vodu do zářivě modré barvy.</li>
-                    <li><strong>Shark Bay:</strong> Zátoka, kde můžete v křišťálově čisté mělké vodě bezpečně pozorovat malé žraloky citronové.</li>
-                    <li><strong>Vodní sporty:</strong> Sal (především pláž Kite Beach) patří k nejlepším místům na světě pro windsurfing a kitesurfing.</li>
-                </ul>
-            </li>
-        </ul>
-
-        <h2>Město Santa Maria</h2>
-        <p>Na samém jižním cípu ostrova Sal leží Santa Maria, nejvýznamnější a nejživější turistické letovisko celých Kapverd. Původně ospalá rybářská vesnice se proměnila v příjemné městečko plné života.</p>
-
-        <ul>
-            <li><strong>Atmosféra a architektura:</strong> Santa Maria si i přes rozvoj turistiky zachovala svůj osobitý šarm. Najdete tu pestrobarevné domky, úzké uličky, přátelské místní obyvatele a spoustu pouličních hudebníků hrajících tradiční melancholickou hudbu <em>Morna</em>.</li>
-            <li><strong>Hlavní přednosti a místa v Santa Marii:</strong>
-                <ul>
-                    <li><strong>Pláž Santa Maria:</strong> Dlouhá, několik kilometrů se táhnoucí pláž s jemným bílým pískem a pozvolným vstupem do průzračného oceánu.</li>
-                    <li><strong>Dřevěné molo (Pontão):</strong> Historické molo, kam se každé ráno vracejí místní rybáři s čerstvými úlovky. Skvělé místo na sledování ruchu a focení.</li>
-                    <li><strong>Restaurace a bary:</strong> Podniky nabízející čerstvé ryby, mořské plody, národní jídlo <em>Cachupa</em> i ochutnávku místního grogu (<em>Grogue</em>).</li>
-                    <li><strong>Nákupy a suvenýry:</strong> Obchůdky s tradičním africkým uměním, ručně vyráběnými šperky a suvenýry.</li>
-                </ul>
-            </li>
-        </ul>
-
-        <h2>Nabídka výletů z ostrova Sal</h2>
-        <p>Výlety na Kapverdách kombinují objevování měsíční krajiny ostrova, vodní radovánky a zážitky s místní hudbou.</p>
-
-        <h3>1. Okružní jízda ostrovem (Sal Island Tour)</h3>
-        <ul>
-            <li><strong>Celodenní safari v džípech:</strong> Prohlídka nejzajímavějších míst – solné doly v Pedra de Luma, pláž Shark Bay se žraloky, Fata Morgána v poušti Terra Boa a bazénky Buracona.</li>
-        </ul>
-
-        <h3>2. Výlety po moři a katamarány</h3>
-        <ul>
-            <li><strong>Plavba katamaránem:</strong> Odpočinková plavba podél jižního pobřeží s hudbou, grilem na palubě a zastávkou na šnorchlování.</li>
-        </ul>
-
-        <h3>3. Adrenalin v poušti</h3>
-        <ul>
-            <li><strong>Půldenní safari na čtyřkolkách:</strong> Průzkum písečných dun, vyschlých koryt a pobřežních cest s větrem v zádech.</li>
-        </ul>
-
-        <h3>4. Večerní atmosféra a živá hudba</h3>
-        <ul>
-            <li><strong>Večerní Santa Maria:</strong> Procházky městem, poslech živé hudby (Morna & Funaná) a večeře v místních restauracích.</li>
-        </ul>
-
-        <h2>Galerie</h2>
-        <div class="foto-box">
-            <!-- Správný odkaz na samostatnou galerii Kapverd definovanou v urls.py -->
-            <a href="{% url 'kapverdy_galerie' %}" class="btn-gallery">📷 Otevřít kompletní fotogalerii</a>
-        </div>
-
-        <!-- Tlačítko pro návrat na hlavní stránku -->
-        <p><a href="{% url 'domov' %}" class="btn-back">← Zpět na hlavní stránku</a></p>
-    </div>
-
-</body>
-</html>
+    <h3>4. Večerní atmosféra a živá hudba</h3>
+    <ul>
+        <li><strong>Večerní Santa Maria:</strong> Procházky městem, poslech živé hudby (Morna & Funaná) a večeře v místních restauracích.</li>
+    </ul>
+{% endblock %}
