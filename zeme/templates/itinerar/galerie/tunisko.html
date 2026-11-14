@@ -1,6 +1,6 @@
 
 
-{% extends '../vzhled.html' %}
+{% extends 'itinerar/galerie/galerie.html' %}
 {% load static %}
 
 {% block title %}Fotogalerie - Tunisko{% endblock %}
@@ -10,9 +10,9 @@
     <p>Prohlédněte si snímky z Djerby, Houmtsouku a Krokodýlí farmy</p>
 {% endblock %}
 
-{% block back_url %}{% url 'detail_zeme' 'tunisko' %}{% endblock %}
+{% block back_url %}{% url 'detail_itineraru' slug='tunisko' %}{% endblock %}
 
-{% block main_content %}
+{% block gallery_content %}
     <h2>Tunisko a Djerba</h2>
     <div class="gallery-grid">
         <div class="gallery-card"

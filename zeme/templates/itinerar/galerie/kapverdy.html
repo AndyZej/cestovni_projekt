@@ -1,6 +1,6 @@
 
 
-{% extends '../vzhled.html' %}
+{% extends 'itinerar/galerie/galerie.html' %}
 {% load static %}
 
 {% block title %}Fotogalerie - Kapverdy{% endblock %}
@@ -10,9 +10,9 @@
     <p>Prohlédněte si snímky z ostrova Sal, Santa Marie a místních výletů</p>
 {% endblock %}
 
-{% block back_url %}{% url 'detail_zeme' 'kapverdy' %}{% endblock %}
+{% block back_url %}{% url 'detail_itineraru' slug='kapverdy' %}{% endblock %}
 
-{% block main_content %}
+{% block gallery_content %}
     <h2>Santa Maria</h2>
     <div class="gallery-grid">
         <div class="gallery-card"

@@ -1,6 +1,6 @@
 
 
-{% extends '../vzhled.html' %}
+{% extends 'itinerar/galerie/galerie.html' %}
 {% load static %}
 
 {% block title %}Fotogalerie - Egypt{% endblock %}
@@ -10,9 +10,9 @@
     <p>Prohlédněte si snímky z Hurghady, Akvária, Luxoru a historických památek</p>
 {% endblock %}
 
-{% block back_url %}{% url 'detail_zeme' 'egypt' %}{% endblock %}
+{% block back_url %}{% url 'detail_itineraru' slug='egypt' %}{% endblock %}
 
-{% block main_content %}
+{% block gallery_content %}
     <h2>Hurghada a okolí</h2>
     <div class="gallery-grid">
         <div class="gallery-card"
@@ -37,7 +37,7 @@
     <h2>Luxor</h2>
     <div class="gallery-grid">
         <div class="gallery-card"
-             data-images="{% static 'galerie/itinerar/egypt/Luxor/hatsepsut/1.jpg' %},{% static 'galerie/itinerar/egypt/Luxor/hatsepsut/2.jpg' %},{% static 'galerie/itinerar/egypt/Luxor/hatsepsut/3.jpg' %},{% static 'galerie/itinerar/egypt/Luxor/hatsepsut/4.jpg' %},{% static 'galerie/itinerar/egypt/Luxor/hatsepsut/5.jpg' %},{% static 'galerie/itinerar/egypt/Luxor/hatsepsut/6.jpg' %}"
+             data-images="{% static 'galerie/itinerar/egypt/luxor/hatsepsut/1.jpg' %},{% static 'galerie/itinerar/egypt/luxor/hatsepsut/2.jpg' %},{% static 'galerie/itinerar/egypt/luxor/hatsepsut/3.jpg' %},{% static 'galerie/itinerar/egypt/luxor/hatsepsut/4.jpg' %},{% static 'galerie/itinerar/egypt/luxor/hatsepsut/5.jpg' %},{% static 'galerie/itinerar/egypt/luxor/hatsepsut/6.jpg' %}"
              data-title="Chrám královny Hatšepsut"
              data-desc="Monumentální terasovitý zádušní chrám v Dér el-Bahri."
              onclick="openLightbox(this)">
@@ -46,7 +46,7 @@
         </div>
 
         <div class="gallery-card"
-             data-images="{% static 'galerie/itinerar/egypt/Luxor/karnak/1.jpg' %},{% static 'galerie/itinerar/egypt/Luxor/karnak/2.jpg' %},{% static 'galerie/itinerar/egypt/Luxor/karnak/3.jpg' %},{% static 'galerie/itinerar/egypt/Luxor/karnak/4.jpg' %},{% static 'galerie/itinerar/egypt/Luxor/karnak/5.jpg' %},{% static 'galerie/itinerar/egypt/Luxor/karnak/6.jpg' %},{% static 'galerie/itinerar/egypt/Luxor/karnak/7.jpg' %},{% static 'galerie/itinerar/egypt/Luxor/karnak/8.jpg' %},{% static 'galerie/itinerar/egypt/Luxor/karnak/9.jpg' %},{% static 'galerie/itinerar/egypt/Luxor/karnak/10.jpg' %}"
+             data-images="{% static 'galerie/itinerar/egypt/luxor/karnak/1.jpg' %},{% static 'galerie/itinerar/egypt/luxor/karnak/2.jpg' %},{% static 'galerie/itinerar/egypt/luxor/karnak/3.jpg' %},{% static 'galerie/itinerar/egypt/luxor/karnak/4.jpg' %},{% static 'galerie/itinerar/egypt/luxor/karnak/5.jpg' %},{% static 'galerie/itinerar/egypt/luxor/karnak/6.jpg' %},{% static 'galerie/itinerar/egypt/luxor/karnak/7.jpg' %},{% static 'galerie/itinerar/egypt/luxor/karnak/8.jpg' %},{% static 'galerie/itinerar/egypt/luxor/karnak/9.jpg' %},{% static 'galerie/itinerar/egypt/luxor/karnak/10.jpg' %}"
              data-title="Karnak"
              data-desc="Obrovský chrámový komplex zasvěcený bohu Amonovi."
              onclick="openLightbox(this)">
@@ -55,7 +55,7 @@
         </div>
 
         <div class="gallery-card"
-             data-images="{% static 'galerie/itinerar/egypt/Luxor/memnonkolosy/1.jpg' %},{% static 'galerie/itinerar/egypt/Luxor/memnonkolosy/2.jpg' %},{% static 'galerie/itinerar/egypt/Luxor/memnonkolosy/3.jpg' %},{% static 'galerie/itinerar/egypt/Luxor/memnonkolosy/4.jpg' %},{% static 'galerie/itinerar/egypt/Luxor/memnonkolosy/5.jpg' %},{% static 'galerie/itinerar/egypt/Luxor/memnonkolosy/6.jpg' %}"
+             data-images="{% static 'galerie/itinerar/egypt/luxor/memnonkolosy/1.jpg' %},{% static 'galerie/itinerar/egypt/luxor/memnonkolosy/2.jpg' %},{% static 'galerie/itinerar/egypt/luxor/memnonkolosy/3.jpg' %},{% static 'galerie/itinerar/egypt/luxor/memnonkolosy/4.jpg' %},{% static 'galerie/itinerar/egypt/luxor/memnonkolosy/5.jpg' %},{% static 'galerie/itinerar/egypt/luxor/memnonkolosy/6.jpg' %}"
              data-title="Memnonovy kolosy"
              data-desc="Dvě obří kamenné sochy faraona Amenhotepa III."
              onclick="openLightbox(this)">
@@ -64,7 +64,7 @@
         </div>
 
         <div class="gallery-card"
-             data-images="{% static 'galerie/itinerar/egypt/Luxor/nil/1.jpg' %},{% static 'galerie/itinerar/egypt/Luxor/nil/2.jpg' %},{% static 'galerie/itinerar/egypt/Luxor/nil/3.jpg' %},{% static 'galerie/itinerar/egypt/Luxor/nil/4.jpg' %},{% static 'galerie/itinerar/egypt/Luxor/nil/5.jpg' %},{% static 'galerie/itinerar/egypt/Luxor/nil/6.jpg' %}"
+             data-images="{% static 'galerie/itinerar/egypt/luxor/nil/1.jpg' %},{% static 'galerie/itinerar/egypt/luxor/nil/2.jpg' %},{% static 'galerie/itinerar/egypt/luxor/nil/3.jpg' %},{% static 'galerie/itinerar/egypt/luxor/nil/4.jpg' %},{% static 'galerie/itinerar/egypt/luxor/luxor/nil/5.jpg' %},{% static 'galerie/itinerar/egypt/luxor/nil/6.jpg' %}"
              data-title="Plavba po Nilu"
              data-desc="Malebné scenérie podél nejdelší řeky světa."
              onclick="openLightbox(this)">
@@ -73,7 +73,7 @@
         </div>
 
         <div class="gallery-card"
-             data-images="{% static 'galerie/itinerar/egypt/Luxor/udolikralu/1.jpg' %},{% static 'galerie/itinerar/egypt/Luxor/udolikralu/2.jpg' %},{% static 'galerie/itinerar/egypt/Luxor/udolikralu/3.jpg' %},{% static 'galerie/itinerar/egypt/Luxor/udolikralu/4.jpg' %},{% static 'galerie/itinerar/egypt/Luxor/udolikralu/5.jpg' %},{% static 'galerie/itinerar/egypt/Luxor/udolikralu/6.jpg' %}"
+             data-images="{% static 'galerie/itinerar/egypt/luxor/udolikralu/1.jpg' %},{% static 'galerie/itinerar/egypt/luxor/udolikralu/2.jpg' %},{% static 'galerie/itinerar/egypt/luxor/udolikralu/3.jpg' %},{% static 'galerie/itinerar/egypt/luxor/udolikralu/4.jpg' %},{% static 'galerie/itinerar/egypt/luxor/udolikralu/5.jpg' %},{% static 'galerie/itinerar/egypt/luxor/udolikralu/6.jpg' %}"
              data-title="Údolí králů"
              data-desc="Skalní hrobky starověkých egyptských panovníků."
              onclick="openLightbox(this)">

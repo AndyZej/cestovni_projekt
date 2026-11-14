@@ -1,6 +1,6 @@
 from django.db import models
 
-# Create your models here.
+# Create your zeme_views here.
 
 from django.db import models
 from django.urls import reverse

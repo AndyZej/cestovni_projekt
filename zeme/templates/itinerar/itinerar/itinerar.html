@@ -7,7 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Itinerář{% endblock %}</title>
+    <title>{% block title %}Itinerář cesty{% endblock %}</title>
 
     <!-- Google Fonts: Playfair Display a Lato -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -210,15 +210,15 @@
         </header>
 
         <div class="container">
-            <!-- TADY SE VYKRESLÍ OBSAH KONKRÉTNÍ ZEMĚ -->
+            <!-- TADY SE VYKRESLÍ OBSAH KONKRÉTNÍHO ITINERÁŘE -->
             {% block main_content %}{% endblock %}
 
-            <h2>Galerie</h2>
+            <h2>Galerie itineráře</h2>
             <div class="foto-box">
-                <a href="{% block gallery_url %}#{% endblock %}" class="btn-gallery">📷 Otevřít kompletní fotogalerii</a>
+                <a href="{% block gallery_url %}#{% endblock %}" class="btn-gallery">📷 Otevřít fotogalerii itineráře</a>
             </div>
 
-            <p><a href="{% url 'domovsky' %}" class="btn-back">← Zpět na výběr zemí (Hlavní stránka)</a></p>
+            <p><a href="{% url 'domovsky' %}" class="btn-back">← Zpět na hlavní stránku</a></p>
         </div>
     {% endblock %}
 

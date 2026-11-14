@@ -7,7 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Fotogalerie{% endblock %}</title>
+    <title>{% block title %}Fotogalerie itineráře{% endblock %}</title>
 
     <!-- Google Fonts: Playfair Display a Lato -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -234,16 +234,17 @@
 <body>
 
     <header>
-        {% block header_content %}{% endblock %}
+        <h1>{% block header_title %}{% endblock %}</h1>
+        <p>{% block header_subtitle %}{% endblock %}</p>
     </header>
 
     <div class="container">
 
         <div class="top-nav">
-            <a href="{% block back_url %}#{% endblock %}" class="btn-back">← Zpět na detail země</a>
+            <a href="{% block back_url %}#{% endblock %}" class="btn-back">← Zpět na detail itineráře</a>
         </div>
 
-        {% block main_content %}{% endblock %}
+        {% block gallery_content %}{% endblock %}
 
         <div style="margin-top: 40px;">
             <a href="{% url 'domovsky' %}" class="btn-back">← Zpět na hlavní stránku</a>
@@ -257,7 +258,7 @@
         <div id="lightbox-prev" class="lightbox-nav" onclick="changeImage(-1, event)">&#10094;</div>
         <div id="lightbox-next" class="lightbox-nav" onclick="changeImage(1, event)">&#10095;</div>
 
-        <img id="lightbox-img" src="" alt="Zvětšená fotografie">
+        <img id="lightbox-img" src="" alt="Zvětšená fotografie itineráře">
         <div id="lightbox-caption-title"></div>
         <div id="lightbox-caption-desc"></div>
     </div>
@@ -286,7 +287,7 @@
             const imgSrc = currentImages[currentIndex];
 
             lightboxImg.onerror = function() {
-                console.error("Chyba při načítání:", imgSrc);
+                console.error("Chyba při načítání obrázku itineráře:", imgSrc);
             };
 
             lightboxImg.src = imgSrc;

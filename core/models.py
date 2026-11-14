@@ -10,4 +10,4 @@ class Zeme(models.Model):
 
     def __str__(self):
         return self.nazev
-# Create your models here.
+# Create your zeme_views here.

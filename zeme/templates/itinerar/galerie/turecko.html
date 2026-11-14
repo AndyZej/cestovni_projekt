@@ -1,0 +1,70 @@
+
+
+
+{% extends 'itinerar/galerie/galerie.html' %}
+{% load static %}
+
+{% block title %}Fotogalerie - Egypt{% endblock %}
+
+{% block header_content %}
+    <h1>🇪🇬 Fotogalerie - Egypt</h1>
+    <p>Prohlédněte si snímky z pyramidy v Gíze, údolí králů, Rudého moře a místních památek</p>
+{% endblock %}
+
+{% block back_url %}{% url 'detail_itineraru' slug='egypt' %}{% endblock %}
+
+{% block gallery_content %}
+    <h2>Káhira a Gíza</h2>
+    <div class="gallery-grid">
+        <div class="gallery-card"
+             data-images="{% static 'galerie/itinerar/egypt/kahira/pyramidy/1.jpg' %},{% static 'galerie/itinerar/egypt/kahira/pyramidy/2.jpg' %}"
+             data-title="Pyramidy v Gíze"
+             data-desc="Slavné pyramidy a Sfinga."
+             onclick="openLightbox(this)">
+            <div class="card-icon">🔺</div>
+            <div class="card-label">Pyramidy</div>
+        </div>
+
+        <div class="gallery-card"
+             data-images="{% static 'galerie/itinerar/egypt/kahira/muzeum/1.jpg' %},{% static 'galerie/itinerar/egypt/kahira/muzeum/2.jpg' %}"
+             data-title="Egyptské muzeum"
+             data-desc="Historické sbírky a poklady faraonů."
+             onclick="openLightbox(this)">
+            <div class="card-icon">🏛️</div>
+            <div class="card-label">Muzeum</div>
+        </div>
+    </div>
+
+    <h2>Luxor</h2>
+    <div class="gallery-grid">
+        <div class="gallery-card"
+             data-images="{% static 'galerie/itinerar/egypt/luxor/udolikralu/1.jpg' %},{% static 'galerie/itinerar/egypt/luxor/udolikralu/2.jpg' %}"
+             data-title="Údolí králů"
+             data-desc="Hrobky starověkých panovníků."
+             onclick="openLightbox(this)">
+            <div class="card-icon">🏺</div>
+            <div class="card-label">Údolí králů</div>
+        </div>
+
+        <div class="gallery-card"
+             data-images="{% static 'galerie/itinerar/egypt/luxor/karnak/1.jpg' %},{% static 'galerie/itinerar/egypt/luxor/karnak/2.jpg' %}"
+             data-title="Chrám Karnak"
+             data-desc="Impozantní chrámový komplex."
+             onclick="openLightbox(this)">
+            <div class="card-icon">🏛️</div>
+            <div class="card-label">Karnak</div>
+        </div>
+    </div>
+
+    <h2>Rudé moře</h2>
+    <div class="gallery-grid">
+        <div class="gallery-card"
+             data-images="{% static 'galerie/itinerar/egypt/misto/snorkeling/1.jpg' %},{% static 'galerie/itinerar/egypt/misto/snorkeling/2.jpg' %}"
+             data-title="Šnorchlování a potápění"
+             data-desc="Podmořský svět a korálové útesy."
+             onclick="openLightbox(this)">
+            <div class="card-icon">🐠</div>
+            <div class="card-label">Podmořský svět</div>
+        </div>
+    </div>
+{% endblock %}
