@@ -6,19 +6,23 @@
 
 {% block content %}
     <h1 class="main-heading">Vítejte ve světě mých cestovatelských radostí!</h1>
-    <p class="sub-heading" style="font-family: var(--font-script); font-size: 22px; line-height: 1.5; margin-bottom: 30px; color: #5c4a38; opacity: 0.95; max-width: 850px;">
+    <p class="sub-heading">
         Nemusíte mít procestovaný celý svět, abyste mohli milovat cestování. Podělím se s vámi o své osobní zážitky, praktické tipy a oblíbená místa, která stojí za to navštívit. Pojďme načerpat inspiraci na vaši příští cestu!
     </p>
 
-    <!-- Hlavní dvě tlačítka (Seznam zemí a Itineráře) -->
-    <div style="display: flex; justify-content: center; align-items: center; gap: 20px; flex-wrap: wrap; margin-bottom: 25px;">
-        <a href="{% url 'seznam_zemi' %}" class="split-btn" style="display: inline-flex; align-items: center; gap: 10px; background: var(--panel-bg); backdrop-filter: blur(12px); border: 2px solid var(--gold-accent); color: white; padding: 12px 26px; font-size: 1rem; font-weight: 600; border-radius: 40px; text-decoration: none; cursor: pointer; box-shadow: var(--glass-shadow); transition: all 0.3s ease;">
-            <span style="font-size: 1.2rem;">🌍</span>
+    <!-- Tlačítka (Seznam zemí, Itineráře a Zprávy) -->
+    <div class="split-buttons-wrapper">
+        <a href="{% url 'seznam_zemi' %}" class="split-btn">
+            <span class="btn-icon">🌍</span>
             <span>Seznam zemí</span>
         </a>
-        <a href="{% url 'seznam_itineraru' %}" class="split-btn" style="display: inline-flex; align-items: center; gap: 10px; background: var(--panel-bg); backdrop-filter: blur(12px); border: 2px solid var(--gold-accent); color: white; padding: 12px 26px; font-size: 1rem; font-weight: 600; border-radius: 40px; text-decoration: none; cursor: pointer; box-shadow: var(--glass-shadow); transition: all 0.3s ease;">
-            <span style="font-size: 1.2rem;">📅</span>
+        <a href="{% url 'seznam_itineraru' %}" class="split-btn">
+            <span class="btn-icon">📅</span>
             <span>Itineráře cest</span>
+        </a>
+        <a href="{% url 'seznam_zprav' %}" class="split-btn">
+            <span class="btn-icon">✉️</span>
+            <span>Zprávy</span>
         </a>
     </div>
 {% endblock %}

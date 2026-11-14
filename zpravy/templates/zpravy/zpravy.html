@@ -1,0 +1,25 @@
+
+
+{% extends 'base.html' %}
+
+{% block title %}Komunitní diskuze - Vyberte zemi{% endblock %}
+
+{% block content %}
+    <h1 class="main-heading">💬 Komunitní diskuze podle zemí</h1>
+    <p class="sub-heading">Vyberte zemi a sdílejte své zážitky, dotazy nebo tipy s ostatními cestovateli.</p>
+
+    <div class="split-buttons-wrapper">
+        {% for z in vsechny_zeme %}
+            <a href="{% url 'diskuze_zeme' z.slug %}" class="split-btn">
+                <span class="btn-icon">🌍</span>
+                <span>{{ z.nazev }}</span>
+            </a>
+        {% empty %}
+            <p class="sub-heading">Zatím nejsou k dispozici žádné země k diskuzi.</p>
+        {% endfor %}
+    </div>
+
+    <div style="margin-top: 20px;">
+        <a href="{% url 'domovsky' %}" class="split-btn" style="font-size: 0.9rem; padding: 10px 22px;">← Zpět na hlavní stránku</a>
+    </div>
+{% endblock %}

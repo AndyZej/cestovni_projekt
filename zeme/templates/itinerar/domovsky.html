@@ -5,24 +5,123 @@
 
 {% block title %}Itineráře cest - Cestovatelské radosti{% endblock %}
 
-{% block content %}
-    <div class="center-container" style="position: relative; top: auto; left: auto; transform: none; background: rgba(255, 255, 255, 0.85); border: 2px solid var(--gold-accent); border-radius: 20px; box-shadow: var(--glass-shadow); padding: 40px; margin: 0 auto;">
-        <h1 class="main-heading">📅 Itineráře cest</h1>
+{% block extra_head %}
+<style>
+    .itinerary-card-panel {
+        background: rgba(255, 255, 255, 0.92);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 2px solid var(--gold-accent);
+        border-radius: 24px;
+        padding: 40px 50px;
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+        width: 100%;
+        max-width: 820px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
 
-        <div class="countries-grid" style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; width: 100%; margin-bottom: 30px;">
-            {% for it in itinerare %}
-                <a href="{% url 'detail_itineraru' it.slug %}" class="country-card" style="background: rgba(30, 35, 45, 0.9); backdrop-filter: blur(12px); border: 2px solid var(--gold-accent); color: white; padding: 20px 25px; font-size: 1.1rem; font-weight: 600; border-radius: 20px; text-decoration: none; cursor: pointer; box-shadow: var(--glass-shadow); width: 200px; display: flex; flex-direction: column; align-items: center; gap: 6px;">
-                    <span>{{ it.nazev }}</span>
-                    <p style="font-size: 0.8rem; opacity: 0.8; font-weight: 300;">Zobrazit itinerář</p>
-                </a>
-            {% empty %}
-                <p style="color: #4a3b2c; font-size: 1.1rem;">Zatím nejsou přidány žádné itineráře.</p>
-            {% endfor %}
-        </div>
+    .itinerary-title {
+        font-family: var(--font-script);
+        font-size: 42px;
+        color: #3d3127;
+        margin-bottom: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        font-weight: 700;
+    }
 
-        <div>
-            <a href="{% url 'domovsky' %}" class="back-btn" style="display: inline-flex; align-items: center; gap: 10px; background: rgba(30, 35, 45, 0.9); border: 1px solid var(--gold-accent); color: white; padding: 12px 28px; font-size: 0.95rem; font-weight: 600; border-radius: 30px; text-decoration: none;">← Zpět na hlavní stránku</a>
-        </div>
-    </div>
+    .itinerary-grid {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+        width: 100%;
+        max-width: 660px;
+        margin-bottom: 32px;
+    }
+
+    .country-box {
+        background: #333942;
+        border: 2px solid var(--gold-accent);
+        border-radius: 18px;
+        width: 195px;
+        padding: 20px 16px;
+        text-decoration: none;
+        color: #ffffff;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+        transition: all 0.25s ease;
+    }
+
+    .country-box:hover {
+        background: #252a32;
+        transform: translateY(-4px);
+        box-shadow: 0 10px 24px rgba(197, 160, 89, 0.35);
+    }
+
+    .country-box-name {
+        font-size: 1.15rem;
+        font-weight: 600;
+        color: #ffffff;
+    }
+
+    .country-box-sub {
+        font-size: 0.85rem;
+        color: #cbd5e1;
+        font-weight: 400;
+    }
+
+    .btn-back-pill {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        background: #333942;
+        border: 2px solid var(--gold-accent);
+        color: #ffffff;
+        padding: 12px 28px;
+        border-radius: 30px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.95rem;
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+        transition: all 0.25s ease;
+    }
+
+    .btn-back-pill:hover {
+        background: var(--gold-accent);
+        color: #0f172a;
+        transform: translateY(-2px);
+    }
+</style>
 {% endblock %}
 
+{% block content %}
+<div class="itinerary-card-panel">
+    <h1 class="itinerary-title">
+        <span>📅</span>
+        <span>Seznam itinerářů cest</span>
+    </h1>
+
+    <div class="itinerary-grid">
+        {% for itinerar in itinerare %}
+            <a href="{% url 'detail_itineraru' itinerar.slug %}" class="country-box">
+                <span class="country-box-name">{{ itinerar.nazev }}</span>
+                <span class="country-box-sub">Zobrazit detail</span>
+            </a>
+        {% endfor %}
+    </div>
+
+    <a href="/" class="btn-back-pill">
+        <span>← Zpět na hlavní stránku</span>
+    </a>
+</div>
+{% endblock %}

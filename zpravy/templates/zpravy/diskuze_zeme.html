@@ -1,0 +1,37 @@
+
+
+
+{% extends 'base.html' %}
+
+{% block title %}Diskuze: {{ zeme.nazev }}{% endblock %}
+
+{% block content %}
+    <h1 class="main-heading">💬 Diskuze: {{ zeme.nazev }}</h1>
+
+    <!-- Formulář pro vložení zprávy -->
+    <form method="POST" style="width: 100%; max-width: 600px; margin-bottom: 25px;">
+        {% csrf_token %}
+        <div style="display: flex; gap: 10px;">
+            <input type="text" name="text" required placeholder="Napiš zprávu nebo dotaz pro komunitu..."
+                   style="flex: 1; padding: 12px 18px; border-radius: 30px; border: 2px solid var(--gold-accent); background: rgba(30, 35, 45, 0.9); color: white; outline: none;">
+            <button type="submit" class="split-btn" style="padding: 12px 24px;">Odeslat</button>
+        </div>
+    </form>
+
+    <!-- Výpis komunitních zpráv -->
+    <div style="width: 100%; max-width: 650px; max-height: 40vh; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; text-align: left; margin-bottom: 25px; padding-right: 5px;">
+        {% for z in zpravy %}
+            <div class="glass-panel" style="padding: 15px 20px; border-radius: 15px;">
+                <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--gold-accent); margin-bottom: 5px;">
+                    <strong>👤 {{ z.uzivatel.username }}</strong>
+                    <span>{{ z.cas_odeslani|date:"d. m. Y H:i" }}</span>
+                </div>
+                <p style="font-size: 0.95rem; line-height: 1.4;">{{ z.text }}</p>
+            </div>
+        {% empty %}
+            <p class="sub-heading" style="text-align: center;">Zatím tu nejsou žádné příspěvky. Buď první!</p>
+        {% endfor %}
+    </div>
+
+    <a href="{% url 'seznam_zprav' %}" class="split-btn" style="font-size: 0.9rem; padding: 10px 22px;">← Zpět na výběr zemí</a>
+{% endblock %}

@@ -10,7 +10,7 @@
         Nemusíte mít procestovaný celý svět, abyste mohli milovat cestování. Podělím se s vámi o své osobní zážitky, praktické tipy a oblíbená místa, která stojí za to navštívit. Pojďme načerpat inspiraci na vaši příští cestu!
     </p>
 
-    <!-- Hlavní dvě tlačítka (Seznam zemí a Itineráře) -->
+    <!-- Tlačítka (Seznam zemí, Itineráře a Zprávy) -->
     <div class="split-buttons-wrapper">
         <a href="{% url 'seznam_zemi' %}" class="split-btn">
             <span class="btn-icon">🌍</span>
@@ -19,6 +19,10 @@
         <a href="{% url 'seznam_itineraru' %}" class="split-btn">
             <span class="btn-icon">📅</span>
             <span>Itineráře cest</span>
+        </a>
+        <a href="{% url 'seznam_zprav' %}" class="split-btn">
+            <span class="btn-icon">✉️</span>
+            <span>Zprávy</span>
         </a>
     </div>
 {% endblock %}

@@ -19,7 +19,7 @@ def detail_itineraru_view(request, slug):
     """Dynamicky otevře HTML šablonu pro itinerář podle slugu"""
     template_map = {
         'turecko': 'itinerar/itinerar/turecko.html',
-        'kapverdy': 'itinerar/itinerar/kapverdy.html',  # Pozor na velké K podle obrázku!
+        'kapverdy': 'itinerar/itinerar/Kapverdy.html',
         'tunisko': 'itinerar/itinerar/tunisko.html',
         'egypt': 'itinerar/itinerar/egypt.html',
     }
