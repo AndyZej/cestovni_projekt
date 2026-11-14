@@ -1,0 +1,30 @@
+
+
+{% extends 'zpravy/base_komunita.html' %}
+
+{% block title %}Komunita Kapverdy - Cestovatelské radosti{% endblock %}
+
+{% block chat_heading %}Komunita: Kapverdy & Ostrovy{% endblock %}
+
+{% block chat_icon %}🇨🇻{% endblock %}
+
+{% block chat_subtitle %}Cestovatelská diskuze – Kapverdy{% endblock %}
+
+{% block chat_body %}
+    <div class="flex items-end gap-2 max-w-[80%] sm:max-w-[70%]">
+        <div class="chat-bubble-in p-3.5 text-gray-900">
+            <p class="font-semibold text-xs text-[#c5a059] mb-1">Ondra Cestovatel</p>
+            <p>Zdravím všechny! Který ostrov na Kapverdách je nejlepší na klidnou dovolenou a pláže?</p>
+            <div class="text-xs text-gray-400 text-right mt-1.5">11:05</div>
+        </div>
+    </div>
+
+    <div class="flex items-end gap-2 max-w-[80%] sm:max-w-[70%] ml-auto flex-row-reverse">
+        <div class="chat-bubble-out p-3.5 text-gray-900">
+            <p>Ahoj, Sal nebo Boa Vista jsou na nádherné pláže naprosto perfektní!</p>
+            <div class="text-xs text-gray-500 text-right mt-1.5 flex items-center justify-end gap-1">
+                11:12 <span class="text-sky-500 font-bold">&#10004;&#10004;</span>
+            </div>
+        </div>
+    </div>
+{% endblock %}

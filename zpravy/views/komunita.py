@@ -1,6 +1,4 @@
 
-
-
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from ..models import KomunitniZprava
@@ -12,7 +10,14 @@ def komunita_rozcestnik(request):
 
 @login_required
 def diskuze_zeme(request, slug):
-    vybrana_zeme = get_object_or_404(Zeme, slug=slug)
+    # Pokusíme se najít zemi podle slugu nebo podle názvu (převedeného na malá písmena)
+    # Pokud v DB neexistuje, automaticky ji vytvoříme, aby nikdy nebyla 404 chyba!
+    nazev_opraveny = slug.capitalize() # např. 'kapverdy' -> 'Kapverdy'
+
+    vybrana_zeme, created = Zeme.objects.get_or_create(
+        slug=slug,
+        defaults={'nazev': nazev_opraveny}
+    )
 
     if request.method == 'POST':
         text_zpravy = request.POST.get('text')

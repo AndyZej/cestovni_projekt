@@ -1,0 +1,30 @@
+
+
+{% extends 'zpravy/base_komunita.html' %}
+
+{% block title %}Komunita Turecko - Cestovatelské radosti{% endblock %}
+
+{% block chat_heading %}Komunita: Turecko & Pamukkale{% endblock %}
+
+{% block chat_icon %}🇹🇷{% endblock %}
+
+{% block chat_subtitle %}Cestovatelská diskuze – Turecko{% endblock %}
+
+{% block chat_body %}
+    <div class="flex items-end gap-2 max-w-[80%] sm:max-w-[70%]">
+        <div class="chat-bubble-in p-3.5 text-gray-900">
+            <p class="font-semibold text-xs text-[#c5a059] mb-1">Jan Cestovatel</p>
+            <p>Ahoj! Jaké hotely v Antalyi nebo v Side byste doporučili na rodinnou dovolenou?</p>
+            <div class="text-xs text-gray-400 text-right mt-1.5">15:30</div>
+        </div>
+    </div>
+
+    <div class="flex items-end gap-2 max-w-[80%] sm:max-w-[70%] ml-auto flex-row-reverse">
+        <div class="chat-bubble-out p-3.5 text-gray-900">
+            <p>Ahoj, my byli v Side a bylo to naprosto úžasné, doporučuji klidnější resorty blízko pláže.</p>
+            <div class="text-xs text-gray-500 text-right mt-1.5 flex items-center justify-end gap-1">
+                15:35 <span class="text-sky-500 font-bold">&#10004;&#10004;</span>
+            </div>
+        </div>
+    </div>
+{% endblock %}
