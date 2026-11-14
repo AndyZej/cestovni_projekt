@@ -1,0 +1,126 @@
+
+
+{% extends 'base.html' %}
+
+{% block title %}Zprávy a komunita - Cestovatelské radosti{% endblock %}
+
+{% block extra_head %}
+<style>
+    .center-container {
+        background: rgba(255, 255, 255, 0.85);
+        border: 2px solid var(--gold-accent);
+        border-radius: 20px;
+        box-shadow: var(--glass-shadow);
+        padding: 40px;
+    }
+
+    .main-heading {
+        font-size: 42px;
+        margin-bottom: 30px;
+        color: #4a3b2c;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+    }
+
+    .countries-grid {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        flex-wrap: wrap;
+        width: 100%;
+        margin-bottom: 30px;
+    }
+
+    .country-card {
+        background: rgba(30, 35, 45, 0.9);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 2px solid var(--gold-accent);
+        color: white;
+        padding: 20px 25px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        border-radius: 20px;
+        text-decoration: none;
+        cursor: pointer;
+        box-shadow: var(--glass-shadow);
+        transition: all 0.3s ease;
+        width: 200px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .country-card:hover {
+        background-color: var(--gold-accent);
+        color: #0f172a;
+        transform: translateY(-5px);
+        box-shadow: 0 12px 30px rgba(197, 160, 89, 0.4);
+    }
+
+    .country-card p {
+        font-size: 0.8rem;
+        opacity: 0.8;
+        font-weight: 300;
+    }
+
+    .back-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        background: rgba(30, 35, 45, 0.9);
+        border: 1px solid var(--gold-accent);
+        color: white;
+        padding: 12px 28px;
+        font-size: 0.95rem;
+        font-weight: 600;
+        border-radius: 30px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        box-shadow: var(--glass-shadow);
+    }
+
+    .back-btn:hover {
+        background-color: var(--gold-accent);
+        color: #0f172a;
+        transform: translateY(-2px);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+    <h1 class="main-heading">✉️ Zprávy</h1>
+
+    <div class="countries-grid">
+        {% if vsechny_zeme %}
+            {% for zeme in vsechny_zeme %}
+                <a href="{% url 'diskuze_zeme' zeme.slug %}" class="country-card">
+                    <span>{{ zeme.nazev }}</span>
+                    <p>Otevřít diskuzi</p>
+                </a>
+            {% endfor %}
+        {% else %}
+            {# Záložní ruční karty, dokud v databázi nejsou přidané země #}
+            <a href="{% url 'diskuze_zeme' 'turecko' %}" class="country-card">
+                <span>Turecko</span>
+                <p>Otevřít diskuzi</p>
+            </a>
+            <a href="{% url 'diskuze_zeme' 'kapverdy' %}" class="country-card">
+                <span>Kapverdy</span>
+                <p>Otevřít diskuzi</p>
+            </a>
+            <a href="{% url 'diskuze_zeme' 'tunisko' %}" class="country-card">
+                <span>Tunisko</span>
+                <p>Otevřít diskuzi</p>
+            </a>
+            <a href="{% url 'diskuze_zeme' 'egypt' %}" class="country-card">
+                <span>Egypt</span>
+                <p>Otevřít diskuzi</p>
+            </a>
+        {% endif %}
+    </div>
+
+    <div>
+        <a href="{% url 'domov' %}" class="back-btn">← Zpět na hlavní stránku</a>
+    </div>
+{% endblock %}

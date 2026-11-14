@@ -1,0 +1,55 @@
+
+
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <title>Cestovní podpora – Chat</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #efeae2; margin: 0; padding: 20px; }
+        .whatsapp-chat { max-width: 400px; height: 600px; margin: auto; background: #efeae2; border-radius: 8px; display: flex; flex-direction: column; box-shadow: 0 4px 12px rgba(0,0,0,0.15); overflow: hidden; }
+        .chat-header { background: #00a884; color: white; padding: 15px; font-weight: bold; display: flex; align-items: center; }
+        .chat-body { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; background-image: url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png'); }
+        .message { max-width: 75%; padding: 8px 12px; border-radius: 7.5px; font-size: 14px; position: relative; word-wrap: break-word; }
+        .message.sent { background: #d9fdd3; align-self: flex-end; border-top-right-radius: 0; }
+        .message.received { background: #ffffff; align-self: flex-start; border-top-left-radius: 0; }
+        .chat-footer { padding: 10px; background: #f0f2f5; display: flex; gap: 8px; }
+        .chat-footer input { flex: 1; padding: 10px 15px; border: none; border-radius: 20px; outline: none; }
+        .chat-footer button { background: #00a884; color: white; border: none; padding: 10px 16px; border-radius: 50%; cursor: pointer; }
+        .time { font-size: 10px; color: #667781; float: right; margin-left: 8px; margin-top: 4px; }
+    </style>
+</head>
+<body>
+
+<div class="whatsapp-chat">
+    <div class="chat-header">Cestovní Podpora (Online)</div>
+    <div class="chat-body" id="chatBody">
+        {% for zpráva in zpravy %}
+            {% if zpráva.sender == request.user %}
+                <div class="message sent">
+                    {{ zpráva.message }}
+                    <span class="time">{{ zpráva.timestamp|time:"H:i" }} ✓✓</span>
+                </div>
+            {% else %}
+                <div class="message received">
+                    {{ zpráva.message }}
+                    <span class="time">{{ zpráva.timestamp|time:"H:i" }}</span>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+    <form class="chat-footer" method="POST">
+        {% csrf_token %}
+        <input type="text" name="message" placeholder="Napsat zprávu..." required autocomplete="off">
+        <button type="submit">➤</button>
+    </form>
+</div>
+
+<script>
+    // Automatický scroll dolů na nejnovější zprávu
+    const chatBody = document.getElementById('chatBody');
+    chatBody.scrollTop = chatBody.scrollHeight;
+</script>
+
+</body>
+</html>
