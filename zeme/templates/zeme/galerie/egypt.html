@@ -1,18 +1,18 @@
 
 
 
-{% extends 'zeme/galerie/zeme.html' %}
+{% extends 'zeme/galerie/galerie.html' %}
 {% load static %}
 
-{% block title %}Fotogalerie - Egypt (Země){% endblock %}
+{% block title %}Fotogalerie - egypt (Země){% endblock %}
 
-{% block header_title %}🇪🇬 Egypt - Země{% endblock %}
-{% block header_subtitle %}Prohlédněte si hlavní tematické galerie z Egypta: Hurghada, kultura, moře a památky{% endblock %}
+{% block header_title %}🇪🇬 egypt - Země{% endblock %}
+{% block header_subtitle %}Prohlédněte si hlavní tematické galerie z egypta: Hurghada, kultura, moře a památky{% endblock %}
 
 {% block back_url %}{% url 'detail_zeme' 'egypt' %}{% endblock %}
 
 {% block gallery_content %}
-    <h2>Egypt - Galerie země</h2>
+    <h2>egypt - Galerie země</h2>
     <div class="gallery-grid">
         <div class="gallery-card"
              data-images="{% static 'galerie/zeme/egypt/hurgada/1.jpg' %},{% static 'galerie/zeme/egypt/hurgada/2.jpg' %},{% static 'galerie/zeme/egypt/hurgada/3.jpg' %},{% static 'galerie/zeme/egypt/hurgada/4.jpg' %},{% static 'galerie/zeme/egypt/hurgada/5.jpg' %},{% static 'galerie/zeme/egypt/hurgada/6.jpg' %},{% static 'galerie/zeme/egypt/hurgada/7.jpg' %},{% static 'galerie/zeme/egypt/hurgada/8.jpg' %},{% static 'galerie/zeme/egypt/hurgada/9.jpg' %},{% static 'galerie/zeme/egypt/hurgada/10.jpg' %}"

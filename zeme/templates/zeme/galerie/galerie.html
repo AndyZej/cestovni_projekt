@@ -1,0 +1,337 @@
+
+
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Fotogalerie - Cestovatelské radosti{% endblock %}</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Charm:wght@400;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        @font-face {
+            font-family: 'Fairwater Script';
+            src: local('Fairwater Script'), local('FairwaterScript');
+            font-display: swap;
+        }
+
+        :root {
+            --font-script: 'Fairwater Script', 'Charm', cursive;
+            --font-sans: 'Montserrat', sans-serif;
+            --panel-bg: rgba(30, 35, 45, 0.9);
+            --panel-border: rgba(197, 160, 89, 0.3);
+            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.25);
+            --text-color: #ffffff;
+            --gold-accent: #c5a059;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            user-select: none;
+        }
+
+        body, html {
+            height: 100%;
+            font-family: var(--font-sans);
+            color: var(--text-color);
+            overflow-x: hidden;
+            background-color: #fbf9f4;
+        }
+
+        #bg-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        #bg-overlay::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(251, 249, 244, 0.85);
+        }
+
+        #bubble-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 1;
+            pointer-events: auto;
+        }
+
+        /* Hlavní kontejner galerie */
+        .gallery-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            max-width: 1000px;
+            max-height: 85vh;
+            overflow-y: auto;
+            text-align: center;
+            z-index: 5;
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid var(--gold-accent);
+            border-radius: 20px;
+            box-shadow: var(--glass-shadow);
+            padding: 40px;
+        }
+
+        .main-heading {
+            font-family: var(--font-script);
+            font-size: 38px;
+            line-height: 1.2;
+            margin-bottom: 10px;
+            color: #4a3b2c;
+            font-weight: 700;
+        }
+
+        .sub-heading {
+            font-size: 0.95rem;
+            color: #6c584c;
+            margin-bottom: 30px;
+            font-weight: 400;
+        }
+
+        /* Mřížka pro tematické karty galerií */
+        .gallery-grid {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            width: 100%;
+            margin-bottom: 30px;
+        }
+
+        .gallery-card {
+            background: var(--panel-bg);
+            backdrop-filter: blur(12px);
+            border: 2px solid var(--gold-accent);
+            color: white;
+            padding: 25px 20px;
+            border-radius: 20px;
+            text-decoration: none;
+            cursor: pointer;
+            box-shadow: var(--glass-shadow);
+            transition: all 0.3s ease;
+            width: 210px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .gallery-card:hover {
+            background-color: var(--gold-accent);
+            color: #0f172a;
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(197, 160, 89, 0.4);
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+        }
+
+        .card-label {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--panel-bg);
+            border: 1px solid var(--gold-accent);
+            color: white;
+            padding: 12px 28px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            border-radius: 30px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: var(--glass-shadow);
+            margin-top: 10px;
+        }
+
+        .back-btn:hover {
+            background-color: var(--gold-accent);
+            color: #0f172a;
+            transform: translateY(-2px);
+        }
+
+        /* Lightbox overlay pro zobrazení fotek */
+        #lightbox {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 999;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        #lightbox img {
+            max-width: 85%;
+            max-height: 75vh;
+            border-radius: 10px;
+            border: 2px solid var(--gold-accent);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .lightbox-controls {
+            margin-top: 15px;
+            display: flex;
+            gap: 20px;
+        }
+
+        .lightbox-btn {
+            background: var(--gold-accent);
+            color: #0f172a;
+            border: none;
+            padding: 10px 20px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .lightbox-btn:hover {
+            opacity: 0.85;
+        }
+
+        #lightbox-close {
+            position: absolute;
+            top: 25px; right: 35px;
+            font-size: 40px;
+            color: white;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="bg-overlay"></div>
+    <canvas id="bubble-canvas"></canvas>
+
+    <div class="gallery-container">
+        <h1 class="main-heading">{% block header_title %}Fotogalerie{% endblock %}</h1>
+        <p class="sub-heading">{% block header_subtitle %}Prohlédněte si momentky a vzpomínky z cest.{% endblock %}</p>
+
+        <!-- Sem se vnoří obsah konkrétní galerie (např. egypt.html) -->
+        {% block gallery_content %}
+        {% endblock %}
+
+        <div>
+            <a href="{% block back_url %}{% url 'seznam_zemi' %}{% endblock %}" class="back-btn">← Zpět na detail země</a>
+        </div>
+    </div>
+
+    <!-- Jednoduchý Lightbox okno -->
+    <div id="lightbox" onclick="closeLightbox(event)">
+        <span id="lightbox-close" onclick="closeLightboxDirect()">&times;</span>
+        <img id="lightbox-img" src="" alt="Obrázek galerie">
+        <div class="lightbox-controls">
+            <button class="lightbox-btn" onclick="prevImage(event)">← Předchozí</button>
+            <button class="lightbox-btn" onclick="nextImage(event)">Další →</button>
+        </div>
+    </div>
+
+    <!-- Skript pro bubliny a lightbox -->
+    <script>
+        // Bubliny animace
+        const canvas = document.getElementById('bubble-canvas');
+        const ctx = canvas.getContext('2d');
+        let width = canvas.width = window.innerWidth;
+        let height = canvas.height = window.innerHeight;
+
+        window.addEventListener('resize', () => {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        });
+
+        class Bubble {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = height + Math.random() * 100;
+                this.radius = Math.random() * 30 + 10;
+                this.vy = -(Math.random() * 0.5 + 0.2);
+                this.color = `hsla(${Math.random() * 15 + 35}, 60%, 75%, ${Math.random() * 0.2 + 0.1})`;
+            }
+            update() {
+                this.y += this.vy;
+                if (this.y + this.radius < 0) {
+                    this.y = height + this.radius;
+                    this.x = Math.random() * width;
+                }
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.fill();
+            }
+        }
+
+        const bubbles = Array.from({ length: 25 }, () => new Bubble());
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+            bubbles.forEach(b => b.update());
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        // Lightbox logika pro otevírání fotek z data-images atributu karet
+        let currentImages = [];
+        let currentIndex = 0;
+
+        function openLightbox(element) {
+            const imagesAttr = element.getAttribute('data-images');
+            if (!imagesAttr) return;
+            currentImages = imagesAttr.split(',').map(img => img.trim());
+            currentIndex = 0;
+
+            document.getElementById('lightbox-img').src = currentImages[currentIndex];
+            document.getElementById('lightbox').style.display = 'flex';
+        }
+
+        function closeLightbox(e) {
+            if (e.target.id === 'lightbox') {
+                document.getElementById('lightbox').style.display = 'none';
+            }
+        }
+
+        function closeLightboxDirect() {
+            document.getElementById('lightbox').style.display = 'none';
+        }
+
+        function nextImage(e) {
+            e.stopPropagation();
+            if (currentImages.length === 0) return;
+            currentIndex = (currentIndex + 1) % currentImages.length;
+            document.getElementById('lightbox-img').src = currentImages[currentIndex];
+        }
+
+        function prevImage(e) {
+            e.stopPropagation();
+            if (currentImages.length === 0) return;
+            currentIndex = (currentIndex - 1 + currentImages.length) % currentImages.length;
+            document.getElementById('lightbox-img').src = currentImages[currentIndex];
+        }
+    </script>
+</body>
+</html>

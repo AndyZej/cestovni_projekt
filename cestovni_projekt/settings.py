@@ -66,7 +66,7 @@ ROOT_URLCONF = 'cestovni_projekt.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],  # <--- Tady přidej tuto cestu
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

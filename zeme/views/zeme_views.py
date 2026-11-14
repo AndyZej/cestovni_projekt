@@ -1,7 +1,6 @@
 
 
 
-
 from django.shortcuts import render
 from django.http import Http404
 from ..models import Zeme
@@ -12,20 +11,20 @@ def domovsky_view(request):
 
 def galerie_view(request):
     """Stránka hlavní fotogalerie"""
-    return render(request, 'zeme/galerie.html')
+    return render(request, 'zeme/zeme/galerie.html')
 
 def seznam_zemi_view(request):
     """Seznam všech zemí z databáze"""
-    zemes = Zeme.objects.all()
-    return render(request, 'zeme/seznam_zemi.html', {'zemes': zemes})
+    vsechny_zeme = Zeme.objects.all()
+    return render(request, 'zeme/seznam_zemi.html', {'vsechny_zeme': vsechny_zeme})
 
 def detail_zeme_view(request, slug):
     """Dynamicky otevře HTML šablonu pro zemi podle slugu"""
     template_map = {
-        'turecko': 'zeme/turecko.html',
-        'kapverdy': 'zeme/Kapverdy.html',
-        'tunisko': 'zeme/tunisko.html',
-        'egypt': 'zeme/egypt.html',
+        'turecko': 'zeme/zeme/turecko.html',
+        'kapverdy': 'zeme/zeme/kapverdy.html',
+        'tunisko': 'zeme/zeme/tunisko.html',
+        'egypt': 'zeme/zeme/egypt.html',
     }
 
     template_name = template_map.get(slug)

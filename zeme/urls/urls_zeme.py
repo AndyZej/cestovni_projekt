@@ -19,12 +19,12 @@ urlpatterns = [
     # Seznam zemí
     path('země/', seznam_zemi_view, name='seznam_zemi'),
 
-    # Detail jednotlivých zemí
-    path('zeme/<slug:slug>/', detail_zeme_view, name='detail_zeme'),
-
-    # Samostatné galerie jednotlivých zemí
+    # SPECIFICKÉ CESTY PRO GALERIE (musí být před slugem!)
     path('galerie/kapverdy/', kapverdy_galerie_view, name='kapverdy_galerie'),
     path('galerie/egypt/', egypt_galerie_view, name='egypt_galerie'),
     path('galerie/tunisko/', tunisko_galerie_view, name='tunisko_galerie'),
     path('galerie/turecko/', turecko_galerie_view, name='turecko_galerie'),
+
+    # OBECNÝ SLUG PRO DETAIL ZEMĚ (až nakonec)
+    path('zeme/<slug:slug>/', detail_zeme_view, name='detail_zeme'),
 ]
