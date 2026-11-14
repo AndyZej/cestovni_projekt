@@ -1,22 +1,347 @@
+
+
 <!DOCTYPE html>
 <html lang="cs">
-<head><meta charset="UTF-8"><title>Zprávy s administrátorem</title></head>
-<body>
-    <h1>Komunikace s administrátorem</h1>
-    <form method="POST">
-        {% csrf_token %}
-        <textarea name="zprava" rows="4" cols="50" placeholder="Napište zprávu administrátorovi..."></textarea><br>
-        <button type="submit">Odeslat zprávu</button>
-    </form>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Chat s administrátorem - Cestovatelské radosti{% endblock %}</title>
 
-    <h2>Historie vašich zpráv:</h2>
-    <ul>
-        {% for z in zpravy %}
-            <li><strong>{{ z.cas_odeslani|date:"d.m.Y H:i" }}:</strong> {{ z.zprava }}</li>
-        {% empty %}
-            <li>Zatím jste neposlali žádné zprávy.</li>
-        {% endfor %}
-    </ul>
-    <p><a href="{% url 'domov' %}">Zpět na úvodní stránku</a></p>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Charm:wght@400;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        @font-face {
+            font-family: 'Fairwater Script';
+            src: local('Fairwater Script'), local('FairwaterScript');
+            font-display: swap;
+        }
+
+        :root {
+            --font-script: 'Fairwater Script', 'Charm', cursive;
+            --font-sans: 'Montserrat', sans-serif;
+            --gold-accent: #c5a059;
+            --gold-light: #dfc285;
+            --glass-bg: rgba(255, 255, 255, 0.90);
+            --glass-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body, html {
+            height: 100vh;
+            font-family: var(--font-sans);
+            color: #2c3e50;
+            overflow: hidden;
+            background: linear-gradient(135deg, #fdfbf7 0%, #f4ebd0 100%);
+        }
+
+        .font-charm {
+            font-family: var(--font-script);
+        }
+
+        /* Plátno pro interaktivní bubliny na pozadí */
+        #bubble-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 1;
+            pointer-events: auto;
+        }
+
+        /* Fixní kontejner pro celé okno bez scrollování */
+        .page-wrapper {
+            position: relative;
+            z-index: 10;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 16px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Panel */
+        .glass-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 2px solid var(--gold-accent);
+            border-radius: 24px;
+            box-shadow: var(--glass-shadow);
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* WhatsApp-style Chat UI */
+        .chat-container {
+            background: #efeae2;
+            background-image: radial-gradient(#d1dbd6 1px, transparent 1px);
+            background-size: 20px 20px;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 2px solid var(--gold-accent);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-bubble-in {
+            background: #ffffff;
+            border-radius: 0 16px 16px 16px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            font-size: 1rem;
+        }
+
+        .chat-bubble-out {
+            background: #dcf8c6;
+            border-radius: 16px 0 16px 16px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            font-size: 1rem;
+        }
+    </style>
+    {% block extra_head %}{% endblock %}
+</head>
+<body class="relative">
+
+    <!-- Canvas pro plovoucí bubliny reagující na myš -->
+    <canvas id="bubble-canvas"></canvas>
+
+    <div class="page-wrapper">
+
+        <!-- Odkaz Zpět domů zarovnaný s pravým okrajem hlavního panelu -->
+        <div class="w-full max-w-[1200px] flex justify-end mb-2 pr-2 z-20">
+            <a href="{% url 'domovsky' %}" class="text-sm sm:text-base font-semibold text-black hover:underline flex items-center gap-1.5 bg-white/90 px-4 py-2 rounded-full border border-[#c5a059]/50 shadow-md transition-all hover:bg-white">
+                <i class="fa-solid fa-arrow-left"></i> Zpět domů
+            </a>
+        </div>
+
+        <!-- Hlavní panel chatu -->
+        <div class="glass-panel p-5 sm:p-7 max-h-[89vh] h-[85vh]">
+
+            <!-- Nadpis uprostřed -->
+            <div class="flex items-center justify-center mb-4 flex-shrink-0">
+                <h1 class="font-charm text-3xl sm:text-4xl font-bold text-black text-center">
+                    💬 Chat s administrátorem
+                </h1>
+            </div>
+
+            <!-- WhatsApp-style Chat Container -->
+            <div class="chat-container">
+                <!-- Chat Header -->
+                <div class="bg-[#1f2c34] text-white py-3 px-4 flex items-center justify-between shadow-md flex-shrink-0">
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-full bg-[#c5a059] flex items-center justify-center font-bold text-[#1f2c34] shadow text-sm">
+                            {% if admin_user %}{{ admin_user.username|slice:":2"|upper }}{% else %}AN{% endif %}
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-sm">
+                                {% if admin_user %}{{ admin_user.username }}{% else %}Administrátor{% endif %}
+                            </h4>
+                            <p class="text-[11px] text-emerald-400 flex items-center gap-1.5">
+                                <span class="w-2 h-2 rounded-full bg-emerald-400 inline-block animate-pulse"></span>
+                                Online • Podpora
+                            </p>
+                        </div>
+                    </div>
+                    <div class="text-gray-300 text-sm">
+                        <i class="fa-solid fa-shield-halved text-[#c5a059]"></i>
+                    </div>
+                </div>
+
+                <!-- Chat Messages Body -->
+                <div class="flex-1 p-4 sm:p-6 overflow-y-auto flex flex-col gap-4">
+                    {% if zpravy %}
+                        {% for msg in zpravy %}
+                            {% if msg.sender == request.user %}
+                                <!-- Odchozí zpráva (uživatel) -->
+                                <div class="flex items-end gap-2 max-w-[80%] sm:max-w-[70%] ml-auto flex-row-reverse">
+                                    <div class="chat-bubble-out p-3.5 text-gray-900">
+                                        <p>{{ msg.message }}</p>
+                                        <div class="text-xs text-gray-500 text-right mt-1.5 flex items-center justify-end gap-1">
+                                            {{ msg.timestamp|time:"H:i" }} <span class="text-sky-500 font-bold">&#10004;&#10004;</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% else %}
+                                <!-- Příchozí zpráva (admin) -->
+                                <div class="flex items-end gap-2 max-w-[80%] sm:max-w-[70%]">
+                                    <div class="chat-bubble-in p-3.5 text-gray-900">
+                                        <p class="font-semibold text-xs text-[#c5a059] mb-1">Administrátor</p>
+                                        <p>{{ msg.message }}</p>
+                                        <div class="text-xs text-gray-400 text-right mt-1.5">{{ msg.timestamp|time:"H:i" }}</div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    {% else %}
+                        <div class="text-center text-gray-500 my-auto text-base">
+                            Zatím zde nejsou žádné zprávy. Napište administrátorovi první zprávu níže!
+                        </div>
+                    {% endif %}
+                </div>
+
+                <!-- Chat Footer Input Form -->
+                <form method="POST" class="bg-[#f0f2f5] p-3 sm:p-4 border-t border-gray-200 flex items-center gap-3 flex-shrink-0">
+                    {% csrf_token %}
+                    <input type="text" name="zprava" placeholder="Napište zprávu administrátorovi..." required class="flex-1 bg-white border border-gray-300 rounded-full px-5 py-2.5 text-sm sm:text-base focus:outline-none focus:border-[#c5a059] shadow-sm">
+                    <button type="submit" class="bg-[#00a884] hover:bg-[#008f6f] text-white px-5 sm:px-6 py-2.5 rounded-full font-medium text-sm sm:text-base transition-all shadow-md flex items-center gap-2">
+                        <span>Odeslat</span>
+                        <i class="fa-solid fa-paper-plane text-xs"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- JAVASCRIPT pro animované bubliny a jejich interakci s myší -->
+    <script>
+        const canvas = document.getElementById('bubble-canvas');
+        const ctx = canvas.getContext('2d');
+
+        let width = canvas.width = window.innerWidth;
+        let height = canvas.height = window.innerHeight;
+
+        const mouse = { x: null, y: null, radius: 150 };
+
+        window.addEventListener('mousemove', (e) => { mouse.x = e.clientX; mouse.y = e.clientY; });
+        window.addEventListener('mouseleave', () => { mouse.x = null; mouse.y = null; });
+        window.addEventListener('touchmove', (e) => {
+            if (e.touches.length > 0) { mouse.x = e.touches[0].clientX; mouse.y = e.touches[0].clientY; }
+        });
+        window.addEventListener('touchend', () => { mouse.x = null; mouse.y = null; });
+        window.addEventListener('resize', () => {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        });
+
+        class Bubble {
+            constructor(x, y, radius) {
+                this.x = x || Math.random() * width;
+                this.y = y || height + (Math.random() * 100);
+                this.radius = radius || Math.random() * 35 + 10;
+                this.baseRadius = this.radius;
+
+                this.vy = -(Math.random() * 0.6 + 0.3);
+                this.vx = (Math.random() - 0.5) * 0.4;
+
+                this.updateColor();
+
+                this.angle = Math.random() * Math.PI * 2;
+                this.swingSpeed = Math.random() * 0.02 + 0.005;
+                this.swingMagnitude = Math.random() * 0.8 + 0.2;
+            }
+
+            updateColor() {
+                const hue = Math.floor(Math.random() * 20 + 35);
+                const opacity = Math.random() * 0.25 + 0.10;
+                this.color = `hsla(${hue}, 60%, 75%, ${opacity})`;
+                this.borderColor = `hsla(${hue}, 70%, 85%, ${opacity + 0.2})`;
+            }
+
+            draw() {
+                ctx.save();
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+
+                const gradient = ctx.createRadialGradient(
+                    this.x - this.radius * 0.3,
+                    this.y - this.radius * 0.3,
+                    this.radius * 0.1,
+                    this.x,
+                    this.y,
+                    this.radius
+                );
+                gradient.addColorStop(0, 'rgba(255, 255, 255, 0.85)');
+                gradient.addColorStop(0.4, this.color);
+                gradient.addColorStop(1, 'rgba(197, 160, 89, 0.05)');
+
+                ctx.fillStyle = gradient;
+                ctx.fill();
+
+                ctx.lineWidth = 1;
+                ctx.strokeStyle = this.borderColor;
+                ctx.stroke();
+
+                ctx.restore();
+            }
+
+            update() {
+                this.angle += this.swingSpeed;
+                this.x += Math.sin(this.angle) * this.swingMagnitude + this.vx;
+                this.y += this.vy;
+
+                if (mouse.x !== null && mouse.y !== null) {
+                    const dx = mouse.x - this.x;
+                    const dy = mouse.y - this.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < mouse.radius) {
+                        const force = (mouse.radius - distance) / mouse.radius;
+                        if (this.radius < this.baseRadius * 1.4) {
+                            this.radius += 0.8;
+                        }
+                        this.x -= (dx / distance) * force * 1.5;
+                        this.y -= (dy / distance) * force * 1.5;
+                    } else if (this.radius > this.baseRadius) {
+                        this.radius -= 0.3;
+                    }
+                } else if (this.radius > this.baseRadius) {
+                    this.radius -= 0.3;
+                }
+
+                if (this.y + this.radius < -20) {
+                    this.y = height + this.radius + Math.random() * 20;
+                    this.x = Math.random() * width;
+                    this.updateColor();
+                }
+
+                if (this.x < -this.radius) this.x = width + this.radius;
+                if (this.x > width + this.radius) this.x = -this.radius;
+
+                this.draw();
+            }
+        }
+
+        const bubbles = [];
+        const bubbleCount = Math.min(Math.floor(window.innerWidth / 20), 45);
+
+        for (let i = 0; i < bubbleCount; i++) {
+            const bubble = new Bubble();
+            bubble.y = Math.random() * height;
+            bubbles.push(bubble);
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+            for (let i = 0; i < bubbles.length; i++) {
+                bubbles[i].update();
+            }
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+
+        canvas.addEventListener('click', (e) => {
+            bubbles.push(new Bubble(e.clientX, e.clientY, Math.random() * 30 + 15));
+        });
+    </script>
 </body>
 </html>
