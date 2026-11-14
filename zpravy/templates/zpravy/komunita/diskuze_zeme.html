@@ -1,37 +1,90 @@
 
 
 
-{% extends 'base.html' %}
+{% extends 'zpravy/base_komunita.html' %}
 
-{% block title %}Diskuze: {{ zeme.nazev }}{% endblock %}
+{% block title %}Komunita {{ zeme.nazev }} - Cestovatelské radosti{% endblock %}
 
-{% block content %}
-    <h1 class="main-heading">💬 Diskuze: {{ zeme.nazev }}</h1>
+{% block content_main %}
+<div class="page-wrapper flex flex-col items-center justify-center h-[90vh] py-2">
 
-    <!-- Formulář pro vložení zprávy -->
-    <form method="POST" style="width: 100%; max-width: 600px; margin-bottom: 25px;">
-        {% csrf_token %}
-        <div style="display: flex; gap: 10px;">
-            <input type="text" name="text" required placeholder="Napiš zprávu nebo dotaz pro komunitu..."
-                   style="flex: 1; padding: 12px 18px; border-radius: 30px; border: 2px solid var(--gold-accent); background: rgba(30, 35, 45, 0.9); color: white; outline: none;">
-            <button type="submit" class="split-btn" style="padding: 12px 24px;">Odeslat</button>
+    <!-- Hlavní chatovací panel -->
+    <div class="glass-panel p-4 sm:p-6 w-full max-w-4xl h-full flex flex-col">
+
+        <!-- Nadpis chatu uvnitř panelu -->
+        <div class="flex items-center justify-between mb-3 flex-shrink-0 px-2">
+            <a href="/zpravy/" class="text-xs sm:text-sm font-semibold text-[#c5a059] hover:underline flex items-center gap-1">
+                <i class="fa-solid fa-arrow-left"></i> Zpět na výběr zemí
+            </a>
+            <h1 class="font-charm text-2xl sm:text-3xl font-bold text-[#3d3124]">
+                💬 Komunita: {{ zeme.nazev }}
+            </h1>
+            <div class="w-16"></div> <!-- Pro vyvážení hlavičky -->
         </div>
-    </form>
 
-    <!-- Výpis komunitních zpráv -->
-    <div style="width: 100%; max-width: 650px; max-height: 40vh; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; text-align: left; margin-bottom: 25px; padding-right: 5px;">
-        {% for z in zpravy %}
-            <div class="glass-panel" style="padding: 15px 20px; border-radius: 15px;">
-                <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--gold-accent); margin-bottom: 5px;">
-                    <strong>👤 {{ z.uzivatel.username }}</strong>
-                    <span>{{ z.cas_odeslani|date:"d. m. Y H:i" }}</span>
+        <!-- WhatsApp-style Chat Container -->
+        <div class="chat-container flex-1 flex flex-col overflow-hidden">
+
+            <!-- Chat Header -->
+            <div class="bg-[#1f2c34] text-white py-2.5 px-4 flex items-center justify-between shadow-md flex-shrink-0">
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-full bg-[#c5a059] flex items-center justify-center font-bold text-[#1f2c34] text-xs shadow">
+                        🌍
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-xs sm:text-sm">Diskuze – {{ zeme.nazev }}</h4>
+                        <p class="text-[10px] text-emerald-400 flex items-center gap-1">
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block animate-pulse"></span>
+                            Aktivní komunita
+                        </p>
+                    </div>
                 </div>
-                <p style="font-size: 0.95rem; line-height: 1.4;">{{ z.text }}</p>
             </div>
-        {% empty %}
-            <p class="sub-heading" style="text-align: center;">Zatím tu nejsou žádné příspěvky. Buď první!</p>
-        {% endfor %}
+
+            <!-- Chat Messages Body -->
+            <div class="flex-1 p-4 overflow-y-auto flex flex-col gap-3 bg-[#efeae2]" style="background-image: radial-gradient(#d1dbd6 1px, transparent 1px); background-size: 16px 16px;">
+                {% if zpravy %}
+                    {% for msg in zpravy %}
+                        {% if msg.uzivatel == request.user %}
+                            <!-- Odchozí zpráva -->
+                            <div class="flex items-end gap-2 max-w-[80%] sm:max-w-[70%] ml-auto flex-row-reverse">
+                                <div class="chat-bubble-out p-3 text-gray-900 bg-[#dcf8c6] rounded-l-xl rounded-tr-xl shadow-sm">
+                                    <p class="text-sm">{{ msg.text }}</p>
+                                    <div class="text-[10px] text-gray-500 text-right mt-1 flex items-center justify-end gap-1">
+                                        {{ msg.cas_odeslani|time:"H:i" }} <span class="text-sky-500 font-bold">&#10004;&#10004;</span>
+                                    </div>
+                                </div>
+                            </div>
+                        {% else %}
+                            <!-- Příchozí zpráva -->
+                            <div class="flex items-end gap-2 max-w-[80%] sm:max-w-[70%]">
+                                <div class="chat-bubble-in p-3 text-gray-900 bg-white rounded-r-xl rounded-tl-xl shadow-sm">
+                                    <p class="font-semibold text-[11px] text-[#c5a059] mb-0.5">{{ msg.uzivatel.username }}</p>
+                                    <p class="text-sm">{{ msg.text }}</p>
+                                    <div class="text-[10px] text-gray-400 text-right mt-1">{{ msg.cas_odeslani|time:"H:i" }}</div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                {% else %}
+                    <div class="text-center text-gray-500 my-auto text-sm bg-white/80 p-4 rounded-xl backdrop-blur-sm mx-auto max-w-sm border border-[#c5a059]/30">
+                        Zatím zde nejsou žádné zprávy. Napište do komunity první příspěvek níže!
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Chat Footer Input Form -->
+            <form method="POST" class="bg-[#f0f2f5] p-3 border-t border-gray-200 flex items-center gap-2 flex-shrink-0">
+                {% csrf_token %}
+                <input type="text" name="text" placeholder="Napište zprávu do komunity..." required class="flex-1 bg-white border border-gray-300 rounded-full px-4 py-2 text-sm focus:outline-none focus:border-[#c5a059] shadow-sm">
+                <button type="submit" class="bg-[#00a884] hover:bg-[#008f6f] text-white px-5 py-2 rounded-full font-medium text-sm transition-all shadow-md flex items-center gap-1.5">
+                    <span>Odeslat</span>
+                    <i class="fa-solid fa-paper-plane text-xs"></i>
+                </button>
+            </form>
+
+        </div>
     </div>
 
-    <a href="{% url 'seznam_zprav' %}" class="split-btn" style="font-size: 0.9rem; padding: 10px 22px;">← Zpět na výběr zemí</a>
+</div>
 {% endblock %}
