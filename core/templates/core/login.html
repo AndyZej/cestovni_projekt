@@ -1,30 +1,227 @@
 
 
-<form method="POST" class="login-form">
-    {% csrf_token %}
+{% extends 'base.html' %}
 
-    {% if form.errors %}
-        <div class="alert-error">
-            Nesprávné uživatelské jméno nebo heslo. Zkuste to prosím znovu.
+{% block title %}Přihlášení - Cestovatelské radosti{% endblock %}
+
+{% block extra_head %}
+<style>
+    /* Spolehlivé skrytí nežádoucích postranních prvků z base.html */
+    .top-left,
+    .top-right,
+    .chat-widget {
+        display: none !important;
+    }
+
+    /* Skrytí původní hlavičky z base.html */
+    header {
+        display: none !important;
+    }
+
+    /* Jistota, že bubliny nebudou blokovat prokliky */
+    #bubble-canvas {
+        pointer-events: none !important;
+    }
+
+    :root {
+        --luxury-dark: #1a1a1a;
+        --luxury-gold: #c5a059;
+        --luxury-gold-hover: #b08d46;
+        --bg-color: #faf9f6;
+        --card-bg: #ffffff;
+        --text-main: #333333;
+        --border-color: #e2ded5;
+    }
+
+    body {
+        font-family: 'Lato', sans-serif;
+        background-color: var(--bg-color);
+        color: var(--text-main);
+        margin: 0;
+        padding: 0;
+        line-height: 1.8;
+    }
+
+    /* Hlavní kontejner – jednotný pro celý web, dokonale uprostřed */
+    .container {
+        max-width: 500px;
+        margin: 40px auto 50px auto;
+        padding: 40px 50px;
+        background: var(--card-bg);
+        border: 2px solid var(--luxury-gold);
+        border-radius: 20px;
+        box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        position: relative;
+        z-index: 10;
+        text-align: left;
+    }
+
+    .main-heading {
+        font-family: 'Playfair Display', serif;
+        font-size: 2.3em;
+        margin-bottom: 25px;
+        color: var(--luxury-dark);
+        border-bottom: 2px solid var(--luxury-gold);
+        padding-bottom: 15px;
+        text-align: center;
+    }
+
+    /* Styly pro přihlašovací formulář */
+    .login-form {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .alert-error {
+        background-color: #f8d7da;
+        color: #721c24;
+        padding: 12px 15px;
+        border: 1px solid #f5c6cb;
+        border-radius: 8px;
+        font-size: 0.9rem;
+        text-align: center;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    .form-group label {
+        font-weight: 600;
+        color: var(--luxury-dark);
+        font-size: 0.95rem;
+    }
+
+    .form-group input[type="text"],
+    .form-group input[type="password"] {
+        padding: 12px 16px;
+        border: 1px solid var(--border-color);
+        border-radius: 10px;
+        font-size: 1rem;
+        outline: none;
+        transition: all 0.3s ease;
+        background-color: #fcfcfc;
+    }
+
+    .form-group input:focus {
+        border-color: var(--luxury-gold);
+        box-shadow: 0 0 5px rgba(197, 160, 89, 0.3);
+        background-color: #fff;
+    }
+
+    .form-actions-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 0.9rem;
+        margin-top: 5px;
+    }
+
+    .remember-me {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        color: #555;
+        cursor: pointer;
+    }
+
+    .forgot-password {
+        color: var(--luxury-gold);
+        text-decoration: none;
+        font-weight: 600;
+        transition: color 0.2s ease;
+    }
+
+    .forgot-password:hover {
+        color: var(--luxury-dark);
+        text-decoration: underline;
+    }
+
+    .btn-submit {
+        display: block;
+        width: 100%;
+        padding: 14px;
+        background: var(--luxury-dark);
+        border: 1px solid var(--luxury-gold);
+        color: var(--luxury-gold);
+        font-size: 1rem;
+        font-weight: 700;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-align: center;
+        margin-top: 10px;
+    }
+
+    .btn-submit:hover {
+        background: var(--luxury-gold);
+        color: #ffffff;
+        box-shadow: 0 5px 15px rgba(197, 160, 89, 0.4);
+    }
+
+    .back-wrapper {
+        text-align: center;
+        margin-top: 25px;
+    }
+
+    .btn-back {
+        display: inline-block;
+        padding: 10px 20px;
+        background: transparent;
+        border: 1px solid #ccc;
+        color: #666;
+        font-size: 0.9rem;
+        font-weight: 600;
+        border-radius: 8px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+
+    .btn-back:hover {
+        background: #eee;
+        color: var(--luxury-dark);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="main-heading">🔐 Přihlášení</h1>
+
+    <form method="POST" class="login-form">
+        {% csrf_token %}
+
+        {% if form.errors %}
+            <div class="alert-error">
+                Nesprávné uživatelské jméno nebo heslo. Zkuste to prosím znovu.
+            </div>
+        {% endif %}
+
+        <div class="form-group">
+            <label for="id_username">Uživatelské jméno</label>
+            <input type="text" name="username" id="id_username" placeholder="Zadejte uživatelské jméno" required>
         </div>
-    {% endif %}
 
-    <div class="form-group">
-        <label for="id_username">Uživatelské jméno</label>
-        <input type="text" name="username" id="id_username" placeholder="Zadejte uživatelské jméno" required>
+        <div class="form-group">
+            <label for="id_password">Heslo</label>
+            <input type="password" name="password" id="id_password" placeholder="Zadejte heslo" required>
+        </div>
+
+        <div class="form-actions-row">
+            <label class="remember-me">
+                <input type="checkbox" name="remember"> Zapamatovat si mě
+            </label>
+            <a href="#" class="forgot-password">Zapomněli jste heslo?</a>
+        </div>
+
+        <button type="submit" class="btn-submit">Přihlásit se</button>
+    </form>
+
+    <div class="back-wrapper">
+        <a href="{% url 'domov' %}" class="btn-back">← Zpět na hlavní stránku</a>
     </div>
-
-    <div class="form-group">
-        <label for="id_password">Heslo</label>
-        <input type="password" name="password" id="id_password" placeholder="Zadejte heslo" required>
-    </div>
-
-    <div class="form-actions-row">
-        <label class="remember-me">
-            <input type="checkbox" name="remember"> Zapamatovat si mě
-        </label>
-        <a href="#" class="forgot-password">Zapomněli jste heslo?</a>
-    </div>
-
-    <button type="submit" class="btn-submit">Přihlásit se</button>
-</form>
+</div>
+{% endblock %}
