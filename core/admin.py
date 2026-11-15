@@ -1,3 +1,8 @@
+
+
+
+from core.models import Itinerar, Zeme
 from django.contrib import admin
 
-# Register your zeme_views here.
+admin.site.register(Zeme)
+admin.site.register(Itinerar)

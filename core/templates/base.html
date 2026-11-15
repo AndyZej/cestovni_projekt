@@ -23,10 +23,10 @@ font-display: swap;
 :root {
 --font-script: 'Fairwater Script', 'Charm', cursive;
 --font-sans: 'Montserrat', sans-serif;
---panel-bg: rgba(30, 35, 45, 0.85);
---panel-border: rgba(197, 160, 89, 0.3);
---glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.25);
---text-color: #ffffff;
+--panel-bg: rgba(255, 255, 255, 0.92); /* Sjednoceno s pozadím karet zemí */
+--panel-border: rgba(197, 160, 89, 0.4); /* Zlatavý okraj jako u zemí */
+--glass-shadow: 0 12px 40px 0 rgba(138, 108, 66, 0.15);
+--text-color: #2c241d;
 --gold-accent: #c5a059;
 }
 
@@ -52,16 +52,7 @@ left: 0;
 width: 100%;
 height: 100%;
 z-index: -1;
-background-size: cover;
-background-position: center;
-background-repeat: no-repeat;
-}
-
-#bg-overlay::before {
-content: '';
-position: absolute;
-top: 0; left: 0; right: 0; bottom: 0;
-background: rgba(251, 249, 244, 0.85);
+background: radial-gradient(circle at top left, #fdfaf2 0%, #f7eedb 55%, #f3e6cc 100%);
 }
 
 #bubble-canvas {
@@ -74,16 +65,18 @@ z-index: 1;
 pointer-events: auto;
 }
 
+/* Sjednocená skleněná karta – stejný styl jako karty zemí */
 .glass-panel {
 background: var(--panel-bg);
-backdrop-filter: blur(14px);
--webkit-backdrop-filter: blur(14px);
-border: 1px solid var(--panel-border);
+backdrop-filter: blur(16px);
+-webkit-backdrop-filter: blur(16px);
+border: 1.5px solid var(--panel-border);
 border-radius: 20px;
 box-shadow: var(--glass-shadow);
-transition: background 1.2s ease, border-color 1.2s ease;
+transition: all 0.3s ease;
 }
 
+/* Levý horní roh (Přihlášení) */
 .top-left {
 position: absolute;
 top: 24px;
@@ -102,11 +95,12 @@ align-items: center;
 gap: 8px;
 font-size: 1.05rem;
 font-weight: 600;
+color: #2c241d;
 }
 
 .top-left-desc {
 font-size: 0.85rem;
-opacity: 0.85;
+color: #6e6359;
 line-height: 1.4;
 }
 
@@ -123,7 +117,7 @@ text-decoration: none;
 font-weight: 600;
 font-size: 0.9rem;
 transition: background 0.2s, transform 0.2s;
-box-shadow: 0 4px 12px rgba(0, 135, 81, 0.4);
+box-shadow: 0 4px 12px rgba(0, 135, 81, 0.3);
 width: fit-content;
 }
 
@@ -132,11 +126,12 @@ background: #007043;
 transform: translateY(-2px);
 }
 
+/* Pravý horní roh (Palubní deník) */
 .top-right {
 position: absolute;
 top: 24px;
 right: 24px;
-padding: 16px 20px;
+padding: 18px 22px;
 text-align: right;
 max-width: 340px;
 z-index: 10;
@@ -146,19 +141,20 @@ z-index: 10;
 font-size: 0.9rem;
 font-weight: 600;
 margin-bottom: 4px;
+color: #2c241d;
 }
 
 .log-date {
 font-family: monospace;
 font-size: 0.85rem;
-opacity: 0.9;
+color: #55483d;
 margin-bottom: 6px;
 }
 
 .log-quote {
 font-style: italic;
 font-size: 0.8rem;
-opacity: 0.85;
+color: #6e6359;
 }
 
 .center-container {
@@ -212,7 +208,7 @@ background: var(--panel-bg);
 backdrop-filter: blur(12px);
 -webkit-backdrop-filter: blur(12px);
 border: 2px solid var(--gold-accent);
-color: white;
+color: #2c241d;
 padding: 12px 26px;
 font-size: 1rem;
 font-weight: 600;
@@ -225,7 +221,7 @@ transition: all 0.3s ease;
 
 .split-btn:hover {
 background-color: var(--gold-accent);
-color: #0f172a;
+color: #ffffff;
 transform: translateY(-3px);
 box-shadow: 0 8px 24px rgba(197, 160, 89, 0.4);
 }
@@ -251,7 +247,7 @@ font-weight: 500;
 font-size: 0.9rem;
 transition: transform 0.2s;
 text-decoration: none;
-color: white;
+color: #2c241d;
 }
 
 .chat-toggle-btn:hover {
