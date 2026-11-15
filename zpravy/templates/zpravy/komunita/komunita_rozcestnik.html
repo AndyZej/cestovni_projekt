@@ -1,57 +1,179 @@
 
 
 
-{% extends 'zpravy/base_komunita.html' %}
+{% extends 'base.html' %}
 
-{% block title %}Komunitní chaty - Cestovatelské radosti{% endblock %}
+{% block title %}Cestovatelské komunity - Cestovatelské radosti{% endblock %}
 
-{% block content_main %}
-<div class="page-wrapper flex flex-col items-center justify-center min-h-[85vh] px-4">
+{% block extra_head %}
+<style>
+    /* Spolehlivé skrytí nežádoucích postranních prvků */
+    .top-left,
+    .top-right,
+    .chat-widget {
+        display: none !important;
+    }
 
-    <!-- Hlavička rozcestníku -->
-    <header class="text-center mb-8">
-        <h1 class="font-charm text-4xl sm:text-6xl font-bold text-[#4a3b2c] mb-3">
-            ✨ Cestovatelské komunity
-        </h1>
-        <p class="text-gray-700 text-base sm:text-lg">
-            Vyberte si zemi a připojte se k diskuzi s ostatními cestovateli.
-        </p>
-    </header>
+    /* Skrytí původní hlavičky z base.html */
+    header {
+        display: none !important;
+    }
 
-    <!-- Panel s kartami zemí - Zvětšeno na max-w-5xl a přidáno větší vnitřní odsazení -->
-    <div class="glass-panel p-8 sm:p-12 max-w-5xl w-full flex flex-col items-center shadow-2xl">
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 w-full">
+    /* Jistota, že bubliny nebudou blokovat prokliky */
+    #bubble-canvas {
+        pointer-events: none !important;
+    }
 
-            <!-- Kapverdy -->
-            <a href="{% url 'diskuze_zeme' 'kapverdy' %}" class="glass-card p-8 text-center block hover:scale-105 transition duration-300 group">
-                <div class="text-5xl mb-3">🇨🇻</div>
-                <h3 class="font-bold text-2xl text-[#3d3124] group-hover:text-[#c5a059] transition">Kapverdy</h3>
-                <p class="text-sm text-gray-600 mt-2">Otevřít komunitní chat</p>
-            </a>
+    :root {
+        --luxury-dark: #1a1a1a;
+        --luxury-gold: #c5a059;
+        --luxury-gold-hover: #b08d46;
+        --bg-color: #faf9f6;
+        --card-bg: #ffffff;
+        --text-main: #333333;
+        --border-color: #e2ded5;
+    }
 
-            <!-- Egypt -->
-            <a href="{% url 'diskuze_zeme' 'egypt' %}" class="glass-card p-8 text-center block hover:scale-105 transition duration-300 group">
-                <div class="text-5xl mb-3">🇪🇬</div>
-                <h3 class="font-bold text-2xl text-[#3d3124] group-hover:text-[#c5a059] transition">Egypt</h3>
-                <p class="text-sm text-gray-600 mt-2">Otevřít komunitní chat</p>
-            </a>
+    body {
+        font-family: 'Lato', sans-serif;
+        background-color: var(--bg-color);
+        color: var(--text-main);
+        margin: 0;
+        padding: 0;
+        line-height: 1.8;
+    }
 
-            <!-- Tunisko -->
-            <a href="{% url 'diskuze_zeme' 'tunisko' %}" class="glass-card p-8 text-center block hover:scale-105 transition duration-300 group">
-                <div class="text-5xl mb-3">🇹🇳</div>
-                <h3 class="font-bold text-2xl text-[#3d3124] group-hover:text-[#c5a059] transition">Tunisko</h3>
-                <p class="text-sm text-gray-600 mt-2">Otevřít komunitní chat</p>
-            </a>
+    /* Hlavní kontejner – jednotný, dokonale uprostřed, stejný jako u zemí */
+    .container {
+        max-width: 650px;
+        margin: 40px auto 50px auto;
+        padding: 35px 40px;
+        background: var(--card-bg);
+        border: 2px solid var(--luxury-gold);
+        border-radius: 20px;
+        box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        position: relative;
+        z-index: 10;
+        text-align: center;
+    }
 
-            <!-- Turecko -->
-            <a href="{% url 'diskuze_zeme' 'turecko' %}" class="glass-card p-8 text-center block hover:scale-105 transition duration-300 group">
-                <div class="text-5xl mb-3">🇹🇷</div>
-                <h3 class="font-bold text-2xl text-[#3d3124] group-hover:text-[#c5a059] transition">Turecko</h3>
-                <p class="text-sm text-gray-600 mt-2">Otevřít komunitní chat</p>
-            </a>
+    .main-heading {
+        font-family: 'Playfair Display', serif;
+        font-size: 2.2rem;
+        margin-bottom: 10px;
+        color: var(--luxury-dark);
+    }
 
-        </div>
+    .sub-heading {
+        font-size: 0.95rem;
+        color: #666;
+        margin-bottom: 25px;
+    }
+
+    .countries-grid {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        flex-wrap: wrap;
+        width: 100%;
+        margin-bottom: 30px;
+    }
+
+    .country-card {
+        background: rgba(30, 35, 45, 0.9);
+        border: 2px solid var(--luxury-gold);
+        color: white;
+        padding: 15px 20px;
+        border-radius: 12px;
+        text-decoration: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        width: 170px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 4px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
+
+    .country-card:hover {
+        background-color: var(--luxury-gold);
+        color: #0f172a;
+        transform: translateY(-4px);
+        box-shadow: 0 10px 25px rgba(197, 160, 89, 0.4);
+    }
+
+    .country-card span.flag {
+        font-size: 2rem;
+    }
+
+    .country-card h3 {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.15rem;
+        margin: 0;
+        color: inherit;
+    }
+
+    .country-card p {
+        font-size: 0.75rem;
+        opacity: 0.85;
+        font-weight: 300;
+        margin: 0;
+        color: inherit;
+    }
+
+    .btn-back {
+        display: inline-block;
+        padding: 10px 24px;
+        background: var(--luxury-dark);
+        border: 1px solid var(--luxury-gold);
+        color: var(--luxury-gold);
+        font-size: 0.9rem;
+        font-weight: 700;
+        border-radius: 8px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+
+    .btn-back:hover {
+        background: #2c2c2c;
+        color: #ffffff;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="main-heading">✨ Cestovatelské komunity</h1>
+    <p class="sub-heading">
+        Vyberte si zemi a připojte se k diskuzi s ostatními cestovateli.
+    </p>
+
+    <div class="countries-grid">
+        <a href="{% url 'diskuze_zeme' 'turecko' %}" class="country-card">
+            <span class="flag">🇹🇷</span>
+            <h3>Turecko</h3>
+            <p>Otevřít chat</p>
+        </a>
+        <a href="{% url 'diskuze_zeme' 'kapverdy' %}" class="country-card">
+            <span class="flag">🇨🇻</span>
+            <h3>Kapverdy</h3>
+            <p>Otevřít chat</p>
+        </a>
+        <a href="{% url 'diskuze_zeme' 'tunisko' %}`" class="country-card">
+            <span class="flag">🇹🇳</span>
+            <h3>Tunisko</h3>
+            <p>Otevřít chat</p>
+        </a>
+        <a href="{% url 'diskuze_zeme' 'egypt' %}" class="country-card" style="flex-basis: 100%; max-width: 200px; margin: 0 auto;">
+            <span class="flag">🇪🇬</span>
+            <h3>Egypt</h3>
+            <p>Otevřít chat</p>
+        </a>
     </div>
 
+    <div>
+        <a href="{% url 'domov' %}" class="btn-back">← Zpět na hlavní stránku</a>
+    </div>
 </div>
 {% endblock %}
