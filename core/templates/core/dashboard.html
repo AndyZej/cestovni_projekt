@@ -1,0 +1,170 @@
+
+
+{% extends 'base.html' %}
+
+{% block title %}Můj účet - Cestovatelské radosti{% endblock %}
+
+{% block extra_head %}
+<style>
+    /* Jistota, že bubliny nebudou blokovat prokliky */
+    #bubble-canvas {
+        pointer-events: none !important;
+    }
+
+    :root {
+        --luxury-dark: #1a1a1a;
+        --luxury-gold: #c5a059;
+        --bg-color: #faf9f6;
+        --card-bg: #ffffff;
+        --text-main: #333333;
+    }
+
+    body {
+        font-family: 'Lato', sans-serif;
+        background-color: var(--bg-color);
+        color: var(--text-main);
+        margin: 0;
+        padding: 0;
+        line-height: 1.8;
+    }
+
+    /* ZDE SKRYJEME OBA ROHOVÉ BOXY Z BASE.HTML, ABY NEKÁZALY */
+    /* (Pokud mají vaše rohové boxy v base.html jiné ID nebo třídy, dejte mi vědět a upravíme to) */
+    .osobni-zona-box,
+    .palubni-denik-box,
+    header, .hero-section {
+        display: none !important;
+    }
+
+    .dashboard-container {
+        max-width: 650px;
+        margin: 40px auto 80px auto; /* Větší spodní margi kvůli spodní liště */
+        padding: 40px;
+        background: var(--card-bg);
+        border: 2px solid var(--luxury-gold);
+        border-radius: 20px;
+        box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        position: relative;
+        z-index: 10;
+    }
+
+    .dashboard-title {
+        font-family: 'Playfair Display', serif;
+        font-size: 2.2rem;
+        color: var(--luxury-dark);
+        margin-bottom: 10px;
+        text-align: center;
+    }
+
+    .dashboard-subtitle {
+        text-align: center;
+        color: #666;
+        margin-bottom: 30px;
+        font-size: 0.95rem;
+    }
+
+    .dashboard-section {
+        margin-bottom: 30px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #eee;
+    }
+
+    .dashboard-section h3 {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.3rem;
+        color: var(--luxury-dark);
+        margin-bottom: 15px;
+    }
+
+    .info-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+        font-size: 1rem;
+    }
+
+    .info-label {
+        font-weight: 600;
+        color: #555;
+    }
+
+    .btn-luxury {
+        display: inline-block;
+        padding: 10px 20px;
+        background: var(--luxury-dark);
+        border: 1px solid var(--luxury-gold);
+        color: var(--luxury-gold);
+        font-size: 0.9rem;
+        font-weight: 700;
+        border-radius: 8px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .btn-luxury:hover {
+        background: var(--luxury-gold);
+        color: #ffffff;
+    }
+
+    .back-link {
+        display: inline-block;
+        margin-top: 20px;
+        color: var(--luxury-dark);
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+    .back-link:hover {
+        color: var(--luxury-gold);
+        text-decoration: underline;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+    <h1 class="dashboard-title">✨ Uživatelský panel</h1>
+    <p class="dashboard-subtitle">Vítejte ve své osobní sekci portálu Cestovatelské radosti.</p>
+
+    <!-- Sekce: Osobní údaje -->
+    <div class="dashboard-section">
+        <h3>📋 Osobní údaje</h3>
+        <div class="info-row">
+            <span class="info-label">Uživatelské jméno:</span>
+            <span>{{ user.username }}</span>
+        </div>
+        <div class="info-row">
+            <span class="info-label">E-mailová adresa:</span>
+            <span>{{ user.email|default:"Nezadán" }}</span>
+        </div>
+        <div class="info-row">
+            <span class="info-label">Datum registrace:</span>
+            <span>{{ user.date_joined|date:"j. F Y" }}</span>
+        </div>
+    </div>
+
+    <!-- Sekce: Změna hesla / Akce účtu -->
+    <div class="dashboard-section">
+        <h3>🔐 Zabezpečení a nastavení</h3>
+        <p style="font-size: 0.9rem; color: #666; margin-bottom: 15px;">
+            Zde můžete spravovat své heslo nebo upravit přístupové údaje.
+        </p>
+        <a href="{% url 'password_change' %}" class="btn-luxury">Změnit heslo</a>
+    </div>
+
+    <!-- Sekce: Odhlášení -->
+    <div style="text-align: center; margin-top: 20px;">
+        <form action="{% url 'logout' %}" method="post" style="display: inline;">
+            {% csrf_token %}
+            <button type="submit" class="btn-luxury" style="background-color: #8b0000; border-color: #ff4d4d; color: white;">
+                Odhlásit se ze systému
+            </button>
+        </form>
+    </div>
+
+    <div style="text-align: center; margin-top: 30px;">
+        <a href="{% url 'domov' %}" class="back-link">← Zpět na hlavní stránku</a>
+    </div>
+</div>
+{% endblock %}
