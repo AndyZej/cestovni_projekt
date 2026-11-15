@@ -1,7 +1,5 @@
 
 
-
-
 from django.shortcuts import render
 from django.http import Http404
 
@@ -13,7 +11,8 @@ def seznam_itineraru_view(request):
         {'nazev': 'Tunisko', 'slug': 'tunisko'},
         {'nazev': 'Egypt', 'slug': 'egypt'},
     ]
-    return render(request, 'itinerar/domovsky.html', {'itinerare': itinerare})
+    # Opraveno na správnou šablonu seznamu itinerářů
+    return render(request, 'itinerar/seznam_itinerar.html', {'itinerare': itinerare})
 
 def detail_itineraru_view(request, slug):
     """Dynamicky otevře HTML šablonu pro itinerář podle slugu"""

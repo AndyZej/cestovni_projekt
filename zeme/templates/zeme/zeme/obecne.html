@@ -208,9 +208,18 @@
             box-shadow: 0 6px 18px rgba(197, 160, 89, 0.4);
         }
 
-        .btn-back {
-            display: inline-block;
+        /* Kontejner pro tlačítka: rozprostře se od leva do prava */
+        .actions-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
             margin-top: 35px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .btn-back, .menu-btn {
+            display: inline-block;
             padding: 12px 22px;
             background: var(--luxury-dark);
             color: var(--luxury-gold);
@@ -220,9 +229,10 @@
             font-family: 'Lato', sans-serif;
             font-size: 0.9em;
             transition: all 0.3s ease;
+            box-sizing: border-box;
         }
 
-        .btn-back:hover {
+        .btn-back:hover, .menu-btn:hover {
             background: #2c2c2c;
             color: #ffffff;
         }
@@ -246,7 +256,11 @@
                 <a href="{% block gallery_url %}#{% endblock %}" class="btn-gallery">📷 Otevřít kompletní fotogalerii</a>
             </div>
 
-            <p><a href="{% url 'domovsky' %}" class="btn-back">← Zpět na výběr zemí (Hlavní stránka)</a></p>
+            <!-- Tlačítka: Zpět vlevo, Menu vpravo -->
+            <div class="actions-wrapper">
+                <a href="{% url 'domovsky' %}" class="btn-back">← Zpět na výběr zemí (Hlavní stránka)</a>
+                <a href="{% url 'menu' %}" class="menu-btn">📂 Menu</a>
+            </div>
         </div>
     {% endblock %}
 

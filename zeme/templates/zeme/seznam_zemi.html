@@ -6,12 +6,26 @@
 
 {% block extra_head %}
 <style>
+    /* Skrytí vybraných prvků z base.html pouze na této stránce */
+    .top-left,
+    .top-right,
+    .chat-widget {
+        display: none !important;
+    }
+
+    /* Jistota, že plátno s bublinami nebude blokovat prokliky */
+    #bubble-canvas {
+        pointer-events: none !important;
+    }
+
     .center-container {
         background: rgba(255, 255, 255, 0.85);
         border: 2px solid var(--gold-accent);
         border-radius: 20px;
         box-shadow: var(--glass-shadow);
         padding: 40px;
+        z-index: 10;
+        position: relative;
     }
 
     .main-heading {

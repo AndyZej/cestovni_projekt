@@ -1,0 +1,163 @@
+
+
+{% extends 'base.html' %}
+
+{% block title %}Seznam itinerářů - Cestovatelské radosti{% endblock %}
+
+{% block extra_head %}
+<style>
+    /* Spolehlivé skrytí nežádoucích postranních prvků z base.html */
+    .top-left,
+    .top-right,
+    .chat-widget {
+        display: none !important;
+    }
+
+    /* Skrytí původní černé hlavičky z base.html, abychom měli nadpis uvnitř boxu */
+    header {
+        display: none !important;
+    }
+
+    /* Jistota, že bubliny nebudou blokovat prokliky */
+    #bubble-canvas {
+        pointer-events: none !important;
+    }
+
+    :root {
+        --luxury-dark: #1a1a1a;
+        --luxury-gold: #c5a059;
+        --luxury-gold-hover: #b08d46;
+        --bg-color: #faf9f6;
+        --card-bg: #ffffff;
+        --text-main: #333333;
+        --border-color: #e2ded5;
+    }
+
+    body {
+        font-family: 'Lato', sans-serif;
+        background-color: var(--bg-color);
+        color: var(--text-main);
+        margin: 0;
+        padding: 0;
+        line-height: 1.8;
+    }
+
+    /* Hlavní kontejner – jednotný pro celý web, dokonale uprostřed */
+    .container {
+        max-width: 850px;
+        margin: 40px auto 50px auto;
+        padding: 50px;
+        background: var(--card-bg);
+        border: 2px solid var(--luxury-gold);
+        border-radius: 20px;
+        box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        position: relative;
+        z-index: 10;
+        text-align: center;
+    }
+
+    .main-heading {
+        font-family: 'Playfair Display', serif;
+        font-size: 2.6em;
+        margin-bottom: 30px;
+        color: var(--luxury-dark);
+        border-bottom: 2px solid var(--luxury-gold);
+        padding-bottom: 20px;
+    }
+
+    .countries-grid {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        flex-wrap: wrap;
+        width: 100%;
+        margin-bottom: 40px;
+    }
+
+    .country-card {
+        background: rgba(30, 35, 45, 0.9);
+        border: 2px solid var(--luxury-gold);
+        color: white;
+        padding: 20px 25px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        border-radius: 12px;
+        text-decoration: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        width: 180px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 6px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+
+    .country-card:hover {
+        background-color: var(--luxury-gold);
+        color: #0f172a;
+        transform: translateY(-5px);
+        box-shadow: 0 12px 30px rgba(197, 160, 89, 0.4);
+    }
+
+    .country-card span {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.25rem;
+    }
+
+    .country-card p {
+        font-size: 0.8rem;
+        opacity: 0.85;
+        font-weight: 300;
+        margin: 0;
+        color: inherit;
+    }
+
+    .btn-back {
+        display: inline-block;
+        padding: 12px 28px;
+        background: var(--luxury-dark);
+        border: 1px solid var(--luxury-gold);
+        color: var(--luxury-gold);
+        font-size: 0.95rem;
+        font-weight: 700;
+        border-radius: 4px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+
+    .btn-back:hover {
+        background: #2c2c2c;
+        color: #ffffff;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="main-heading">📅 Seznam itinerářů cest</h1>
+
+    <div class="countries-grid">
+        <a href="{% url 'detail_itineraru' 'turecko' %}" class="country-card">
+            <span>Turecko</span>
+            <p>Zobrazit itinerář</p>
+        </a>
+        <a href="{% url 'detail_itineraru' 'kapverdy' %}" class="country-card">
+            <span>Kapverdy</span>
+            <p>Zobrazit itinerář</p>
+        </a>
+        <a href="{% url 'detail_itineraru' 'tunisko' %}" class="country-card">
+            <span>Tunisko</span>
+            <p>Zobrazit itinerář</p>
+        </a>
+        <a href="{% url 'detail_itineraru' 'egypt' %}" class="country-card">
+            <span>Egypt</span>
+            <p>Zobrazit itinerář</p>
+        </a>
+    </div>
+
+    <div>
+        <a href="{% url 'domovsky' %}" class="btn-back">← Zpět na hlavní stránku</a>
+    </div>
+</div>
+{% endblock %}

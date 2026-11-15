@@ -1,0 +1,312 @@
+
+
+
+{% extends 'base.html' %}
+
+{% block title %}Hlavní menu - Cestovatelské radosti{% endblock %}
+
+{% block extra_head %}
+<style>
+    /* Skrytí prvků z base.html pouze na stránce menu */
+    .top-left,
+    .top-right,
+    .chat-widget {
+        display: none !important;
+    }
+
+    /* Jistota, že canvas s bublinami nebude nikdy blokovat klikání na odkazy */
+    #bubble-canvas {
+        pointer-events: none !important;
+    }
+
+    /* Přizpůsobení kontejneru pro přehledné zobrazení mřížky menu */
+    .center-container {
+        position: relative;
+        top: auto;
+        left: auto;
+        transform: none;
+        margin: 60px auto 90px auto;
+        width: 92%;
+        max-width: 1100px;
+        z-index: 10;
+    }
+
+    .menu-header-title {
+        font-family: 'Fairwater Script', 'Charm', cursive;
+        font-size: 46px;
+        color: var(--text-color);
+        margin-bottom: 8px;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    .menu-header-subtitle {
+        font-size: 1rem;
+        color: var(--subtext-color);
+        margin-bottom: 32px;
+    }
+
+    /* Mřížka 4 hlavních sekcí menu */
+    .menu-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 22px;
+        width: 100%;
+        text-align: left;
+    }
+
+    .menu-card {
+        padding: 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        border-radius: 22px;
+    }
+
+    .menu-card-header {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: var(--text-color);
+        padding-bottom: 10px;
+        border-bottom: 1.5px solid var(--panel-border);
+    }
+
+    .menu-main-link {
+        display: inline-flex;
+        align-items: center;
+        justify-content: space-between;
+        background: var(--accent-color);
+        color: #ffffff;
+        padding: 9px 16px;
+        border-radius: 14px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.9rem;
+        transition: all 0.25s ease;
+    }
+
+    .menu-main-link:hover {
+        background: var(--accent-hover);
+        transform: translateX(3px);
+    }
+
+    /* Seznam zemí a pod-odkazů na galerie */
+    .country-list {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .country-item {
+        background: rgba(255, 255, 255, 0.45);
+        border: 1px solid var(--panel-border);
+        border-radius: 14px;
+        padding: 10px 14px;
+        transition: all 0.2s ease;
+    }
+
+    body.theme-dark .country-item {
+        background: rgba(15, 23, 42, 0.5);
+    }
+
+    .country-item:hover {
+        border-color: var(--accent-color);
+        transform: translateY(-2px);
+    }
+
+    .country-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+    }
+
+    .country-link {
+        font-weight: 600;
+        font-size: 0.95rem;
+        color: var(--text-color);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .country-link:hover {
+        color: var(--accent-color);
+    }
+
+    /* Odznak pro proklik na galerii pod zemí/itinerářem */
+    .gallery-sublink {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        font-size: 0.78rem;
+        font-weight: 600;
+        color: var(--accent-color);
+        background: rgba(0, 0, 0, 0.04);
+        padding: 4px 10px;
+        border-radius: 20px;
+        text-decoration: none;
+        border: 1px solid transparent;
+        transition: all 0.2s ease;
+    }
+
+    body.theme-dark .gallery-sublink {
+        background: rgba(255, 255, 255, 0.08);
+    }
+
+    .gallery-sublink:hover {
+        background: var(--accent-color);
+        color: #ffffff;
+    }
+
+    /* Tlačítko zpět na domovskou stránku */
+    .back-home-wrapper {
+        margin-top: 30px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<h1 class="menu-header-title">Rozcestník cestovatelských radostí</h1>
+<p class="menu-header-subtitle">Vyberte si destinaci, inspirujte se itineráři nebo se zapojte do diskuze s komunitou.</p>
+
+<div class="menu-grid">
+
+    <!-- 1. SEKCE: ZEMĚ A GALERIE ZEMÍ -->
+    <div class="menu-card glass-panel">
+        <div class="menu-card-header">
+            <span>🌍</span> Země a destinace
+        </div>
+        <a href="{% url 'seznam_zemi' %}" class="menu-main-link">
+            <span>Všechny země</span>
+            <span>→</span>
+        </a>
+        <ul class="country-list">
+            <li class="country-item">
+                <div class="country-row">
+                    <a href="{% url 'detail_zeme' 'egypt' %}" class="country-link">🇪🇬 Egypt</a>
+                    <a href="{% url 'egypt_galerie' %}" class="gallery-sublink">📸 Galerie</a>
+                </div>
+            </li>
+            <li class="country-item">
+                <div class="country-row">
+                    <a href="{% url 'detail_zeme' 'kapverdy' %}" class="country-link">🇨🇻 Kapverdy</a>
+                    <a href="{% url 'kapverdy_galerie' %}" class="gallery-sublink">📸 Galerie</a>
+                </div>
+            </li>
+            <li class="country-item">
+                <div class="country-row">
+                    <a href="{% url 'detail_zeme' 'tunisko' %}" class="country-link">🇹🇳 Tunisko</a>
+                    <a href="{% url 'tunisko_galerie' %}" class="gallery-sublink">📸 Galerie</a>
+                </div>
+            </li>
+            <li class="country-item">
+                <div class="country-row">
+                    <a href="{% url 'detail_zeme' 'turecko' %}" class="country-link">🇹🇷 Turecko</a>
+                    <a href="{% url 'turecko_galerie' %}" class="gallery-sublink">📸 Galerie</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <!-- 2. SEKCE: ITINERÁŘE CEST A JEJICH GALERIE -->
+    <div class="menu-card glass-panel">
+        <div class="menu-card-header">
+            <span>📅</span> Itineráře cest
+        </div>
+        <a href="{% url 'seznam_itineraru' %}" class="menu-main-link">
+            <span>Všechny itineráře</span>
+            <span>→</span>
+        </a>
+        <ul class="country-list">
+            <li class="country-item">
+                <div class="country-row">
+                    <a href="{% url 'detail_itineraru' 'egypt' %}" class="country-link">🇪🇬 Egypt – itinerář</a>
+                    <a href="{% url 'egypt_galerie' %}" class="gallery-sublink">📸 Galerie</a>
+                </div>
+            </li>
+            <li class="country-item">
+                <div class="country-row">
+                    <a href="{% url 'detail_itineraru' 'kapverdy' %}" class="country-link">🇨🇻 Kapverdy – itinerář</a>
+                    <a href="{% url 'kapverdy_galerie' %}" class="gallery-sublink">📸 Galerie</a>
+                </div>
+            </li>
+            <li class="country-item">
+                <div class="country-row">
+                    <a href="{% url 'detail_itineraru' 'tunisko' %}" class="country-link">🇹🇳 Tunisko – itinerář</a>
+                    <a href="{% url 'tunisko_galerie' %}" class="gallery-sublink">📸 Galerie</a>
+                </div>
+            </li>
+            <li class="country-item">
+                <div class="country-row">
+                    <a href="{% url 'detail_itineraru' 'turecko' %}" class="country-link">🇹🇷 Turecko – itinerář</a>
+                    <a href="{% url 'turecko_galerie' %}" class="gallery-sublink">📸 Galerie</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <!-- 3. SEKCE: ZPRÁVY KOMUNITY PODLE ZEMÍ -->
+    <div class="menu-card glass-panel">
+        <div class="menu-card-header">
+            <span>💬</span> Zprávy komunity
+        </div>
+        <a href="{% url 'zpravy' %}" class="menu-main-link">
+            <span>Všechny diskuze</span>
+            <span>→</span>
+        </a>
+        <ul class="country-list">
+            <li class="country-item">
+                <div class="country-row">
+                    <a href="/zpravy/zeme/egypt/" class="country-link">🇪🇬 Komunita: Egypt</a>
+                    <span style="font-size: 0.8rem; color: var(--subtext-color);">Fórum →</span>
+                </div>
+            </li>
+            <li class="country-item">
+                <div class="country-row">
+                    <a href="/zpravy/zeme/kapverdy/" class="country-link">🇨🇻 Komunita: Kapverdy</a>
+                    <span style="font-size: 0.8rem; color: var(--subtext-color);">Fórum →</span>
+                </div>
+            </li>
+            <li class="country-item">
+                <div class="country-row">
+                    <a href="/zpravy/zeme/tunisko/" class="country-link">🇹🇳 Komunita: Tunisko</a>
+                    <span style="font-size: 0.8rem; color: var(--subtext-color);">Fórum →</span>
+                </div>
+            </li>
+            <li class="country-item">
+                <div class="country-row">
+                    <a href="/zpravy/zeme/turecko/" class="country-link">🇹🇷 Komunita: Turecko</a>
+                    <span style="font-size: 0.8rem; color: var(--subtext-color);">Fórum →</span>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <!-- 4. SEKCE: PODPORA A ADMINISTRÁTOR (S OPRAVENÝM ODKAZEM NA CHAT) -->
+    <div class="menu-card glass-panel">
+        <div class="menu-card-header">
+            <span>🙋‍♂️</span> Podpora a kontakt
+        </div>
+        <p style="font-size: 0.88rem; color: var(--subtext-color); line-height: 1.5;">
+            Máte dotaz k cestám, itinerářům nebo potřebujete poradit s plánováním? Napište přímo administrátorovi.
+        </p>
+        <!-- Použití názvu URL 'chat_admin', případně můžete použít '/zpravy/chat/' -->
+        <a href="{% url 'chat_admin' %}" class="menu-main-link" style="margin-top: auto;">
+            <span>✉️ Zprávy s administrátorem</span>
+            <span>→</span>
+        </a>
+    </div>
+
+</div>
+
+<div class="back-home-wrapper">
+    <a href="{% url 'domov' %}" class="split-btn">
+        🏠 Zpět na úvodní stránku
+    </a>
+</div>
+{% endblock %}

@@ -3,125 +3,27 @@
 
 {% extends 'base.html' %}
 
-{% block title %}Itineráře cest - Cestovatelské radosti{% endblock %}
-
-{% block extra_head %}
-<style>
-    .itinerary-card-panel {
-        background: rgba(255, 255, 255, 0.92);
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
-        border: 2px solid var(--gold-accent);
-        border-radius: 24px;
-        padding: 40px 50px;
-        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
-        width: 100%;
-        max-width: 820px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .itinerary-title {
-        font-family: var(--font-script);
-        font-size: 42px;
-        color: #3d3127;
-        margin-bottom: 30px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 12px;
-        font-weight: 700;
-    }
-
-    .itinerary-grid {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 20px;
-        width: 100%;
-        max-width: 660px;
-        margin-bottom: 32px;
-    }
-
-    .country-box {
-        background: #333942;
-        border: 2px solid var(--gold-accent);
-        border-radius: 18px;
-        width: 195px;
-        padding: 20px 16px;
-        text-decoration: none;
-        color: #ffffff;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 6px;
-        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
-        transition: all 0.25s ease;
-    }
-
-    .country-box:hover {
-        background: #252a32;
-        transform: translateY(-4px);
-        box-shadow: 0 10px 24px rgba(197, 160, 89, 0.35);
-    }
-
-    .country-box-name {
-        font-size: 1.15rem;
-        font-weight: 600;
-        color: #ffffff;
-    }
-
-    .country-box-sub {
-        font-size: 0.85rem;
-        color: #cbd5e1;
-        font-weight: 400;
-    }
-
-    .btn-back-pill {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-        background: #333942;
-        border: 2px solid var(--gold-accent);
-        color: #ffffff;
-        padding: 12px 28px;
-        border-radius: 30px;
-        text-decoration: none;
-        font-weight: 600;
-        font-size: 0.95rem;
-        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
-        transition: all 0.25s ease;
-    }
-
-    .btn-back-pill:hover {
-        background: var(--gold-accent);
-        color: #0f172a;
-        transform: translateY(-2px);
-    }
-</style>
-{% endblock %}
+{% block title %}Cestovatelské radosti - Hlavní stránka{% endblock %}
 
 {% block content %}
-<div class="itinerary-card-panel">
-    <h1 class="itinerary-title">
-        <span>📅</span>
-        <span>Seznam itinerářů cest</span>
-    </h1>
+    <h1 class="main-heading">Vítejte ve světě mých cestovatelských radostí!</h1>
+    <p class="sub-heading">
+        Nemusíte mít procestovaný celý svět, abyste mohli milovat cestování. Podělím se s vámi o své osobní zážitky, praktické tipy a oblíbená místa, která stojí za to navštívit. Pojďme načerpat inspiraci na vaši příští cestu!
+    </p>
 
-    <div class="itinerary-grid">
-        {% for itinerar in itinerare %}
-            <a href="{% url 'detail_itineraru' itinerar.slug %}" class="country-box">
-                <span class="country-box-name">{{ itinerar.nazev }}</span>
-                <span class="country-box-sub">Zobrazit detail</span>
-            </a>
-        {% endfor %}
+    <!-- Tlačítka (Seznam zemí, Itineráře a Zprávy) -->
+    <div class="split-buttons-wrapper">
+        <a href="{% url 'seznam_zemi' %}" class="split-btn">
+            <span class="btn-icon">🌍</span>
+            <span>Seznam zemí</span>
+        </a>
+        <a href="{% url 'seznam_itineraru' %}" class="split-btn">
+            <span class="btn-icon">📅</span>
+            <span>Itineráře cest</span>
+        </a>
+        <a href="{% url 'zpravy' %}" class="split-btn">
+            <span class="btn-icon">✉️</span>
+            <span>Zprávy</span>
+        </a>
     </div>
-
-    <a href="/" class="btn-back-pill">
-        <span>← Zpět na hlavní stránku</span>
-    </a>
-</div>
 {% endblock %}

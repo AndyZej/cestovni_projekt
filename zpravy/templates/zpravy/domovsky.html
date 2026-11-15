@@ -1,0 +1,29 @@
+
+
+
+{% extends 'base.html' %}
+
+{% block title %}Cestovatelské radosti - Hlavní stránka{% endblock %}
+
+{% block content %}
+    <h1 class="main-heading">Vítejte ve světě mých cestovatelských radostí!</h1>
+    <p class="sub-heading">
+        Nemusíte mít procestovaný celý svět, abyste mohli milovat cestování. Podělím se s vámi o své osobní zážitky, praktické tipy a oblíbená místa, která stojí za to navštívit. Pojďme načerpat inspiraci na vaši příští cestu!
+    </p>
+
+    <!-- Tlačítka (Seznam zemí, Itineráře a Zprávy) -->
+    <div class="split-buttons-wrapper">
+        <a href="{% url 'seznam_zemi' %}" class="split-btn">
+            <span class="btn-icon">🌍</span>
+            <span>Seznam zemí</span>
+        </a>
+        <a href="{% url 'seznam_itineraru' %}" class="split-btn">
+            <span class="btn-icon">📅</span>
+            <span>Itineráře cest</span>
+        </a>
+        <a href="{% url 'zpravy' %}" class="split-btn">
+            <span class="btn-icon">✉️</span>
+            <span>Zprávy</span>
+        </a>
+    </div>
+{% endblock %}

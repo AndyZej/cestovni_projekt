@@ -11,453 +11,763 @@
 <!-- Google Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Charm:wght@400;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Charm:wght@400;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
 @font-face {
-font-family: 'Fairwater Script';
-src: local('Fairwater Script'), local('FairwaterScript');
-font-display: swap;
+    font-family: 'Fairwater Script';
+    src: local('Fairwater Script'), local('FairwaterScript');
+    font-display: swap;
 }
 
-:root {
---font-script: 'Fairwater Script', 'Charm', cursive;
---font-sans: 'Montserrat', sans-serif;
---panel-bg: rgba(255, 255, 255, 0.92); /* Sjednoceno s pozadím karet zemí */
---panel-border: rgba(197, 160, 89, 0.4); /* Zlatavý okraj jako u zemí */
---glass-shadow: 0 12px 40px 0 rgba(138, 108, 66, 0.15);
---text-color: #2c241d;
---gold-accent: #c5a059;
+/* ==========================================
+   10 VIZUÁLNÍCH MODELŮ S VYSOKÝM KONTRASTEM
+   ========================================== */
+
+/* 1. Zlatá poušť */
+:root, body.theme-gold {
+    --bg-gradient: radial-gradient(circle at top left, #fdfaf2 0%, #f7eedb 55%, #f3e6cc 100%);
+    --body-bg: #fbf9f4;
+    --panel-bg: rgba(255, 255, 255, 0.96);
+    --panel-border: rgba(197, 160, 89, 0.65);
+    --glass-shadow: 0 12px 40px 0 rgba(138, 108, 66, 0.22);
+    --text-color: #1a1410;
+    --subtext-color: #4a3e34;
+    --accent-color: #b38b4d;
+    --accent-hover: #9e773f;
+    --bubble-hue: 42;
+    --bubble-sat: 65%;
+    --bubble-light: 70%;
 }
+
+/* 2. Mořská laguna */
+body.theme-laguna {
+    --bg-gradient: radial-gradient(circle at top left, #f8fafc 0%, #e0f2fe 55%, #bae6fd 100%);
+    --body-bg: #f0f4f8;
+    --panel-bg: rgba(255, 255, 255, 0.96);
+    --panel-border: rgba(14, 165, 233, 0.65);
+    --glass-shadow: 0 12px 40px 0 rgba(14, 165, 233, 0.22);
+    --text-color: #090d16;
+    --subtext-color: #1e3a8a;
+    --accent-color: #0284c7;
+    --accent-hover: #0369a1;
+    --bubble-hue: 200;
+    --bubble-sat: 70%;
+    --bubble-light: 65%;
+}
+
+/* 3. Lesní oáza (Hlavní výchozí model) */
+body.theme-forest {
+    --bg-gradient: radial-gradient(circle at top left, #eef7f2 0%, #d8ede3 55%, #bce0d0 100%);
+    --body-bg: #e6f2ec;
+    --panel-bg: rgba(255, 255, 255, 0.96);
+    --panel-border: rgba(5, 150, 105, 0.6);
+    --glass-shadow: 0 12px 40px 0 rgba(5, 150, 105, 0.2);
+    --text-color: #022c22;
+    --subtext-color: #064e3b;
+    --accent-color: #059669;
+    --accent-hover: #047857;
+    --bubble-hue: 155;
+    --bubble-sat: 65%;
+    --bubble-light: 60%;
+}
+
+/* 4. Provensálská levandule */
+body.theme-lavender {
+    --bg-gradient: radial-gradient(circle at top left, #faf5ff 0%, #f3e8ff 55%, #e9d5ff 100%);
+    --body-bg: #fdfcff;
+    --panel-bg: rgba(255, 255, 255, 0.96);
+    --panel-border: rgba(124, 58, 237, 0.65);
+    --glass-shadow: 0 12px 40px 0 rgba(124, 58, 237, 0.22);
+    --text-color: #2e054d;
+    --subtext-color: #581c87;
+    --accent-color: #7c3aed;
+    --accent-hover: #6d28d9;
+    --bubble-hue: 265;
+    --bubble-sat: 65%;
+    --bubble-light: 70%;
+}
+
+/* 5. Zapadající slunce */
+body.theme-sunset {
+    --bg-gradient: radial-gradient(circle at top left, #fff7ed 0%, #ffedd5 55%, #fed7aa 100%);
+    --body-bg: #fff8f1;
+    --panel-bg: rgba(255, 255, 255, 0.96);
+    --panel-border: rgba(234, 88, 12, 0.65);
+    --glass-shadow: 0 12px 40px 0 rgba(234, 88, 12, 0.22);
+    --text-color: #290a03;
+    --subtext-color: #7c2d12;
+    --accent-color: #ea580c;
+    --accent-hover: #c2410c;
+    --bubble-hue: 22;
+    --bubble-sat: 75%;
+    --bubble-light: 65%;
+}
+
+/* 6. Skandinávský minimalismus */
+body.theme-scandi {
+    --bg-gradient: radial-gradient(circle at top left, #ffffff 0%, #f1f5f9 55%, #e2e8f0 100%);
+    --body-bg: #fafafa;
+    --panel-bg: rgba(255, 255, 255, 0.98);
+    --panel-border: rgba(71, 85, 105, 0.5);
+    --glass-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.12);
+    --text-color: #0f172a;
+    --subtext-color: #334155;
+    --accent-color: #334155;
+    --accent-hover: #1e293b;
+    --bubble-hue: 215;
+    --bubble-sat: 30%;
+    --bubble-light: 65%;
+}
+
+/* 7. Himálajský sníh */
+body.theme-snow {
+    --bg-gradient: radial-gradient(circle at top left, #ffffff 0%, #f0f9ff 55%, #e0f2fe 100%);
+    --body-bg: #f8fafc;
+    --panel-bg: rgba(255, 255, 255, 0.96);
+    --panel-border: rgba(2, 132, 199, 0.65);
+    --glass-shadow: 0 12px 40px 0 rgba(2, 132, 199, 0.22);
+    --text-color: #04131f;
+    --subtext-color: #035388;
+    --accent-color: #0284c7;
+    --accent-hover: #0369a1;
+    --bubble-hue: 198;
+    --bubble-sat: 65%;
+    --bubble-light: 68%;
+}
+
+/* 8. Tropický korál */
+body.theme-coral {
+    --bg-gradient: radial-gradient(circle at top left, #fff1f2 0%, #ffe4e6 55%, #fecdd3 100%);
+    --body-bg: #fef2f2;
+    --panel-bg: rgba(255, 255, 255, 0.96);
+    --panel-border: rgba(244, 63, 94, 0.65);
+    --glass-shadow: 0 12px 40px 0 rgba(244, 63, 94, 0.22);
+    --text-color: #2b020c;
+    --subtext-color: #881337;
+    --accent-color: #f43f5e;
+    --accent-hover: #e11d48;
+    --bubble-hue: 345;
+    --bubble-sat: 75%;
+    --bubble-light: 70%;
+}
+
+/* 9. Podzimní káva / Moka */
+body.theme-mocha {
+    --bg-gradient: radial-gradient(circle at top left, #fdfbf7 0%, #f5ebe0 55%, #e3d5ca 100%);
+    --body-bg: #fbf7f4;
+    --panel-bg: rgba(255, 255, 255, 0.96);
+    --panel-border: rgba(180, 83, 9, 0.65);
+    --glass-shadow: 0 12px 40px 0 rgba(180, 83, 9, 0.22);
+    --text-color: #1a0f07;
+    --subtext-color: #5c2c06;
+    --accent-color: #b45309;
+    --accent-hover: #92400e;
+    --bubble-hue: 30;
+    --bubble-sat: 60%;
+    --bubble-light: 65%;
+}
+
+/* 10. Hluboká noc (Elegant Dark) */
+body.theme-dark {
+    --bg-gradient: radial-gradient(circle at top left, #1e293b 0%, #0f172a 55%, #020617 100%);
+    --body-bg: #0b0f19;
+    --panel-bg: rgba(30, 41, 59, 0.94);
+    --panel-border: rgba(251, 191, 36, 0.6);
+    --glass-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.5);
+    --text-color: #ffffff;
+    --subtext-color: #e2e8f0;
+    --accent-color: #fbbf24;
+    --accent-hover: #f59e0b;
+    --bubble-hue: 45;
+    --bubble-sat: 70%;
+    --bubble-light: 55%;
+}
+
+/* ==========================================
+   ZÁKLADNÍ STYLY STRÁNKY
+   ========================================== */
 
 * {
-box-sizing: border-box;
-margin: 0;
-padding: 0;
-user-select: none;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    user-select: none;
 }
 
 body, html {
-height: 100%;
-font-family: var(--font-sans);
-color: var(--text-color);
-overflow-x: hidden;
-background-color: #fbf9f4;
+    height: 100%;
+    font-family: 'Montserrat', sans-serif;
+    color: var(--text-color);
+    overflow-x: hidden;
+    background-color: var(--body-bg);
+    transition: color 0.3s ease, background-color 0.5s ease;
 }
 
 #bg-overlay {
-position: fixed;
-top: 0;
-left: 0;
-width: 100%;
-height: 100%;
-z-index: -1;
-background: radial-gradient(circle at top left, #fdfaf2 0%, #f7eedb 55%, #f3e6cc 100%);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background: var(--bg-gradient);
+    transition: background 0.5s ease;
 }
 
 #bubble-canvas {
-position: fixed;
-top: 0;
-left: 0;
-width: 100vw;
-height: 100vh;
-z-index: 1;
-pointer-events: auto;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1;
+    pointer-events: auto;
 }
 
-/* Sjednocená skleněná karta – stejný styl jako karty zemí */
 .glass-panel {
-background: var(--panel-bg);
-backdrop-filter: blur(16px);
--webkit-backdrop-filter: blur(16px);
-border: 1.5px solid var(--panel-border);
-border-radius: 20px;
-box-shadow: var(--glass-shadow);
-transition: all 0.3s ease;
+    background: var(--panel-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1.5px solid var(--panel-border);
+    border-radius: 20px;
+    box-shadow: var(--glass-shadow);
+    transition: all 0.3s ease;
 }
 
-/* Levý horní roh (Přihlášení) */
+.glass-panel:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 45px rgba(0, 0, 0, 0.12);
+}
+
+/* 1. Levý horní roh (Přihlášení) */
 .top-left {
-position: absolute;
-top: 24px;
-left: 24px;
-padding: 22px 24px;
-display: flex;
-flex-direction: column;
-gap: 12px;
-z-index: 10;
-max-width: 320px;
+    position: absolute;
+    top: 24px;
+    left: 24px;
+    padding: 22px 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    z-index: 10;
+    width: 360px;
+    max-width: 90vw;
+}
+
+.card-badge {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent-color);
+    background: rgba(0, 0, 0, 0.04);
+    padding: 3px 9px;
+    border-radius: 10px;
 }
 
 .top-left-header {
-display: flex;
-align-items: center;
-gap: 8px;
-font-size: 1.05rem;
-font-weight: 600;
-color: #2c241d;
+    font-family: 'Fairwater Script', 'Charm', cursive;
+    font-size: 1.75rem;
+    line-height: 1.15;
+    font-weight: 700;
+    color: var(--text-color);
+    white-space: nowrap;
 }
 
 .top-left-desc {
-font-size: 0.85rem;
-color: #6e6359;
-line-height: 1.4;
+    font-size: 0.85rem;
+    color: var(--subtext-color);
+    line-height: 1.45;
 }
 
-.btn-login-green {
-display: inline-flex;
-align-items: center;
-justify-content: center;
-gap: 8px;
-background: #008751;
-color: white;
-padding: 10px 20px;
-border-radius: 30px;
-text-decoration: none;
-font-weight: 600;
-font-size: 0.9rem;
-transition: background 0.2s, transform 0.2s;
-box-shadow: 0 4px 12px rgba(0, 135, 81, 0.3);
-width: fit-content;
+.btn-login-accent {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: var(--accent-color);
+    color: #ffffff;
+    padding: 10px 20px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: background 0.2s, transform 0.2s;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    width: fit-content;
 }
 
-.btn-login-green:hover {
-background: #007043;
-transform: translateY(-2px);
+.btn-login-accent:hover {
+    background: var(--accent-hover);
+    transform: translateY(-2px);
 }
 
-/* Pravý horní roh (Palubní deník) */
+/* 2. Pravý horní roh (Palubní deník) */
 .top-right {
-position: absolute;
-top: 24px;
-right: 24px;
-padding: 18px 22px;
-text-align: right;
-max-width: 340px;
-z-index: 10;
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    padding: 18px 22px;
+    text-align: right;
+    max-width: 340px;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
 }
 
 .log-title {
-font-size: 0.9rem;
-font-weight: 600;
-margin-bottom: 4px;
-color: #2c241d;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--text-color);
 }
 
-.log-date {
-font-family: monospace;
-font-size: 0.85rem;
-color: #55483d;
-margin-bottom: 6px;
+.log-datetime-box {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.log-date-text {
+    font-size: 0.83rem;
+    font-weight: 500;
+    color: var(--subtext-color);
+}
+
+.log-time-pill {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: #ffffff;
+    background: var(--accent-color);
+    padding: 3px 10px;
+    border-radius: 16px;
+}
+
+.log-divider {
+    width: 50%;
+    height: 1px;
+    background: var(--panel-border);
+    margin: 2px 0;
 }
 
 .log-quote {
-font-style: italic;
-font-size: 0.8rem;
-color: #6e6359;
+    font-style: italic;
+    font-size: 0.8rem;
+    color: var(--subtext-color);
 }
 
+/* 3. Střed stránky */
 .center-container {
-position: absolute;
-top: 50%;
-left: 50%;
-transform: translate(-50%, -50%);
-width: 90%;
-max-width: 900px;
-text-align: center;
-z-index: 5;
-display: flex;
-flex-direction: column;
-align-items: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 900px;
+    text-align: center;
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .main-heading {
-font-family: var(--font-script);
-font-size: 44px;
-line-height: 1.3;
-margin-bottom: 16px;
-color: #2c241d;
-font-weight: 700;
-text-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    font-family: 'Fairwater Script', 'Charm', cursive;
+    font-size: 44px;
+    line-height: 1.3;
+    margin-bottom: 16px;
+    color: var(--text-color);
+    font-weight: 700;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .sub-heading {
-font-family: var(--font-sans);
-font-size: 1.05rem;
-line-height: 1.6;
-margin-bottom: 30px;
-color: #3d3127;
-font-weight: 400;
-max-width: 800px;
+    font-size: 1.05rem;
+    line-height: 1.6;
+    margin-bottom: 30px;
+    color: var(--subtext-color);
+    font-weight: 400;
+    max-width: 800px;
 }
 
 .split-buttons-wrapper {
-display: flex;
-justify-content: center;
-align-items: center;
-gap: 20px;
-flex-wrap: wrap;
-margin-bottom: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 25px;
 }
 
 .split-btn {
-display: inline-flex;
-align-items: center;
-gap: 10px;
-background: var(--panel-bg);
-backdrop-filter: blur(12px);
--webkit-backdrop-filter: blur(12px);
-border: 2px solid var(--gold-accent);
-color: #2c241d;
-padding: 12px 26px;
-font-size: 1rem;
-font-weight: 600;
-border-radius: 40px;
-text-decoration: none;
-cursor: pointer;
-box-shadow: var(--glass-shadow);
-transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--panel-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 2px solid var(--accent-color);
+    color: var(--text-color);
+    padding: 12px 26px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 40px;
+    text-decoration: none;
+    cursor: pointer;
+    box-shadow: var(--glass-shadow);
+    transition: all 0.3s ease;
 }
 
 .split-btn:hover {
-background-color: var(--gold-accent);
-color: #ffffff;
-transform: translateY(-3px);
-box-shadow: 0 8px 24px rgba(197, 160, 89, 0.4);
+    background-color: var(--accent-color);
+    color: #ffffff;
+    transform: translateY(-3px);
 }
 
-.split-btn .btn-icon {
-font-size: 1.2rem;
+/* 4. Levý dolní roh - Oddělené tlačítko Menu */
+.menu-widget {
+    position: fixed;
+    bottom: 24px;
+    left: 24px;
+    z-index: 100;
 }
 
+.menu-toggle-btn {
+    padding: 10px 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: transform 0.2s, color 0.2s;
+    text-decoration: none;
+    color: var(--text-color);
+}
+
+.menu-toggle-btn:hover {
+    transform: translateY(-2px);
+    color: var(--accent-color);
+}
+
+/* 5. Dole uprostřed - Samostatný panel pro Vzhled */
+.bottom-center-panel {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+}
+
+.theme-switcher-inline {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.theme-switcher-inline label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.theme-select {
+    background: transparent;
+    border: 1px solid var(--panel-border);
+    border-radius: 12px;
+    padding: 6px 12px;
+    font-family: inherit;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--text-color);
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.theme-select:hover {
+    border-color: var(--accent-color);
+}
+
+.theme-select option {
+    background-color: #ffffff;
+    color: #1e293b;
+}
+
+/* 6. Pravý dolní roh - Zprávy / Podpora */
 .chat-widget {
-position: fixed;
-bottom: 24px;
-right: 24px;
-z-index: 100;
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 100;
 }
 
 .chat-toggle-btn {
-padding: 12px 20px;
-cursor: pointer;
-display: flex;
-align-items: center;
-gap: 8px;
-font-weight: 500;
-font-size: 0.9rem;
-transition: transform 0.2s;
-text-decoration: none;
-color: #2c241d;
+    padding: 10px 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: transform 0.2s;
+    text-decoration: none;
+    color: var(--text-color);
 }
 
 .chat-toggle-btn:hover {
-transform: translateY(-2px);
+    transform: translateY(-2px);
 }
 </style>
 {% block extra_head %}{% endblock %}
 </head>
-<body>
+<!-- Výchozí 3. model (Lesní oáza) -->
+<body class="theme-forest">
 
 <div id="bg-overlay"></div>
 <canvas id="bubble-canvas"></canvas>
 
 <!-- 1. Levý horní roh (Přihlášení) -->
 <div class="top-left glass-panel">
-<div class="top-left-header">
-👋 Budeme cestovat společně?
-</div>
-<div class="top-left-desc">
-Přihlas se ke svému účtu a objevuj uložené zážitky.
-</div>
-<a href="{% url 'login' %}" class="btn-login-green">
-<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path></svg>
-Přihlásit se
-</a>
+    <div class="card-badge">✨ Osobní zóna</div>
+    <div class="top-left-header">
+        Budeme cestovat společně?
+    </div>
+    <div class="top-left-desc">
+        Přihlas se ke svému účtu a objevuj uložené zážitky.
+    </div>
+    <a href="{% url 'login' %}" class="btn-login-accent">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path></svg>
+        Přihlásit se
+    </a>
 </div>
 
 <!-- 2. Pravý horní roh (Palubní deník) -->
 <div class="top-right glass-panel">
-<div class="log-title">📌 Záznam z palubního deníku</div>
-<div class="log-date" id="current-datetime">Načítání času...</div>
-<div class="log-quote">Právě teď je ten nejlepší čas začít plánovat další cestu.</div>
+    <div class="log-title">📌 Záznam z palubního deníku</div>
+    <div class="log-datetime-box">
+        <span class="log-date-text" id="current-date">Načítání data...</span>
+        <span class="log-time-pill" id="current-time">00:00</span>
+    </div>
+    <div class="log-divider"></div>
+    <div class="log-quote">Právě teď je ten nejlepší čas začít plánovat další cestu.</div>
 </div>
 
 <!-- 3. Střed stránky -->
 <div class="center-container">
-{% block content %}
-{% endblock %}
+    {% block content %}
+    {% endblock %}
 </div>
 
-<!-- 4. Pravý dolní roh - Chat s administrátorem -->
+<!-- 4. Levý dolní roh - Oddělené tlačítko Menu -->
+<div class="menu-widget">
+    <a href="{% url 'menu' %}" class="menu-toggle-btn glass-panel">
+        📂 Menu
+    </a>
+</div>
+
+<!-- 5. Dole uprostřed - Samostatný panel pro Vzhled -->
+<div class="bottom-center-panel glass-panel">
+    <div class="theme-switcher-inline">
+        <label for="theme-selector">🎨 Vzhled:</label>
+        <select id="theme-selector" class="theme-select">
+            <option value="theme-forest">3. Lesní oáza (Výchozí)</option>
+            <option value="theme-gold">1. Zlatá poušť</option>
+            <option value="theme-laguna">2. Mořská laguna</option>
+            <option value="theme-lavender">4. Provensálská levandule</option>
+            <option value="theme-sunset">5. Zapadající slunce</option>
+            <option value="theme-scandi">6. Skandinávský minimalismus</option>
+            <option value="theme-snow">7. Himálajský sníh</option>
+            <option value="theme-coral">8. Tropický korál</option>
+            <option value="theme-mocha">9. Podzimní káva / Moka</option>
+            <option value="theme-dark">10. Hluboká noc (Dark)</option>
+        </select>
+    </div>
+</div>
+
+<!-- 6. Pravý dolní roh - Zprávy / Podpora -->
 <div class="chat-widget">
-<a href="{% url 'chat_admin' %}" class="chat-toggle-btn glass-panel">
-🙋‍♂️ Potřebuješ poradit? Napiš administrátorovi!
-</a>
+    <a href="{% url 'chat_admin' %}" class="chat-toggle-btn glass-panel">
+        ✉️ Zprávy (Podpora)
+    </a>
 </div>
 
-<!-- JAVASCRIPT pro bubliny a čas -->
+<!-- JAVASCRIPT pro přepínání modelů, bubliny a čas -->
 <script>
+// 1. Aktualizace data a času v palubním deníku
 function updateDateTime() {
-const now = new Date();
-const days = ['Neděle', 'Pondělí', 'Úterý', 'Středa', 'Čtvrtek', 'Pátek', 'Sobota'];
-const months = ['ledna', 'února', 'března', 'dubna', 'května', 'června', 'července', 'srpna', 'září', 'října', 'listopadu', 'prosince'];
+    const now = new Date();
+    const days = ['Neděle', 'Pondělí', 'Úterý', 'Středa', 'Čtvrtek', 'Pátek', 'Sobota'];
+    const months = ['ledna', 'února', 'března', 'dubna', 'května', 'června', 'července', 'srpna', 'září', 'října', 'listopadu', 'prosince'];
 
-const formatted = `${days[now.getDay()]} ${now.getDate()}. ${months[now.getMonth()]} ${now.getFullYear()} | ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
-document.getElementById('current-datetime').textContent = formatted;
+    const dateStr = `${days[now.getDay()]} ${now.getDate()}. ${months[now.getMonth()]} ${now.getFullYear()}`;
+    const timeStr = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+
+    if(document.getElementById('current-date')) {
+        document.getElementById('current-date').textContent = dateStr;
+        document.getElementById('current-time').textContent = timeStr;
+    }
 }
-
 updateDateTime();
 setInterval(updateDateTime, 1000);
 
+// 2. Přepínač vizuálních modelů s uložením v localStorage
+const themeSelector = document.getElementById('theme-selector');
+const savedTheme = localStorage.getItem('selectedTheme') || 'theme-forest';
+
+function applyTheme(themeName) {
+    document.body.className = themeName;
+    if(themeSelector) themeSelector.value = themeName;
+    localStorage.setItem('selectedTheme', themeName);
+    if (typeof bubbles !== 'undefined') {
+        bubbles.forEach(b => b.updateColor());
+    }
+}
+
+if(themeSelector) {
+    themeSelector.addEventListener('change', (e) => {
+        applyTheme(e.target.value);
+    });
+}
+
+// 3. Plátno s interaktivními bublinami
 const canvas = document.getElementById('bubble-canvas');
 const ctx = canvas.getContext('2d');
-
 let width = canvas.width = window.innerWidth;
 let height = canvas.height = window.innerHeight;
-
 const mouse = { x: null, y: null, radius: 150 };
 
 window.addEventListener('mousemove', (e) => { mouse.x = e.clientX; mouse.y = e.clientY; });
 window.addEventListener('mouseleave', () => { mouse.x = null; mouse.y = null; });
 window.addEventListener('touchmove', (e) => {
-if (e.touches.length > 0) { mouse.x = e.touches[0].clientX; mouse.y = e.touches[0].clientY; }
+    if (e.touches.length > 0) { mouse.x = e.touches[0].clientX; mouse.y = e.touches[0].clientY; }
 });
 window.addEventListener('touchend', () => { mouse.x = null; mouse.y = null; });
 window.addEventListener('resize', () => {
-width = canvas.width = window.innerWidth;
-height = canvas.height = window.innerHeight;
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
 });
 
-const lightPalettes = [
-{ min: 35, max: 50 },
-{ min: 40, max: 55 },
-{ min: 30, max: 45 }
-];
-
-let baseHue = lightPalettes[0];
+function getBubbleStyle() {
+    const bodyStyle = getComputedStyle(document.body);
+    const hue = parseInt(bodyStyle.getPropertyValue('--bubble-hue').trim(), 10) || 155;
+    const sat = bodyStyle.getPropertyValue('--bubble-sat').trim() || '65%';
+    const light = bodyStyle.getPropertyValue('--bubble-light').trim() || '60%';
+    return { hue, sat, light };
+}
 
 class Bubble {
-constructor(x, y, radius) {
-this.x = x || Math.random() * width;
-this.y = y || height + (Math.random() * 100);
-this.radius = radius || Math.random() * 35 + 10;
-this.baseRadius = this.radius;
+    constructor(x, y, radius) {
+        this.x = x || Math.random() * width;
+        this.y = y || height + (Math.random() * 100);
+        this.radius = radius || Math.random() * 35 + 10;
+        this.baseRadius = this.radius;
+        this.vy = -(Math.random() * 0.6 + 0.3);
+        this.vx = (Math.random() - 0.5) * 0.4;
+        this.updateColor();
+        this.angle = Math.random() * Math.PI * 2;
+        this.swingSpeed = Math.random() * 0.02 + 0.005;
+        this.swingMagnitude = Math.random() * 0.8 + 0.2;
+    }
 
-this.vy = -(Math.random() * 0.6 + 0.3);
-this.vx = (Math.random() - 0.5) * 0.4;
+    updateColor() {
+        const cfg = getBubbleStyle();
+        const hue = cfg.hue + Math.floor(Math.random() * 16 - 8);
+        const opacity = Math.random() * 0.28 + 0.12;
+        this.color = `hsla(${hue}, ${cfg.sat}, ${cfg.light}, ${opacity})`;
+        this.borderColor = `hsla(${hue}, ${cfg.sat}, ${cfg.light}, ${opacity + 0.25})`;
+    }
 
-this.updateColor();
+    draw() {
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        const gradient = ctx.createRadialGradient(
+            this.x - this.radius * 0.3, this.y - this.radius * 0.3, this.radius * 0.1,
+            this.x, this.y, this.radius
+        );
+        gradient.addColorStop(0, 'rgba(255, 255, 255, 0.9)');
+        gradient.addColorStop(0.4, this.color);
+        gradient.addColorStop(1, 'rgba(255, 255, 255, 0.1)');
+        ctx.fillStyle = gradient;
+        ctx.fill();
+        ctx.lineWidth = 1;
+        ctx.strokeStyle = this.borderColor;
+        ctx.stroke();
 
-this.angle = Math.random() * Math.PI * 2;
-this.swingSpeed = Math.random() * 0.02 + 0.005;
-this.swingMagnitude = Math.random() * 0.8 + 0.2;
-}
+        ctx.beginPath();
+        ctx.arc(
+            this.x - this.radius * 0.3, this.y - this.radius * 0.3, this.radius * 0.3,
+            Math.PI * 1.2, Math.PI * 1.7
+        );
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.75)';
+        ctx.lineWidth = Math.max(1, this.radius * 0.08);
+        ctx.stroke();
+        ctx.restore();
+    }
 
-updateColor() {
-const hue = Math.floor(Math.random() * (baseHue.max - baseHue.min) + baseHue.min);
-const opacity = Math.random() * 0.25 + 0.10;
-this.color = `hsla(${hue}, 60%, 75%, ${opacity})`;
-this.borderColor = `hsla(${hue}, 70%, 85%, ${opacity + 0.2})`;
-}
+    update() {
+        this.angle += this.swingSpeed;
+        this.x += Math.sin(this.angle) * this.swingMagnitude + this.vx;
+        this.y += this.vy;
 
-draw() {
-ctx.save();
-ctx.beginPath();
-ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        if (mouse.x !== null && mouse.y !== null) {
+            const dx = mouse.x - this.x;
+            const dy = mouse.y - this.y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            if (distance < mouse.radius) {
+                const force = (mouse.radius - distance) / mouse.radius;
+                if (this.radius < this.baseRadius * 1.4) this.radius += 0.8;
+                this.x -= (dx / distance) * force * 1.5;
+                this.y -= (dy / distance) * force * 1.5;
+            } else if (this.radius > this.baseRadius) {
+                this.radius -= 0.3;
+            }
+        } else if (this.radius > this.baseRadius) {
+            this.radius -= 0.3;
+        }
 
-const gradient = ctx.createRadialGradient(
-this.x - this.radius * 0.3,
-this.y - this.radius * 0.3,
-this.radius * 0.1,
-this.x,
-this.y,
-this.radius
-);
-gradient.addColorStop(0, 'rgba(255, 255, 255, 0.85)');
-gradient.addColorStop(0.4, this.color);
-gradient.addColorStop(1, 'rgba(197, 160, 89, 0.05)');
+        if (this.y + this.radius < -20) {
+            this.y = height + this.radius + Math.random() * 20;
+            this.x = Math.random() * width;
+            this.updateColor();
+        }
+        if (this.x < -this.radius) this.x = width + this.radius;
+        if (this.x > width + this.radius) this.x = -this.radius;
 
-ctx.fillStyle = gradient;
-ctx.fill();
-
-ctx.lineWidth = 1;
-ctx.strokeStyle = this.borderColor;
-ctx.stroke();
-
-ctx.beginPath();
-ctx.arc(
-this.x - this.radius * 0.3,
-this.y - this.radius * 0.3,
-this.radius * 0.3,
-Math.PI * 1.2,
-Math.PI * 1.7
-);
-ctx.strokeStyle = 'rgba(255, 255, 255, 0.7)';
-ctx.lineWidth = Math.max(1, this.radius * 0.08);
-ctx.stroke();
-
-ctx.restore();
-}
-
-update() {
-this.angle += this.swingSpeed;
-this.x += Math.sin(this.angle) * this.swingMagnitude + this.vx;
-this.y += this.vy;
-
-if (mouse.x !== null && mouse.y !== null) {
-const dx = mouse.x - this.x;
-const dy = mouse.y - this.y;
-const distance = Math.sqrt(dx * dx + dy * dy);
-
-if (distance < mouse.radius) {
-const force = (mouse.radius - distance) / mouse.radius;
-if (this.radius < this.baseRadius * 1.4) {
-this.radius += 0.8;
-}
-this.x -= (dx / distance) * force * 1.5;
-this.y -= (dy / distance) * force * 1.5;
-} else if (this.radius > this.baseRadius) {
-this.radius -= 0.3;
-}
-} else if (this.radius > this.baseRadius) {
-this.radius -= 0.3;
-}
-
-if (this.y + this.radius < -20) {
-this.y = height + this.radius + Math.random() * 20;
-this.x = Math.random() * width;
-this.updateColor();
-}
-
-if (this.x < -this.radius) this.x = width + this.radius;
-if (this.x > width + this.radius) this.x = -this.radius;
-
-this.draw();
-}
+        this.draw();
+    }
 }
 
 const bubbles = [];
 const bubbleCount = Math.min(Math.floor(window.innerWidth / 20), 45);
-
 for (let i = 0; i < bubbleCount; i++) {
-const bubble = new Bubble();
-bubble.y = Math.random() * height;
-bubbles.push(bubble);
+    const b = new Bubble();
+    b.y = Math.random() * height;
+    bubbles.push(b);
 }
+
+applyTheme(savedTheme);
 
 function animate() {
-ctx.clearRect(0, 0, width, height);
-for (let i = 0; i < bubbles.length; i++) {
-bubbles[i].update();
+    ctx.clearRect(0, 0, width, height);
+    bubbles.forEach(b => b.update());
+    requestAnimationFrame(animate);
 }
-requestAnimationFrame(animate);
-}
-
 animate();
 
 canvas.addEventListener('click', (e) => {
-bubbles.push(new Bubble(e.clientX, e.clientY, Math.random() * 30 + 15));
+    bubbles.push(new Bubble(e.clientX, e.clientY, Math.random() * 30 + 15));
 });
 </script>
+{% block extra_js %}{% endblock %}
 </body>
 </html>
