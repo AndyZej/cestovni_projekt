@@ -4,9 +4,17 @@
 
 {% block title %}Můj účet - Cestovatelské radosti{% endblock %}
 
+{# Skryjeme pouze levý box (přihlášení), pravý horní roh (deník) využijeme pro naše tlačítko zpět #}
+{% block corner_widgets %}
+<div class="top-right glass-panel">
+    <a href="{% url 'domov' %}" style="text-decoration: none; color: var(--text-color); font-weight: 600; font-size: 0.9rem; display: flex; align-items: center; gap: 8px;">
+        ← Zpět na hlavní stránku
+    </a>
+</div>
+{% endblock %}
+
 {% block extra_head %}
 <style>
-    /* Jistota, že bubliny nebudou blokovat prokliky */
     #bubble-canvas {
         pointer-events: none !important;
     }
@@ -25,62 +33,75 @@
         color: var(--text-main);
         margin: 0;
         padding: 0;
-        line-height: 1.8;
-    }
-
-    /* ZDE SKRYJEME OBA ROHOVÉ BOXY Z BASE.HTML, ABY NEKÁZALY */
-    /* (Pokud mají vaše rohové boxy v base.html jiné ID nebo třídy, dejte mi vědět a upravíme to) */
-    .osobni-zona-box,
-    .palubni-denik-box,
-    header, .hero-section {
-        display: none !important;
+        line-height: 1.6;
+        height: 100vh;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     .dashboard-container {
+        width: 100%;
         max-width: 650px;
-        margin: 40px auto 80px auto; /* Větší spodní margi kvůli spodní liště */
-        padding: 40px;
+        max-height: 75vh;
+        overflow-y: auto;
+        margin: 0 auto;
+        padding: 30px 35px;
         background: var(--card-bg);
         border: 2px solid var(--luxury-gold);
         border-radius: 20px;
         box-shadow: 0 15px 35px rgba(0,0,0,0.1);
         position: relative;
         z-index: 10;
+        box-sizing: border-box;
+    }
+
+    .dashboard-container::-webkit-scrollbar {
+        width: 6px;
+    }
+    .dashboard-container::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 10px;
+    }
+    .dashboard-container::-webkit-scrollbar-thumb {
+        background: var(--luxury-gold);
+        border-radius: 10px;
     }
 
     .dashboard-title {
         font-family: 'Playfair Display', serif;
-        font-size: 2.2rem;
+        font-size: 2rem;
         color: var(--luxury-dark);
-        margin-bottom: 10px;
+        margin-bottom: 5px;
         text-align: center;
     }
 
     .dashboard-subtitle {
         text-align: center;
         color: #666;
-        margin-bottom: 30px;
-        font-size: 0.95rem;
+        margin-bottom: 20px;
+        font-size: 0.9rem;
     }
 
     .dashboard-section {
-        margin-bottom: 30px;
-        padding-bottom: 20px;
+        margin-bottom: 20px;
+        padding-bottom: 15px;
         border-bottom: 1px solid #eee;
     }
 
     .dashboard-section h3 {
         font-family: 'Playfair Display', serif;
-        font-size: 1.3rem;
+        font-size: 1.2rem;
         color: var(--luxury-dark);
-        margin-bottom: 15px;
+        margin-bottom: 10px;
     }
 
     .info-row {
         display: flex;
         justify-content: space-between;
-        margin-bottom: 10px;
-        font-size: 1rem;
+        margin-bottom: 8px;
+        font-size: 0.95rem;
     }
 
     .info-label {
@@ -90,9 +111,9 @@
 
     .btn-luxury {
         display: inline-block;
-        padding: 10px 20px;
+        padding: 8px 18px;
         background: var(--luxury-dark);
-        border: 1px solid var(--luxury-gold);
+        border: 1.5px solid var(--luxury-gold);
         color: var(--luxury-gold);
         font-size: 0.9rem;
         font-weight: 700;
@@ -107,17 +128,10 @@
         color: #ffffff;
     }
 
-    .back-link {
-        display: inline-block;
-        margin-top: 20px;
-        color: var(--luxury-dark);
-        text-decoration: none;
-        font-weight: 600;
-    }
-
-    .back-link:hover {
-        color: var(--luxury-gold);
-        text-decoration: underline;
+    .btn-admin {
+        background: #111;
+        border-color: #c5a059;
+        color: #c5a059;
     }
 </style>
 {% endblock %}
@@ -142,29 +156,42 @@
             <span class="info-label">Datum registrace:</span>
             <span>{{ user.date_joined|date:"j. F Y" }}</span>
         </div>
+        {% if user.is_staff or user.is_superuser %}
+        <div class="info-row" style="margin-top: 8px;">
+            <span class="info-label">Oprávnění:</span>
+            <span style="color: var(--luxury-gold); font-weight: bold;">⭐ Administrátor / Správce</span>
+        </div>
+        {% endif %}
     </div>
 
-    <!-- Sekce: Změna hesla / Akce účtu -->
+    <!-- Sekce pro administrátory -->
+    {% if user.is_staff or user.is_superuser %}
+    <div class="dashboard-section" style="background: #fffdf5; padding: 15px; border-radius: 10px; border: 1px dashed var(--luxury-gold);">
+        <h3>⚙️ Administrace webu</h3>
+        <p style="font-size: 0.85rem; color: #666; margin-bottom: 10px;">
+            Jste přihlášen/a jako administrátor. Zde máte přístup ke správě systému.
+        </p>
+        <a href="{% url 'admin:index' %}" class="btn-luxury btn-admin" target="_blank">Otevřít Django Admin</a>
+    </div>
+    {% endif %}
+
+    <!-- Sekce: Změna hesla -->
     <div class="dashboard-section">
         <h3>🔐 Zabezpečení a nastavení</h3>
-        <p style="font-size: 0.9rem; color: #666; margin-bottom: 15px;">
+        <p style="font-size: 0.85rem; color: #666; margin-bottom: 10px;">
             Zde můžete spravovat své heslo nebo upravit přístupové údaje.
         </p>
         <a href="{% url 'password_change' %}" class="btn-luxury">Změnit heslo</a>
     </div>
 
     <!-- Sekce: Odhlášení -->
-    <div style="text-align: center; margin-top: 20px;">
+    <div style="text-align: center; margin-top: 15px;">
         <form action="{% url 'logout' %}" method="post" style="display: inline;">
             {% csrf_token %}
             <button type="submit" class="btn-luxury" style="background-color: #8b0000; border-color: #ff4d4d; color: white;">
                 Odhlásit se ze systému
             </button>
         </form>
-    </div>
-
-    <div style="text-align: center; margin-top: 30px;">
-        <a href="{% url 'domov' %}" class="back-link">← Zpět na hlavní stránku</a>
     </div>
 </div>
 {% endblock %}
