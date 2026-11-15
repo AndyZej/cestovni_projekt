@@ -8,7 +8,7 @@
 
 {% block header_content %}
     <h1>🇹🇷 Fotogalerie - Turecko</h1>
-    <p>Prohlédněte si snímky z Antalye, Istanbulu a dalších krásných míst</p>
+    <p>Prohlédněte si snímky z Antalye, Bodrumu a Istanbulu</p>
 {% endblock %}
 
 {% block back_url %}{% url 'detail_itineraru' slug='turecko' %}{% endblock %}
@@ -16,17 +16,15 @@
 {% block gallery_content %}
     <h2>Antalya a okolí</h2>
     <div class="gallery-grid">
-        <!-- Green Canyon -->
         <div class="gallery-card"
              data-images="{% static 'galerie/itinerar/turecko/antalya/greencanyon/1.jpg' %},{% static 'galerie/itinerar/turecko/antalya/greencanyon/2.jpg' %},{% static 'galerie/itinerar/turecko/antalya/greencanyon/3.jpg' %},{% static 'galerie/itinerar/turecko/antalya/greencanyon/4.jpg' %},{% static 'galerie/itinerar/turecko/antalya/greencanyon/5.jpg' %},{% static 'galerie/itinerar/turecko/antalya/greencanyon/6.jpg' %},{% static 'galerie/itinerar/turecko/antalya/greencanyon/7.jpg' %},{% static 'galerie/itinerar/turecko/antalya/greencanyon/8.jpg' %}"
              data-title="Green Canyon"
              data-desc="Nádherná příroda a tyrkysová voda v kaňonu."
              onclick="openLightbox(this)">
-            <div class="card-icon"> canyon </div>
+            <div class="card-icon">🏞️</div>
             <div class="card-label">Green Canyon</div>
         </div>
 
-        <!-- Lodní výlet v Antalyi -->
         <div class="gallery-card"
              data-images="{% static 'galerie/itinerar/turecko/antalya/lodnivylet/1.jpg' %},{% static 'galerie/itinerar/turecko/antalya/lodnivylet/2.jpg' %},{% static 'galerie/itinerar/turecko/antalya/lodnivylet/3.jpg' %},{% static 'galerie/itinerar/turecko/antalya/lodnivylet/lod.jpg' %},{% static 'galerie/itinerar/turecko/antalya/lodnivylet/lod2.jpg' %},{% static 'galerie/itinerar/turecko/antalya/lodnivylet/lod3.jpg' %}"
              data-title="Lodní výlet"
@@ -35,11 +33,76 @@
             <div class="card-icon">⛵</div>
             <div class="card-label">Lodní výlet</div>
         </div>
+
+        <div class="gallery-card"
+             data-images="{% static 'galerie/itinerar/turecko/antalya/mesto/1.jpeg' %},{% static 'galerie/itinerar/turecko/antalya/mesto/cervenavez.jpg' %},{% static 'galerie/itinerar/turecko/antalya/mesto/cervenavez2.jpg' %},{% static 'galerie/itinerar/turecko/antalya/mesto/hrad.jpg' %},{% static 'galerie/itinerar/turecko/antalya/mesto/hrad2.jpg' %}"
+             data-title="Město a památky"
+             data-desc="Červená věž, historický hrad a centrum města."
+             onclick="openLightbox(this)">
+            <div class="card-icon">🏰</div>
+            <div class="card-label">Město</div>
+        </div>
+    </div>
+
+    <h2>Bodrum a okolí</h2>
+    <div class="gallery-grid">
+        <div class="gallery-card"
+             data-images="{% static 'galerie/itinerar/turecko/bodrum/efes/1.jpg' %},{% static 'galerie/itinerar/turecko/bodrum/efes/2.jpg' %},{% static 'galerie/itinerar/turecko/bodrum/efes/3.jpg' %},{% static 'galerie/itinerar/turecko/bodrum/efes/4.jpg' %},{% static 'galerie/itinerar/turecko/bodrum/efes/5.jpg' %},{% static 'galerie/itinerar/turecko/bodrum/efes/6.jpg' %}"
+             data-title="Antický Efes"
+             data-desc="Rozsáhlé antické památky v Efesu."
+             onclick="openLightbox(this)">
+            <div class="card-icon">🏛️</div>
+            <div class="card-label">Efes</div>
+        </div>
+
+        <div class="gallery-card"
+             data-images="{% static 'galerie/itinerar/turecko/bodrum/efes/dumpannymarie/1.jpg' %},{% static 'galerie/itinerar/turecko/bodrum/efes/dumpannymarie/2.jpg' %},{% static 'galerie/itinerar/turecko/bodrum/efes/dumpannymarie/3.jpg' %},{% static 'galerie/itinerar/turecko/bodrum/efes/dumpannymarie/4.jpg' %},{% static 'galerie/itinerar/turecko/bodrum/efes/dumpannymarie/5.jpg' %}"
+             data-title="Dům Panny Marie"
+             data-desc="Poutní místo poblíž Efesu."
+             onclick="openLightbox(this)">
+            <div class="card-icon">⛪</div>
+            <div class="card-label">Dům Panny Marie</div>
+        </div>
+
+        <div class="gallery-card"
+             data-images="{% static 'galerie/itinerar/turecko/bodrum/hrad/1.jpg' %},{% static 'galerie/itinerar/turecko/bodrum/hrad/2.jpg' %},{% static 'galerie/itinerar/turecko/bodrum/hrad/3.jpg' %},{% static 'galerie/itinerar/turecko/bodrum/hrad/4.jpg' %},{% static 'galerie/itinerar/turecko/bodrum/hrad/5.jpg' %}"
+             data-title="Hrad sv. Petra"
+             data-desc="Dominanta přístavu v Bodrumu."
+             onclick="openLightbox(this)">
+            <div class="card-icon">🏰</div>
+            <div class="card-label">Hrad</div>
+        </div>
+
+        <div class="gallery-card"
+             data-images="{% static 'galerie/itinerar/turecko/bodrum/jepp/1.jpg' %},{% static 'galerie/itinerar/turecko/bodrum/jepp/2.jpg' %},{% static 'galerie/itinerar/turecko/bodrum/jepp/3.jpg' %},{% static 'galerie/itinerar/turecko/bodrum/jepp/4.jpg' %},{% static 'galerie/itinerar/turecko/bodrum/jepp/5.jpg' %},{% static 'galerie/itinerar/turecko/bodrum/jepp/6.jpg' %}"
+             data-title="Jeep Safari"
+             data-desc="Dobrodružná jízda terénem v okolí Bodrumu."
+             onclick="openLightbox(this)">
+            <div class="card-icon">🚙</div>
+            <div class="card-label">Jeep Safari</div>
+        </div>
+
+        <div class="gallery-card"
+             data-images="{% static 'galerie/itinerar/turecko/bodrum/lodnivylet/1.jpg' %},{% static 'galerie/itinerar/turecko/bodrum/lodnivylet/2.jpg' %},{% static 'galerie/itinerar/turecko/bodrum/lodnivylet/3.jpg' %},{% static 'galerie/itinerar/turecko/bodrum/lodnivylet/4.jpg' %},{% static 'galerie/itinerar/turecko/bodrum/lodnivylet/5.jpg' %}"
+             data-title="Lodní výlet"
+             data-desc="Plavba po zátokách v okolí Bodrumu."
+             onclick="openLightbox(this)">
+            <div class="card-icon">⛵</div>
+            <div class="card-label">Lodní výlet</div>
+        </div>
+
+        <div class="gallery-card"
+             data-images="{% static 'galerie/itinerar/turecko/bodrum/mesto/1.jpg' %},{% static 'galerie/itinerar/turecko/bodrum/mesto/2.jpg' %},{% static 'galerie/itinerar/turecko/bodrum/mesto/3.jpg' %},{% static 'galerie/itinerar/turecko/bodrum/mesto/4.jpg' %},{% static 'galerie/itinerar/turecko/bodrum/mesto/bazar.jpg' %},{% static 'galerie/itinerar/turecko/bodrum/mesto/marina.jpg' %},{% static 'galerie/itinerar/turecko/bodrum/mesto/marina2.jpg' %},{% static 'galerie/itinerar/turecko/bodrum/mesto/mlyn.jpg' %},{% static 'galerie/itinerar/turecko/bodrum/mesto/promenade.jpg' %}"
+             data-title="Město Bodrum"
+             data-desc="Přístav, větrné mlýny, bazar a pobřežní promenáda."
+             onclick="openLightbox(this)">
+            <div class="card-icon">🏙️</div>
+            <div class="card-label">Město</div>
+        </div>
     </div>
 
     <h2>Istanbul a památky</h2>
     <div class="gallery-grid">
-        <!-- Modrá mešita (modnamesita) - vynecháno chybějící 7.jpg, přidána modrapiramida.jpg -->
         <div class="gallery-card"
              data-images="{% static 'galerie/itinerar/turecko/istanbul/modnamesita/1.jpg' %},{% static 'galerie/itinerar/turecko/istanbul/modnamesita/2.jpg' %},{% static 'galerie/itinerar/turecko/istanbul/modnamesita/3.jpg' %},{% static 'galerie/itinerar/turecko/istanbul/modnamesita/4.jpg' %},{% static 'galerie/itinerar/turecko/istanbul/modnamesita/5.jpg' %},{% static 'galerie/itinerar/turecko/istanbul/modnamesita/6.jpg' %},{% static 'galerie/itinerar/turecko/istanbul/modnamesita/8.jpg' %},{% static 'galerie/itinerar/turecko/istanbul/modnamesita/modrapiramida.jpg' %}"
              data-title="Modrá mešita"
@@ -49,7 +112,6 @@
             <div class="card-label">Modrá mešita</div>
         </div>
 
-        <!-- Nová mešita (novamesita) - vynecháno chybějící 3.jpg, přidána novamesita.jpg -->
         <div class="gallery-card"
              data-images="{% static 'galerie/itinerar/turecko/istanbul/novamesita/1.jpg' %},{% static 'galerie/itinerar/turecko/istanbul/novamesita/2.jpg' %},{% static 'galerie/itinerar/turecko/istanbul/novamesita/4.jpg' %},{% static 'galerie/itinerar/turecko/istanbul/novamesita/5.jpg' %},{% static 'galerie/itinerar/turecko/istanbul/novamesita/novamesita.jpg' %}"
              data-title="Nová mešita"
@@ -59,7 +121,6 @@
             <div class="card-label">Nová mešita</div>
         </div>
 
-        <!-- Palác Topkapi -->
         <div class="gallery-card"
              data-images="{% static 'galerie/itinerar/turecko/istanbul/topkapi/1.jpg' %},{% static 'galerie/itinerar/turecko/istanbul/topkapi/2.jpg' %},{% static 'galerie/itinerar/turecko/istanbul/topkapi/3.jpg' %},{% static 'galerie/itinerar/turecko/istanbul/topkapi/4.jpg' %},{% static 'galerie/itinerar/turecko/istanbul/topkapi/5.jpg' %},{% static 'galerie/itinerar/turecko/istanbul/topkapi/6.jpg' %},{% static 'galerie/itinerar/turecko/istanbul/topkapi/7.jpg' %},{% static 'galerie/itinerar/turecko/istanbul/topkapi/8.jpg' %},{% static 'galerie/itinerar/turecko/istanbul/topkapi/9.jpg' %},{% static 'galerie/itinerar/turecko/istanbul/topkapi/10.jpg' %}"
              data-title="Palác Topkapi"
@@ -69,7 +130,6 @@
             <div class="card-label">Topkapi</div>
         </div>
 
-        <!-- Velký bazar (istanbul/bazar) -->
         <div class="gallery-card"
              data-images="{% static 'galerie/itinerar/turecko/istanbul/bazar/1.jpg' %},{% static 'galerie/itinerar/turecko/istanbul/bazar/2.jpg' %},{% static 'galerie/itinerar/turecko/istanbul/bazar/3.jpg' %},{% static 'galerie/itinerar/turecko/istanbul/bazar/4.jpg' %},{% static 'galerie/itinerar/turecko/istanbul/bazar/5.jpg' %},{% static 'galerie/itinerar/turecko/istanbul/bazar/6.jpg' %},{% static 'galerie/itinerar/turecko/istanbul/bazar/7.jpg' %},{% static 'galerie/itinerar/turecko/istanbul/bazar/8.jpg' %},{% static 'galerie/itinerar/turecko/istanbul/bazar/9.jpg' %},{% static 'galerie/itinerar/turecko/istanbul/bazar/bazar.jpg' %}"
              data-title="Bazar v Istanbulu"
@@ -79,7 +139,6 @@
             <div class="card-label">Bazar</div>
         </div>
 
-        <!-- Náměstí Taksim -->
         <div class="gallery-card"
              data-images="{% static 'galerie/itinerar/turecko/istanbul/taksim/1.jpg' %},{% static 'galerie/itinerar/turecko/istanbul/taksim/2.jpg' %},{% static 'galerie/itinerar/turecko/istanbul/taksim/3.jpg' %},{% static 'galerie/itinerar/turecko/istanbul/taksim/4.jpg' %},{% static 'galerie/itinerar/turecko/istanbul/taksim/5.jpg' %}"
              data-title="Náměstí Taksim"
@@ -89,7 +148,6 @@
             <div class="card-label">Taksim</div>
         </div>
 
-        <!-- Obecné fotky z Istanbulu -->
         <div class="gallery-card"
              data-images="{% static 'galerie/itinerar/turecko/istanbul/obecne/1.jpg' %},{% static 'galerie/itinerar/turecko/istanbul/obecne/istanbulkart.jpg' %},{% static 'galerie/itinerar/turecko/istanbul/obecne/metro.jpg' %},{% static 'galerie/itinerar/turecko/istanbul/obecne/pier.jpg' %},{% static 'galerie/itinerar/turecko/istanbul/obecne/terminal.jpg' %}"
              data-title="Z cesty po Istanbulu"
