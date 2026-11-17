@@ -11,14 +11,15 @@ def seznam_itineraru_view(request):
         {'nazev': 'Tunisko', 'slug': 'tunisko'},
         {'nazev': 'Egypt', 'slug': 'egypt'},
     ]
-    # Opraveno na správnou šablonu seznamu itinerářů
     return render(request, 'itinerar/seznam_itinerar.html', {'itinerare': itinerare})
 
 def detail_itineraru_view(request, slug):
     """Dynamicky otevře HTML šablonu pro itinerář podle slugu"""
+    # Sjednoceno na malé písmena podle reálných souborů na disku,
+    # aby nedocházelo k chybám na různých operačních systémech
     template_map = {
         'turecko': 'itinerar/itinerar/turecko.html',
-        'kapverdy': 'itinerar/itinerar/Kapverdy.html',
+        'kapverdy': 'itinerar/itinerar/kapverdy.html',
         'tunisko': 'itinerar/itinerar/tunisko.html',
         'egypt': 'itinerar/itinerar/egypt.html',
     }

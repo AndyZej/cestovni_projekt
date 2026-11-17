@@ -134,22 +134,22 @@
 
     <!-- Mřížka 2x2: 2 tlačítka nahoře, 2 pod nimi -->
     <div class="menu-grid-2x2">
-        <!-- 1. řádek vlevo -->
-        <a href="{% url 'domov' %}" class="menu-btn">
+        <!-- 1. řádek vlevo: Seznam zemí -->
+        <a href="{% url 'seznam_zemi' %}" class="menu-btn">
             🌍 Seznam zemí
         </a>
 
-        <!-- 1. řádek vpravo -->
-        <a href="{% url 'domov' %}" class="menu-btn">
+        <!-- 1. řádek vpravo: Itináře cest -->
+        <a href="{% url 'seznam_itineraru' %}" class="menu-btn">
             📅 Itináře cest
         </a>
 
-        <!-- 2. řádek vlevo -->
+        <!-- 2. řádek vlevo: Zprávy (opraveno z 'seznam_zprav' na 'zpravy') -->
         <a href="{% url 'zpravy' %}" class="menu-btn">
             ✉️ Zprávy
         </a>
 
-        <!-- 2. řádek vpravo: ÚČET (odkaz na dashboard nebo přihlášení) -->
+        <!-- 2. řádek vpravo: Účet / Přihlášení -->
         {% if user.is_authenticated %}
             <a href="{% url 'dashboard_uctu' %}" class="menu-btn menu-btn-account">
                 👤 Můj účet ({{ user.username }})

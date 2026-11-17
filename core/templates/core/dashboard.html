@@ -4,17 +4,9 @@
 
 {% block title %}Můj účet - Cestovatelské radosti{% endblock %}
 
-{# Skryjeme pouze levý box (přihlášení), pravý horní roh (deník) využijeme pro naše tlačítko zpět #}
-{% block corner_widgets %}
-<div class="top-right glass-panel">
-    <a href="{% url 'domov' %}" style="text-decoration: none; color: var(--text-color); font-weight: 600; font-size: 0.9rem; display: flex; align-items: center; gap: 8px;">
-        ← Zpět na hlavní stránku
-    </a>
-</div>
-{% endblock %}
-
 {% block extra_head %}
 <style>
+    /* KLÍČOVÁ OPRAVA: Zajištění, že bubliny nebudou blokovat klikání na odkazy (země, itineráře apod.) */
     #bubble-canvas {
         pointer-events: none !important;
     }
@@ -39,6 +31,11 @@
         display: flex;
         align-items: center;
         justify-content: center;
+    }
+
+    /* Bezpečné skrytí rohových boxů pouze na této stránce dashboardu */
+    .top-left, .top-right {
+        display: none !important;
     }
 
     .dashboard-container {
@@ -69,19 +66,50 @@
         border-radius: 10px;
     }
 
+    .dashboard-header-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 15px;
+    }
+
+    .dashboard-title-area {
+        text-align: left;
+    }
+
     .dashboard-title {
         font-family: 'Playfair Display', serif;
-        font-size: 2rem;
+        font-size: 1.8rem;
         color: var(--luxury-dark);
-        margin-bottom: 5px;
-        text-align: center;
+        margin-bottom: 2px;
     }
 
     .dashboard-subtitle {
-        text-align: center;
         color: #666;
-        margin-bottom: 20px;
-        font-size: 0.9rem;
+        font-size: 0.85rem;
+    }
+
+    .btn-back-inline {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 8px 14px;
+        background: var(--bg-color);
+        border: 1px solid var(--luxury-gold);
+        color: var(--luxury-dark);
+        font-size: 0.85rem;
+        font-weight: 600;
+        border-radius: 12px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        white-space: nowrap;
+    }
+
+    .btn-back-inline:hover {
+        background: var(--luxury-gold);
+        color: #ffffff;
     }
 
     .dashboard-section {
@@ -138,8 +166,15 @@
 
 {% block content %}
 <div class="dashboard-container">
-    <h1 class="dashboard-title">✨ Uživatelský panel</h1>
-    <p class="dashboard-subtitle">Vítejte ve své osobní sekci portálu Cestovatelské radosti.</p>
+    <div class="dashboard-header-row">
+        <div class="dashboard-title-area">
+            <h1 class="dashboard-title">✨ Uživatelský panel</h1>
+            <p class="dashboard-subtitle">Vítejte ve své osobní sekci portálu.</p>
+        </div>
+        <a href="{% url 'domov' %}" class="btn-back-inline">
+            ← Zpět domů
+        </a>
+    </div>
 
     <!-- Sekce: Osobní údaje -->
     <div class="dashboard-section">

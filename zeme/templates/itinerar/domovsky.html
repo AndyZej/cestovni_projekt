@@ -3,27 +3,163 @@
 
 {% extends 'base.html' %}
 
-{% block title %}Cestovatelské radosti - Hlavní stránka{% endblock %}
+{% block title %}Domovská stránka - Cestovatelské radosti{% endblock %}
+
+{% block extra_head %}
+<style>
+    /* Jistota, že bubliny nebudou blokovat prokliky */
+    #bubble-canvas {
+        pointer-events: none !important;
+    }
+
+    :root {
+        --luxury-dark: #1a1a1a;
+        --luxury-gold: #c5a059;
+        --luxury-gold-hover: #b08d46;
+        --bg-color: #faf9f6;
+        --card-bg: #ffffff;
+        --text-main: #333333;
+    }
+
+    body {
+        font-family: 'Lato', sans-serif;
+        background-color: var(--bg-color);
+        color: var(--text-main);
+        margin: 0;
+        padding: 0;
+        line-height: 1.8;
+    }
+
+    .home-hero-wrapper {
+        max-width: 780px;
+        margin: 0 auto;
+        padding: 60px 20px 40px 20px;
+        text-align: center;
+        position: relative;
+        z-index: 10;
+    }
+
+    .hero-title {
+        font-family: 'Playfair Display', serif;
+        font-style: italic;
+        font-size: 3rem;
+        font-weight: 700;
+        color: var(--luxury-dark);
+        margin-bottom: 18px;
+        line-height: 1.2;
+    }
+
+    .hero-subtitle {
+        font-size: 1.1rem;
+        color: #444;
+        max-width: 680px;
+        margin: 0 auto 35px auto;
+        line-height: 1.7;
+    }
+
+    /* Mřížka 2x2: dva prvky na prvním řádku, dva pod nimi */
+    .menu-grid-2x2 {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+        max-width: 480px;
+        margin: 0 auto;
+    }
+
+    @media (max-width: 520px) {
+        .menu-grid-2x2 {
+            grid-template-columns: 1fr;
+        }
+        .hero-title {
+            font-size: 2.2rem;
+        }
+    }
+
+    .menu-btn {
+        background: rgba(30, 35, 45, 0.9);
+        border: 2px solid var(--luxury-gold);
+        color: white;
+        padding: 13px 20px;
+        border-radius: 30px;
+        text-decoration: none;
+        font-size: 0.95rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
+
+    .menu-btn:hover {
+        background-color: var(--luxury-gold);
+        color: #0f172a;
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(197, 160, 89, 0.4);
+    }
+
+    /* Zvýrazněné tlačítko pro přihlášený účet */
+    .menu-btn-account {
+        background: var(--luxury-dark);
+        border: 2px solid var(--luxury-gold);
+        color: var(--luxury-gold);
+    }
+
+    .menu-btn-account:hover {
+        background-color: var(--luxury-gold);
+        color: #0f172a;
+    }
+
+    /* Zvýrazněné tlačítko pro nepřihlášeného uživatele */
+    .menu-btn-login {
+        background: var(--luxury-gold);
+        border: 2px solid var(--luxury-gold);
+        color: #0f172a;
+    }
+
+    .menu-btn-login:hover {
+        background-color: var(--luxury-dark);
+        color: var(--luxury-gold);
+    }
+</style>
+{% endblock %}
 
 {% block content %}
-    <h1 class="main-heading">Vítejte ve světě mých cestovatelských radostí!</h1>
-    <p class="sub-heading">
+<div class="home-hero-wrapper">
+    <!-- Úvodní text domovské stránky -->
+    <h1 class="hero-title">Vítejte ve světě mých cestovatelských radostí!</h1>
+    <p class="hero-subtitle">
         Nemusíte mít procestovaný celý svět, abyste mohli milovat cestování. Podělím se s vámi o své osobní zážitky, praktické tipy a oblíbená místa, která stojí za to navštívit. Pojďme načerpat inspiraci na vaši příští cestu!
     </p>
 
-    <!-- Tlačítka (Seznam zemí, Itineráře a Zprávy) -->
-    <div class="split-buttons-wrapper">
-        <a href="{% url 'seznam_zemi' %}" class="split-btn">
-            <span class="btn-icon">🌍</span>
-            <span>Seznam zemí</span>
+    <!-- Mřížka 2x2: 2 tlačítka nahoře, 2 pod nimi -->
+    <div class="menu-grid-2x2">
+        <!-- 1. řádek vlevo -->
+        <a href="{% url 'domov' %}" class="menu-btn">
+            🌍 Seznam zemí
         </a>
-        <a href="{% url 'seznam_itineraru' %}" class="split-btn">
-            <span class="btn-icon">📅</span>
-            <span>Itineráře cest</span>
+
+        <!-- 1. řádek vpravo -->
+        <a href="{% url 'domov' %}" class="menu-btn">
+            📅 Itináře cest
         </a>
-        <a href="{% url 'zpravy' %}" class="split-btn">
-            <span class="btn-icon">✉️</span>
-            <span>Zprávy</span>
+
+        <!-- 2. řádek vlevo -->
+        <a href="{% url 'zpravy' %}" class="menu-btn">
+            ✉️ Zprávy
         </a>
+
+        <!-- 2. řádek vpravo: ÚČET (odkaz na dashboard nebo přihlášení) -->
+        {% if user.is_authenticated %}
+            <a href="{% url 'dashboard_uctu' %}" class="menu-btn menu-btn-account">
+                👤 Můj účet ({{ user.username }})
+            </a>
+        {% else %}
+            <a href="{% url 'login' %}" class="menu-btn menu-btn-login">
+                🔐 Přihlásit se
+            </a>
+        {% endif %}
     </div>
+</div>
 {% endblock %}

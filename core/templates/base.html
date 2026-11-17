@@ -215,6 +215,7 @@ body, html {
     transition: background 0.5s ease;
 }
 
+/* ZDE JE OPRAVA: pointer-events: none zajistí, že bubliny neblokují kliknutí */
 #bubble-canvas {
     position: fixed;
     top: 0;
@@ -222,7 +223,7 @@ body, html {
     width: 100vw;
     height: 100vh;
     z-index: 1;
-    pointer-events: auto;
+    pointer-events: none !important;
 }
 
 .glass-panel {
@@ -534,8 +535,6 @@ body, html {
 <div id="bg-overlay"></div>
 <canvas id="bubble-canvas"></canvas>
 
-<!-- BLOK PRO ROHOVÉ WIDGETY (Na dashboardu se automaticky skryjí) -->
-{% block corner_widgets %}
 <!-- 1. Levý horní roh (Přihlášení) -->
 <div class="top-left glass-panel">
     <div class="card-badge">✨ Osobní zóna</div>
@@ -561,7 +560,6 @@ body, html {
     <div class="log-divider"></div>
     <div class="log-quote">Právě teď je ten nejlepší čas začít plánovat další cestu.</div>
 </div>
-{% endblock %}
 
 <!-- 3. Střed stránky -->
 <div class="center-container">
