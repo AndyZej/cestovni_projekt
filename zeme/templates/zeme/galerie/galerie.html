@@ -29,7 +29,7 @@
             --gold-accent: #c5a059;
         }
 
-        * {
+        *, *::before, *::after {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
@@ -152,6 +152,17 @@
             font-weight: 600;
         }
 
+        .bottom-nav {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 14px;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--panel-border);
+        }
+
         .back-btn {
             display: inline-flex;
             align-items: center;
@@ -159,14 +170,13 @@
             background: var(--panel-bg);
             border: 1px solid var(--gold-accent);
             color: white;
-            padding: 12px 28px;
+            padding: 12px 24px;
             font-size: 0.95rem;
             font-weight: 600;
             border-radius: 30px;
             text-decoration: none;
             transition: all 0.3s ease;
             box-shadow: var(--glass-shadow);
-            margin-top: 10px;
         }
 
         .back-btn:hover {
@@ -238,8 +248,10 @@
         {% block gallery_content %}
         {% endblock %}
 
-        <div>
+        <div class="bottom-nav">
+            <a href="{% url 'domovsky' %}" class="back-btn">← Zpět na hlavní stránku</a>
             <a href="{% block back_url %}{% url 'seznam_zemi' %}{% endblock %}" class="back-btn">← Zpět na detail země</a>
+            <a href="{% url 'menu' %}" class="back-btn">📂 Menu</a>
         </div>
     </div>
 

@@ -69,8 +69,15 @@
             box-shadow: 0 15px 35px rgba(0,0,0,0.04);
         }
 
-        .top-nav {
-            margin-bottom: 30px;
+        .bottom-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
         }
 
         h2 {
@@ -211,6 +218,7 @@
             border-radius: 2px;
             font-weight: 700;
             font-size: 0.9em;
+            border: 1px solid var(--luxury-gold);
             transition: all 0.3s ease;
         }
 
@@ -240,14 +248,12 @@
 
     <div class="container">
 
-        <div class="top-nav">
-            <a href="{% block back_url %}#{% endblock %}" class="btn-back">← Zpět na detail itineráře</a>
-        </div>
-
         {% block gallery_content %}{% endblock %}
 
-        <div style="margin-top: 40px;">
+        <div class="bottom-nav">
             <a href="{% url 'domovsky' %}" class="btn-back">← Zpět na hlavní stránku</a>
+            <a href="{% block back_url %}#{% endblock %}" class="btn-back">← Zpět na detail itineráře</a>
+            <a href="{% url 'menu' %}" class="btn-back">📂 Menu</a>
         </div>
 
     </div>

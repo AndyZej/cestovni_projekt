@@ -9,12 +9,18 @@
 <style>
     *, *::before, *::after { box-sizing: border-box; }
 
-    /* Odsazení obsahu od horních a dolních lišt v base.html */
+    /* Skrytí levého a pravého horního panelu z base.html pouze na této stránce */
+    .top-left,
+    .top-right {
+        display: none;
+    }
+
+    /* Odsazení obsahu od horního okraje a spodních lišt v base.html */
     .center-container {
         position: relative;
         top: auto; left: auto; transform: none;
         margin: 0 auto;
-        padding: 155px 16px 105px;
+        padding: 56px 16px 105px;
     }
 
     .favorites-page { width: 100%; max-width: 720px; margin: 0 auto; }
