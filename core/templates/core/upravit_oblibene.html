@@ -1,362 +1,292 @@
 
 
-{% extends 'base.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moje 4 oblíbené části</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 40px 20px;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: #eaf7f0;
+            color: #13382c;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+        .container { width: 100%; max-width: 720px; text-align: center; }
+        h1 { font-size: 2rem; color: #0d3b2e; margin-bottom: 8px; }
+        .subtitle { color: #3a6354; margin-bottom: 28px; font-size: 0.95rem; }
 
-{% block title %}Výběr oblíbených částí - Cestovatelské radosti{% endblock %}
+        /* 4 uložené karty */
+        .favorites-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+            gap: 16px;
+            margin-bottom: 28px;
+        }
+        .fav-card {
+            background: #ffffff;
+            border: 1.5px solid #c5a86a;
+            border-radius: 16px;
+            padding: 20px;
+            text-align: left;
+            box-shadow: 0 4px 12px rgba(13, 59, 46, 0.05);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .fav-card-top {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 14px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #d5ece1;
+        }
+        .fav-card-title { font-weight: 700; font-size: 1.1rem; color: #0d3b2e; }
+        .btn-open {
+            display: inline-block;
+            background-color: #008a59;
+            color: #fff;
+            text-decoration: none;
+            padding: 9px 16px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            align-self: flex-start;
+        }
 
-{% block extra_head %}
-<style>
-    .top-left,
-    .top-right,
-    .chat-widget {
-        display: none !important;
-    }
+        /* Lišta s tlačítkem Možnosti a Zpět do účtu */
+        .action-bar {
+            display: inline-flex;
+            gap: 14px;
+            flex-wrap: wrap;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.85);
+            border: 1.5px solid #c5a86a;
+            padding: 14px 24px;
+            border-radius: 999px;
+            margin-bottom: 25px;
+        }
+        .btn-back {
+            background: #fff;
+            color: #008a59;
+            border: 2px solid #008a59;
+            padding: 10px 20px;
+            border-radius: 999px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+        .btn-options {
+            background: #161817;
+            color: #fff;
+            border: 1.5px solid #c5a86a;
+            padding: 10px 22px;
+            border-radius: 999px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+        }
 
-    #bubble-canvas {
-        pointer-events: none !important;
-    }
+        /* Rozbalovací menu */
+        .menu-panel { text-align: left; margin-top: 15px; }
+        .menu-box {
+            background: #ffffff;
+            border: 1.5px solid #c5a86a;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .menu-box h3 {
+            margin: 0 0 14px 0;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #d5ece1;
+            color: #0d3b2e;
+        }
+        .row-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #bfe3d0;
+            border-radius: 10px;
+            padding: 10px 14px;
+            margin-bottom: 8px;
+            background: #fcfefd;
+        }
+        .row-item label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            margin: 0;
+        }
+        .gallery-pill {
+            border: 1px solid #bfe3d0;
+            border-radius: 8px;
+            padding: 4px 10px;
+            background: #f4fbf7;
+            font-size: 0.88rem;
+        }
+        .btn-save {
+            background: #161817;
+            color: #fff;
+            border: 1.5px solid #c5a86a;
+            padding: 12px 26px;
+            border-radius: 999px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+        .counter-badge {
+            display: inline-block;
+            background: #008a59;
+            color: #fff;
+            padding: 5px 14px;
+            border-radius: 999px;
+            font-size: 0.88rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
 
-    .center-container {
-        position: relative;
-        top: auto;
-        left: auto;
-        transform: none;
-        margin: 40px auto 80px auto;
-        width: 92%;
-        max-width: 1100px;
-        z-index: 10;
-    }
+<div class="container">
+    <h1>⭐ Moje 4 oblíbené části</h1>
+    <p class="subtitle">Zde vidíte své uložené části. Kliknutím na <strong>Možnosti</strong> rozbalíte kompletní nabídku.</p>
 
-    .menu-header-title {
-        font-family: 'Fairwater Script', 'Charm', cursive;
-        font-size: 40px;
-        color: var(--text-color);
-        margin-bottom: 8px;
-        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-        text-align: center;
-    }
+    <!-- 1. ZOBRAZENÍ POUZE 4 ULOŽENÝCH SEKCÍ -->
+    {% if oblibene_sekce %}
+        <div class="favorites-grid">
+            {% for sekce in oblibene_sekce %}
 
-    .menu-header-subtitle {
-        font-size: 0.95rem;
-        color: var(--subtext-color);
-        margin-bottom: 25px;
-        text-align: center;
-    }
-
-    .menu-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-        gap: 22px;
-        width: 100%;
-        text-align: left;
-    }
-
-    .menu-card {
-        padding: 20px;
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-        border-radius: 22px;
-        background: var(--card-bg, #ffffff);
-        border: 2px solid var(--luxury-gold, #c5a059);
-    }
-
-    .menu-card-header {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        font-size: 1.1rem;
-        font-weight: 700;
-        color: var(--text-color);
-        padding-bottom: 8px;
-        border-bottom: 1.5px solid var(--panel-border, #eee);
-    }
-
-    .checkbox-row-link {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        background: var(--accent-color, #0b7a54);
-        color: #ffffff;
-        padding: 8px 14px;
-        border-radius: 12px;
-        text-decoration: none;
-        font-weight: 600;
-        font-size: 0.85rem;
-    }
-
-    .checkbox-row-link input[type="checkbox"] {
-        accent-color: #ffffff;
-        width: 16px;
-        height: 16px;
-        cursor: pointer;
-    }
-
-    .country-list {
-        list-style: none;
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-        padding: 0;
-        margin: 0;
-    }
-
-    .country-item {
-        background: rgba(255, 255, 255, 0.45);
-        border: 1px solid var(--panel-border, #ddd);
-        border-radius: 12px;
-        padding: 8px 12px;
-        transition: all 0.2s ease;
-    }
-
-    .country-row {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 6px;
-    }
-
-    .country-label {
-        font-weight: 600;
-        font-size: 0.9rem;
-        color: var(--text-color);
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        cursor: pointer;
-    }
-
-    .gallery-checkbox-wrap {
-        display: inline-flex;
-        align-items: center;
-        gap: 4px;
-        font-size: 0.75rem;
-        font-weight: 600;
-        color: var(--text-color);
-        background: rgba(0, 0, 0, 0.04);
-        padding: 3px 8px;
-        border-radius: 16px;
-        border: 1px solid var(--panel-border, #ccc);
-        cursor: pointer;
-    }
-
-    .gallery-checkbox-wrap input {
-        accent-color: var(--accent-color, #0b7a54);
-        cursor: pointer;
-    }
-
-    /* Vzhled pro zablokované checkboxy po dosažení limitu 4 */
-    input[type="checkbox"]:disabled + span,
-    input[type="checkbox"]:disabled {
-        opacity: 0.5;
-        cursor: not-allowed;
-    }
-
-    .form-actions-bar {
-        margin-top: 30px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        background: rgba(0,0,0,0.02);
-        padding: 15px 20px;
-        border-radius: 14px;
-        border: 1px solid var(--panel-border, #eee);
-    }
-
-    .btn-save-luxury {
-        background: var(--luxury-dark, #1a1a1a);
-        color: var(--luxury-gold, #c5a059);
-        border: 1.5px solid var(--luxury-gold, #c5a059);
-        padding: 10px 22px;
-        border-radius: 10px;
-        font-weight: bold;
-        cursor: pointer;
-        transition: all 0.3s;
-    }
-    .btn-save-luxury:hover {
-        background: var(--luxury-gold, #c5a059);
-        color: #fff;
-    }
-</style>
-{% endblock %}
-
-{% block content %}
-<div class="center-container">
-    <h1 class="menu-header-title">⭐ Výběr 4 oblíbených částí</h1>
-    <p class="menu-header-subtitle">Zaškrtněte až 4 libovolné sekce z vašeho menu, které chcete mít okamžitě přístupné v dashboardu.</p>
-
-    <form method="post">
-        {% csrf_token %}
-
-        <div class="menu-grid">
-
-            <!-- 1. SEKCE: ZEMĚ A GALERIE ZEMÍ -->
-            <div class="menu-card glass-panel">
-                <div class="menu-card-header">
-                    <span>🌍</span> Země a destinace
+            <div class="fav-card-top">
+                        <span style="font-size: 1.5rem;">{{ sekce.ikona }}</span>
+                        <span class="fav-card-title">{{ sekce.nazev_casti }}</span>
+                    </div>
+                    <a href="{{ sekce.hotova_url }}" class="btn-open">Otevřít sekci →</a>
                 </div>
-                <label class="checkbox-row-link">
-                    <span>Všechny země</span>
-                    <input type="checkbox" name="oblibene_sekce" value="seznam_zemi" {% if 'seznam_zemi' in uzivatelske_vybrane %}checked{% endif %}>
-                </label>
-                <ul class="country-list">
-                    <li class="country-item">
-                        <div class="country-row">
-                            <label class="country-label"><input type="checkbox" name="oblibene_sekce" value="egypt_detail" {% if 'egypt_detail' in uzivatelske_vybrane %}checked{% endif %}> 🇪🇬 Egypt</label>
-                            <label class="gallery-checkbox-wrap"><input type="checkbox" name="oblibene_sekce" value="egypt_galerie" {% if 'egypt_galerie' in uzivatelske_vybrane %}checked{% endif %}> 📸 Galerie</label>
-                        </div>
-                    </li>
-                    <li class="country-item">
-                        <div class="country-row">
-                            <label class="country-label"><input type="checkbox" name="oblibene_sekce" value="kapverdy_detail" {% if 'kapverdy_detail' in uzivatelske_vybrane %}checked{% endif %}> 🇨🇻 Kapverdy</label>
-                            <label class="gallery-checkbox-wrap"><input type="checkbox" name="oblibene_sekce" value="kapverdy_galerie" {% if 'kapverdy_galerie' in uzivatelske_vybrane %}checked{% endif %}> 📸 Galerie</label>
-                        </div>
-                    </li>
-                    <li class="country-item">
-                        <div class="country-row">
-                            <label class="country-label"><input type="checkbox" name="oblibene_sekce" value="tunisko_detail" {% if 'tunisko_detail' in uzivatelske_vybrane %}checked{% endif %}> 🇹🇳 Tunisko</label>
-                            <label class="gallery-checkbox-wrap"><input type="checkbox" name="oblibene_sekce" value="tunisko_galerie" {% if 'tunisko_galerie' in uzivatelske_vybrane %}checked{% endif %}> 📸 Galerie</label>
-                        </div>
-                    </li>
-                    <li class="country-item">
-                        <div class="country-row">
-                            <label class="country-label"><input type="checkbox" name="oblibene_sekce" value="turecko_detail" {% if 'turecko_detail' in uzivatelske_vybrane %}checked{% endif %}> 🇹🇷 Turecko</label>
-                            <label class="gallery-checkbox-wrap"><input type="checkbox" name="oblibene_sekce" value="turecko_galerie" {% if 'turecko_galerie' in uzivatelske_vybrane %}checked{% endif %}> 📸 Galerie</label>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-
-            <!-- 2. SEKCE: ITINERÁŘE CEST -->
-            <div class="menu-card glass-panel">
-                <div class="menu-card-header">
-                    <span>📅</span> Itineráře cest
-                </div>
-                <label class="checkbox-row-link">
-                    <span>Všechny itineráře</span>
-                    <input type="checkbox" name="oblibene_sekce" value="seznam_itineraru" {% if 'seznam_itineraru' in uzivatelske_vybrane %}checked{% endif %}>
-                </label>
-                <ul class="country-list">
-                    <li class="country-item">
-                        <div class="country-row">
-                            <label class="country-label"><input type="checkbox" name="oblibene_sekce" value="egypt_itinerar" {% if 'egypt_itinerar' in uzivatelske_vybrane %}checked{% endif %}> 🇪🇬 Egypt – itinerář</label>
-                        </div>
-                    </li>
-                    <li class="country-item">
-                        <div class="country-row">
-                            <label class="country-label"><input type="checkbox" name="oblibene_sekce" value="kapverdy_itinerar" {% if 'kapverdy_itinerar' in uzivatelske_vybrane %}checked{% endif %}> 🇨🇻 Kapverdy – itinerář</label>
-                        </div>
-                    </li>
-                    <li class="country-item">
-                        <div class="country-row">
-                            <label class="country-label"><input type="checkbox" name="oblibene_sekce" value="tunisko_itinerar" {% if 'tunisko_itinerar' in uzivatelske_vybrane %}checked{% endif %}> 🇹🇳 Tunisko – itinerář</label>
-                        </div>
-                    </li>
-                    <li class="country-item">
-                        <div class="country-row">
-                            <label class="country-label"><input type="checkbox" name="oblibene_sekce" value="turecko_itinerar" {% if 'turecko_itinerar' in uzivatelske_vybrane %}checked{% endif %}> 🇹🇷 Turecko – itinerář</label>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-
-            <!-- 3. SEKCE: ZPRÁVY KOMUNITY PODLE ZEMÍ -->
-            <div class="menu-card glass-panel">
-                <div class="menu-card-header">
-                    <span>💬</span> Zprávy komunity
-                </div>
-                <label class="checkbox-row-link">
-                    <span>Všechny diskuze</span>
-                    <input type="checkbox" name="oblibene_sekce" value="zpravy_vsechny" {% if 'zpravy_vsechny' in uzivatelske_vybrane %}checked{% endif %}>
-                </label>
-                <ul class="country-list">
-                    <li class="country-item">
-                        <div class="country-row">
-                            <label class="country-label"><input type="checkbox" name="oblibene_sekce" value="komunita_egypt" {% if 'komunita_egypt' in uzivatelske_vybrane %}checked{% endif %}> 🇪🇬 Komunita: Egypt</label>
-                        </div>
-                    </li>
-                    <li class="country-item">
-                        <div class="country-row">
-                            <label class="country-label"><input type="checkbox" name="oblibene_sekce" value="komunita_kapverdy" {% if 'komunita_kapverdy' in uzivatelske_vybrane %}checked{% endif %}> 🇨🇻 Komunita: Kapverdy</label>
-                        </div>
-                    </li>
-                    <li class="country-item">
-                        <div class="country-row">
-                            <label class="country-label"><input type="checkbox" name="oblibene_sekce" value="komunita_tunisko" {% if 'komunita_tunisko' in uzivatelske_vybrane %}checked{% endif %}> 🇹🇳 Komunita: Tunisko</label>
-                        </div>
-                    </li>
-                    <li class="country-item">
-                        <div class="country-row">
-                            <label class="country-label"><input type="checkbox" name="oblibene_sekce" value="komunita_turecko" {% if 'komunita_turecko' in uzivatelske_vybrane %}checked{% endif %}> 🇹🇷 Komunita: Turecko</label>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-
-            <!-- 4. SEKCE: PODPORA A ADMINISTRÁTOR -->
-            <div class="menu-card glass-panel">
-                <div class="menu-card-header">
-                    <span>🙋‍♂️</span> Podpora a kontakt
-                </div>
-                <p style="font-size: 0.85rem; color: var(--subtext-color); line-height: 1.4; margin: 0;">
-                    Máte dotaz k cestám, itinerářům nebo potřebujete poradit?
-                </p>
-                <label class="checkbox-row-link" style="margin-top: auto;">
-                    <span>✉️ Zprávy s administrátorem</span>
-                    <input type="checkbox" name="oblibene_sekce" value="chat_admin" {% if 'chat_admin' in uzivatelske_vybrane %}checked{% endif %}>
-                </label>
-            </div>
-
+            {% endfor %}
         </div>
+    {% endif %}
 
-        <!-- Akční tlačítka dole -->
-        <div class="form-actions-bar">
-            <a href="{% url 'dashboard_uctu' %}" class="split-btn" style="text-decoration: none;">
-                ← Zpět do účtu
-            </a>
-            <button type="submit" class="btn-save-luxury">
-                💾 Uložit výběr oblíbených
-            </button>
-        </div>
-    </form>
+    <!-- 2. TLAČÍTKO ZPĚT DO ÚČTU A TLAČÍTKO MOŽNOSTI -->
+    <div class="action-bar">
+        <a href="{% url 'dashboard_uctu' %}" class="btn-back">← Zpět do účtu</a>
+        <button type="button" class="btn-options" onclick="toggleMenu()">
+            ⚙️ Možnosti
+        </button>
+    </div>
+
+    <!-- 3. CELÉ ROZBALOVACÍ MENU (skryté po uložení, rozbalí se kliknutím na Možnosti) -->
+    <div id="selectionMenu" class="menu-panel" style="display: {% if rozbalit_menu %}block{% else %}none{% endif %};">
+        <form method="POST">
+            {% csrf_token %}
+
+            <div style="text-align: center;">
+                <span class="counter-badge">Vybráno: <span id="selectedCount">{{ vybrane_klice|length }}</span> / 4</span>
+            </div>
+
+            <!-- ZEMĚ -->
+            <div class="menu-box">
+                <h3>🌍 Země a destinace</h3>
+                <div class="row-item" style="background: #008a59; color: white;">
+                    <label style="color: white;"><input type="checkbox" class="sec-check" name="oblibene_sekce" value="seznam_zemi" {% if 'seznam_zemi' in vybrane_klice %}checked{% endif %}> Všechny země</label>
+                </div>
+                <div class="row-item">
+                    <label><input type="checkbox" class="sec-check" name="oblibene_sekce" value="egypt_detail" {% if 'egypt_detail' in vybrane_klice %}checked{% endif %}> 🇪🇬 Egypt – popis</label>
+                    <label class="gallery-pill"><input type="checkbox" class="sec-check" name="oblibene_sekce" value="egypt_galerie" {% if 'egypt_galerie' in vybrane_klice %}checked{% endif %}> 📸 Galerie</label>
+                </div>
+                <div class="row-item">
+                    <label><input type="checkbox" class="sec-check" name="oblibene_sekce" value="kapverdy_detail" {% if 'kapverdy_detail' in vybrane_klice %}checked{% endif %}> 🇨🇻 Kapverdy – popis</label>
+                    <label class="gallery-pill"><input type="checkbox" class="sec-check" name="oblibene_sekce" value="kapverdy_galerie" {% if 'kapverdy_galerie' in vybrane_klice %}checked{% endif %}> 📸 Galerie</label>
+                </div>
+                <div class="row-item">
+                    <label><input type="checkbox" class="sec-check" name="oblibene_sekce" value="tunisko_detail" {% if 'tunisko_detail' in vybrane_klice %}checked{% endif %}> 🇹🇳 Tunisko – popis</label>
+                    <label class="gallery-pill"><input type="checkbox" class="sec-check" name="oblibene_sekce" value="tunisko_galerie" {% if 'tunisko_galerie' in vybrane_klice %}checked{% endif %}> 📸 Galerie</label>
+                </div>
+                <div class="row-item">
+                    <label><input type="checkbox" class="sec-check" name="oblibene_sekce" value="turecko_detail" {% if 'turecko_detail' in vybrane_klice %}checked{% endif %}> 🇹🇷 Turecko – popis</label>
+                    <label class="gallery-pill"><input type="checkbox" class="sec-check" name="oblibene_sekce" value="turecko_galerie" {% if 'turecko_galerie' in vybrane_klice %}checked{% endif %}> 📸 Galerie</label>
+                </div>
+            </div>
+
+            <!-- ITINERÁŘE VČETNĚ GALERIÍ -->
+            <div class="menu-box">
+                <h3>📅 Itineráře cest</h3>
+                <div class="row-item" style="background: #008a59; color: white;">
+                    <label style="color: white;"><input type="checkbox" class="sec-check" name="oblibene_sekce" value="seznam_itineraru" {% if 'seznam_itineraru' in vybrane_klice %}checked{% endif %}> Všechny itineráře</label>
+                </div>
+                <div class="row-item">
+                    <label><input type="checkbox" class="sec-check" name="oblibene_sekce" value="egypt_itinerar" {% if 'egypt_itinerar' in vybrane_klice %}checked{% endif %}> 🇪🇬 Egypt – itinerář</label>
+                    <label class="gallery-pill"><input type="checkbox" class="sec-check" name="oblibene_sekce" value="egypt_itinerar_galerie" {% if 'egypt_itinerar_galerie' in vybrane_klice %}checked{% endif %}> 📸 Galerie</label>
+                </div>
+                <div class="row-item">
+                    <label><input type="checkbox" class="sec-check" name="oblibene_sekce" value="kapverdy_itinerar" {% if 'kapverdy_itinerar' in vybrane_klice %}checked{% endif %}> 🇨🇻 Kapverdy – itinerář</label>
+                    <label class="gallery-pill"><input type="checkbox" class="sec-check" name="oblibene_sekce" value="kapverdy_itinerar_galerie" {% if 'kapverdy_itinerar_galerie' in vybrane_klice %}checked{% endif %}> 📸 Galerie</label>
+                </div>
+                <div class="row-item">
+                    <label><input type="checkbox" class="sec-check" name="oblibene_sekce" value="tunisko_itinerar" {% if 'tunisko_itinerar' in vybrane_klice %}checked{% endif %}> 🇹🇳 Tunisko – itinerář</label>
+                    <label class="gallery-pill"><input type="checkbox" class="sec-check" name="oblibene_sekce" value="tunisko_itinerar_galerie" {% if 'tunisko_itinerar_galerie' in vybrane_klice %}checked{% endif %}> 📸 Galerie</label>
+                </div>
+                <div class="row-item">
+                    <label><input type="checkbox" class="sec-check" name="oblibene_sekce" value="turecko_itinerar" {% if 'turecko_itinerar' in vybrane_klice %}checked{% endif %}> 🇹🇷 Turecko – itinerář</label>
+                    <label class="gallery-pill"><input type="checkbox" class="sec-check" name="oblibene_sekce" value="turecko_itinerar_galerie" {% if 'turecko_itinerar_galerie' in vybrane_klice %}checked{% endif %}> 📸 Galerie</label>
+                </div>
+            </div>
+
+            <!-- KOMUNITA -->
+            <div class="menu-box">
+                <h3>💬 Komunita a zprávy</h3>
+                <div class="row-item" style="background: #008a59; color: white;">
+                    <label style="color: white;"><input type="checkbox" class="sec-check" name="oblibene_sekce" value="zpravy_vsechny" {% if 'zpravy_vsechny' in vybrane_klice %}checked{% endif %}> Všechny diskuze</label>
+                </div>
+                <div class="row-item"><label><input type="checkbox" class="sec-check" name="oblibene_sekce" value="komunita_egypt" {% if 'komunita_egypt' in vybrane_klice %}checked{% endif %}> 🇪🇬 Komunita: Egypt</label></div>
+                <div class="row-item"><label><input type="checkbox" class="sec-check" name="oblibene_sekce" value="komunita_kapverdy" {% if 'komunita_kapverdy' in vybrane_klice %}checked{% endif %}> 🇨🇻 Komunita: Kapverdy</label></div>
+                <div class="row-item"><label><input type="checkbox" class="sec-check" name="oblibene_sekce" value="komunita_tunisko" {% if 'komunita_tunisko' in vybrane_klice %}checked{% endif %}> 🇹🇳 Komunita: Tunisko</label></div>
+                <div class="row-item"><label><input type="checkbox" class="sec-check" name="oblibene_sekce" value="komunita_turecko" {% if 'komunita_turecko' in vybrane_klice %}checked{% endif %}> 🇹🇷 Komunita: Turecko</label></div>
+            </div>
+
+            <div style="text-align: center; margin-bottom: 40px;">
+                <button type="submit" class="btn-save">💾 Uložit výběr oblíbených</button>
+            </div>
+        </form>
+    </div>
 </div>
 
-<!-- JavaScript pro hlídání limitu 4 zaškrtnutých položek -->
 <script>
-document.addEventListener("DOMContentLoaded", function() {
-    const checkboxes = document.querySelectorAll('input[name="oblibene_sekce"]');
-    const MAX_LIMIT = 4;
-
-    function updateCheckboxesState() {
-        const checkedCount = document.querySelectorAll('input[name="oblibene_sekce"]:checked').length;
-
-        checkboxes.forEach(cb => {
-            if (!cb.checked) {
-                if (checkedCount >= MAX_LIMIT) {
-                    cb.disabled = true; // Zablokuje nezaškrtnuté, pokud je limit dosažen
-                } else {
-                    cb.disabled = false; // Odblokuje, pokud je pod limitem
-                }
-            }
-        });
+    function toggleMenu() {
+        const menu = document.getElementById('selectionMenu');
+        if (menu.style.display === 'none') {
+            menu.style.display = 'block';
+            menu.scrollIntoView({ behavior: 'smooth' });
+        } else {
+            menu.style.display = 'none';
+        }
     }
 
-    // Spustit při načtení stránky (pokud už uživatel má 4 položky předvyplněné)
-    updateCheckboxesState();
+    const checkboxes = document.querySelectorAll('.sec-check');
+    const countSpan = document.getElementById('selectedCount');
 
-    // Sledovat změny při kliknutí
-    checkboxes.forEach(cb => {
-        cb.addEventListener('change', function() {
-            const checkedCount = document.querySelectorAll('input[name="oblibene_sekce"]:checked').length;
-
-            if (checkedCount > MAX_LIMIT) {
-                this.checked = false;
-                alert("Můžeš si vybrat maximálně 4 oblíbené sekce.");
-            }
-
-            updateCheckboxesState();
+    function updateCheckboxes() {
+        const checked = document.querySelectorAll('.sec-check:checked');
+        countSpan.textContent = checked.length;
+        checkboxes.forEach(cb => {
+            if (!cb.checked) cb.disabled = checked.length >= 4;
         });
-    });
-});
+    }
+    checkboxes.forEach(cb => cb.addEventListener('change', updateCheckboxes));
+    updateCheckboxes();
 </script>
-{% endblock %}
+
+</body>
+</html>

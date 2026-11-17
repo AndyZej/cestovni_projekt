@@ -6,13 +6,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Můj dashboard – Oblíbené části</title>
+    <title>Uživatelský panel</title>
     <style>
-        /* Základní styly laděné podle vašich obrázků (Lesní oáza) */
         body {
             margin: 0;
             padding: 40px 20px;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             background-color: #eaf7f0;
             color: #13382c;
             display: flex;
@@ -22,210 +21,258 @@
             box-sizing: border-box;
         }
 
-        .dashboard-wrapper {
+        .panel-card {
+            background: #ffffff;
+            border: 1.5px solid #c5a86a;
+            border-radius: 20px;
+            padding: 35px;
             width: 100%;
-            max-width: 750px;
-            text-align: center;
+            max-width: 800px;
+            box-shadow: 0 6px 20px rgba(13, 59, 46, 0.06);
+            box-sizing: border-box;
         }
 
-        .header-title {
-            font-size: 2rem;
-            font-weight: 700;
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #e2f2e9;
+            padding-bottom: 20px;
+            margin-bottom: 25px;
+        }
+
+        .panel-title {
+            font-size: 1.8rem;
             color: #0d3b2e;
-            margin-bottom: 8px;
+            margin: 0;
             display: flex;
             align-items: center;
-            justify-content: center;
             gap: 10px;
         }
 
-        .header-subtitle {
-            font-size: 0.95rem;
+        .subtitle {
             color: #3a6354;
-            margin-bottom: 30px;
+            font-size: 0.92rem;
+            margin: 5px 0 0 0;
         }
 
-        /* Mřížka pro vybrané 4 oblíbené sekce */
-        .favorites-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 18px;
-            margin-bottom: 35px;
-        }
-
-        /* Karta jednotlivé sekce */
-        .section-card {
-            background: #ffffff;
-            border: 1.5px solid #c5a86a;
-            border-radius: 16px;
-            padding: 22px 24px;
-            box-shadow: 0 4px 12px rgba(13, 59, 46, 0.05);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            align-items: flex-start;
-            text-align: left;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        .section-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(13, 59, 46, 0.1);
-        }
-
-        .card-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 14px;
-            width: 100%;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #d5ece1;
-        }
-
-        .card-icon {
-            font-size: 1.6rem;
-        }
-
-        .card-title {
-            font-size: 1.15rem;
-            font-weight: 700;
-            color: #0d3b2e;
-            margin: 0;
-        }
-
-        .card-position {
-            margin-left: auto;
-            font-size: 0.75rem;
-            background: #eaf7f0;
-            color: #0d8a5c;
-            padding: 3px 9px;
-            border-radius: 12px;
-            font-weight: 600;
-        }
-
-        .card-action {
-            display: inline-block;
-            background-color: #008a59;
-            color: #ffffff;
+        .btn-home {
+            background-color: #ffffff;
+            color: #008a59;
+            border: 2px solid #008a59;
+            padding: 9px 18px;
+            border-radius: 999px;
             text-decoration: none;
             font-weight: 600;
             font-size: 0.9rem;
-            padding: 10px 18px;
-            border-radius: 10px;
-            transition: background-color 0.2s ease;
-            margin-top: 8px;
+            transition: all 0.2s ease;
         }
 
-        .card-action:hover {
-            background-color: #006e47;
+        .btn-home:hover {
+            background-color: #f0faf5;
         }
 
-        /* Prázdný stav (když uživatel ještě nevybral žádné sekce) */
-        .empty-state {
-            background: #ffffff;
-            border: 1.5px solid #c5a86a;
-            border-radius: 16px;
-            padding: 35px 25px;
-            margin-bottom: 30px;
+        /* Sekce uvnitř panelu */
+        .section-box {
+            background: #fcfefd;
+            border: 1px solid #d5ece1;
+            border-radius: 14px;
+            padding: 22px;
+            margin-bottom: 25px;
         }
 
-        /* Ovládací panel pod kartami (Tlačítko Možnosti) */
-        .controls-box {
-            background: rgba(255, 255, 255, 0.7);
-            border: 1px solid #b8decb;
-            border-radius: 24px;
-            padding: 18px 24px;
-            display: inline-flex;
-            flex-wrap: wrap;
-            gap: 14px;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .btn-options {
-            background-color: #161817;
-            color: #ffffff;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.95rem;
-            padding: 12px 24px;
-            border-radius: 999px;
-            border: 1.5px solid #c5a86a;
-            display: inline-flex;
+        .section-box h3 {
+            margin-top: 0;
+            margin-bottom: 15px;
+            color: #0d3b2e;
+            font-size: 1.15rem;
+            display: flex;
             align-items: center;
             gap: 8px;
-            transition: all 0.2s ease;
+            border-bottom: 1px solid #e5f5ed;
+            padding-bottom: 10px;
         }
 
-        .btn-options:hover {
-            background-color: #2b302e;
-            transform: scale(1.02);
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            font-size: 0.95rem;
+            border-bottom: 1px dashed #edf7f2;
         }
 
-        .btn-back {
-            background-color: #ffffff;
-            color: #008a59;
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            color: #4a7564;
+            font-weight: 500;
+        }
+
+        .info-value {
+            font-weight: 600;
+            color: #0d3b2e;
+        }
+
+        /* Tlačítka uvnitř boxů */
+        .btn-action {
+            display: inline-block;
+            background-color: #161817;
+            color: #ffffff;
+            border: 1.5px solid #c5a86a;
+            padding: 10px 20px;
+            border-radius: 999px;
             text-decoration: none;
             font-weight: 600;
-            font-size: 0.95rem;
-            padding: 12px 22px;
-            border-radius: 999px;
-            border: 2px solid #008a59;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
+            font-size: 0.9rem;
             transition: all 0.2s ease;
         }
 
-        .btn-back:hover {
-            background-color: #f0faf5;
+        .btn-action:hover {
+            background-color: #2b302e;
+        }
+
+        /* Mřížka pro vybrané 4 oblíbené části uvnitř panelu */
+        .favorites-mini-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .mini-card {
+            background: #ffffff;
+            border: 1px solid #c5a86a;
+            border-radius: 10px;
+            padding: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 6px rgba(13, 59, 46, 0.03);
+        }
+
+        .mini-card-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #0d3b2e;
+        }
+
+        .btn-mini-open {
+            background: #008a59;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-size: 0.78rem;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .btn-mini-open:hover {
+            background: #006e47;
+        }
+
+        .empty-text {
+            color: #557c6d;
+            font-size: 0.92rem;
+            margin: 0 0 15px 0;
+            line-height: 1.4;
         }
     </style>
 </head>
 <body>
 
-    <div class="dashboard-wrapper">
-        <div class="header-title">
-            <span>⭐</span> Moje vybrané sekce
+<div class="panel-card">
+
+    <!-- HLAVIČKA PANELU -->
+    <div class="panel-header">
+        <div>
+            <h1 class="panel-title">✨ Uživatelský panel</h1>
+            <p class="subtitle">Vítejte ve své osobní sekci portálu.</p>
         </div>
-        <p class="header-subtitle">
-            Přehled vašich oblíbených částí uložených v databázi (maximálně 4 sekce).
-        </p>
+        <div>
+            <a href="{% url 'domov' %}" class="btn-home">← Zpět domů</a>
+        </div>
+    </div>
+
+    <!-- 1. OSOBNÍ ÚDAJE -->
+    <div class="section-box">
+        <h3>📄 Osobní údaje</h3>
+        <div class="info-row">
+            <span class="info-label">Uživatelské jméno:</span>
+            <span class="info-value">{{ request.user.username }}</span>
+        </div>
+        <div class="info-row">
+            <span class="info-label">E-mailová adresa:</span>
+            <span class="info-value">{{ request.user.email|default:"Nezadán" }}</span>
+        </div>
+        <div class="info-row">
+            <span class="info-label">Datum registrace:</span>
+            <span class="info-value">{{ request.user.date_joined|date:"j. F Y" }}</span>
+        </div>
+        <div class="info-row">
+            <span class="info-label">Oprávnění:</span>
+            <span class="info-value">
+                {% if request.user.is_superuser %}
+                    ⭐ Administrátor / Správce
+                {% else %}
+                    👤 Standardní uživatel
+                {% endif %}
+            </span>
+        </div>
+    </div>
+
+    <!-- 2. ADMINISTRACE WEBU (pouze pro admina) -->
+    {% if request.user.is_superuser %}
+    <div class="section-box" style="border-style: dashed;">
+        <h3>⚙️ Administrace webu</h3>
+        <p class="empty-text" style="margin-bottom: 12px;">Jste přihlášen/a jako administrátor. Zde máte přístup ke správě systému.</p>
+        <a href="{% url 'admin:index' %}" class="btn-action">Otevřít Django Admin</a>
+    </div>
+    {% endif %}
+
+    <!-- 3. MOJE 4 OBLÍBENÉ ČÁSTI (NAPOJENO NA DATABÁZI) -->
+    <div class="section-box">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid #e5f5ed; padding-bottom: 10px;">
+            <h3 style="margin: 0; border: none; padding: 0;">⭐ Moje 4 oblíbené části</h3>
+            <!-- Tlačítko odkazující na stránku s formulářem pro výběr -->
+            <a href="{% url 'upravit_oblibene' %}" class="btn-action" style="padding: 6px 14px; font-size: 0.85rem;">⚙️ Upravit výběr</a>
+        </div>
+
+        <p class="empty-text">Rychlý přístup k vašim nejoblíbenějším sekcím portálu.</p>
 
         {% if oblibene_sekce %}
-            <!-- Zobrazení pouze vybraných sekcí uživatele -->
-            <div class="favorites-grid">
+            <!-- Zobrazení reálných 4 sekcí z databáze -->
+            <div class="favorites-mini-grid">
                 {% for sekce in oblibene_sekce %}
-                    <div class="section-card">
-                        <div class="card-header">
-                            <span class="card-icon">{{ sekce.ikona }}</span>
-                            <h3 class="card-title">{{ sekce.nazev_casti }}</h3>
-                            <span class="card-position">#{{ sekce.poradi }}</span>
+                    <div class="mini-card">
+                        <div class="mini-card-info">
+                            <span style="font-size: 1.2rem;">{{ sekce.ikona }}</span>
+                            <span>{{ sekce.nazev_casti }}</span>
                         </div>
-
-                        <a href="{% url sekce.url_name %}" class="card-action">
-                            Otevřít sekci →
-                        </a>
+                        <!-- Zde opraveno na hotovou bezpečnou URL z Pythonu -->
+                        <a href="{{ sekce.hotova_url }}" class="btn-mini-open">Otevřít →</a>
                     </div>
                 {% endfor %}
             </div>
         {% else %}
-            <!-- Pokud uživatel zatím nemá v databázi žádný výběr -->
-            <div class="empty-state">
-                <h3>Zatím nemáte vybrané žádné oblíbené sekce</h3>
-                <p>Klikněte na tlačítko <strong>Možnosti</strong> níže a zaškrtněte si až 4 části, které chcete mít na očích.</p>
-            </div>
+            <!-- Výchozí text, pokud uživatel ještě nic nemá zaškrtnuto -->
+            <p class="empty-text" style="color: #8a2be2; font-weight: 500;">
+                <em>Zatím nemáte vybrané žádné oblíbené části. Klikněte nahoře na „Upravit výběr“ a zvolte si své 4 oblíbené.</em>
+            </p>
         {% endif %}
-
-        <!-- Tlačítka pro úpravu výběru (rozbalení kompletního menu) -->
-        <div class="controls-box">
-            <a href="{% url 'domov' %}" class="btn-back">← Zpět na domovskou stránku</a>
-            <a href="{% url 'upravit_oblibene' %}" class="btn-options">
-                ⚙️ Možnosti (upravit výběr sekcí)
-            </a>
-        </div>
     </div>
+
+    <!-- 4. ZABEZPEČENÍ A NASTAVENÍ -->
+    <div class="section-box" style="margin-bottom: 0;">
+        <h3>🔒 Zabezpečení a nastavení</h3>
+        <p class="empty-text" style="margin-bottom: 0;">Zde můžete spravovat své heslo nebo upravit přístupové údaje.</p>
+    </div>
+
+</div>
 
 </body>
 </html>
