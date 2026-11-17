@@ -122,7 +122,7 @@
         font-family: 'Playfair Display', serif;
         font-size: 1.2rem;
         color: var(--luxury-dark);
-        margin-bottom: 10px;
+        margin-bottom: 0;
     }
 
     .info-row {
@@ -179,7 +179,7 @@
     <!-- Sekce: Osobní údaje -->
     <div class="dashboard-section">
         <h3>📋 Osobní údaje</h3>
-        <div class="info-row">
+        <div class="info-row" style="margin-top: 10px;">
             <span class="info-label">Uživatelské jméno:</span>
             <span>{{ user.username }}</span>
         </div>
@@ -203,17 +203,42 @@
     {% if user.is_staff or user.is_superuser %}
     <div class="dashboard-section" style="background: #fffdf5; padding: 15px; border-radius: 10px; border: 1px dashed var(--luxury-gold);">
         <h3>⚙️ Administrace webu</h3>
-        <p style="font-size: 0.85rem; color: #666; margin-bottom: 10px;">
+        <p style="font-size: 0.85rem; color: #666; margin-bottom: 10px; margin-top: 5px;">
             Jste přihlášen/a jako administrátor. Zde máte přístup ke správě systému.
         </p>
         <a href="{% url 'admin:index' %}" class="btn-luxury btn-admin" target="_blank">Otevřít Django Admin</a>
     </div>
     {% endif %}
 
+    <!-- Sekce: Moje 4 oblíbené části -->
+    <div class="dashboard-section">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+            <h3>⭐ Moje 4 oblíbené části</h3>
+            <!-- Tlačítko pro správu / úpravu oblíbených položek -->
+            <a href="{% url 'upravit_oblibene' %}" style="font-size: 0.8rem; background: var(--luxury-gold); color: #1a1a1a; padding: 5px 12px; border-radius: 6px; text-decoration: none; font-weight: bold; transition: all 0.3s ease;">
+                ⚙️ Upravit výběr
+            </a>
+        </div>
+        <p style="font-size: 0.85rem; color: #666; margin-bottom: 12px;">
+            Rychlý přístup k vašim nejoblíbenějším sekcím portálu.
+        </p>
+        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;">
+            {% for cast in oblibene_casti %}
+                <a href="{% url cast.url_name %}" style="background: var(--luxury-dark); color: var(--luxury-gold); padding: 10px 14px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem; display: flex; align-items: center; gap: 8px; border: 1px solid var(--luxury-gold); transition: all 0.3s;">
+                    <span>{{ cast.ikona }}</span> {{ cast.nazev_casti }}
+                </a>
+            {% empty %}
+                <p style="grid-column: span 2; color: #777; font-size: 0.85rem; font-style: italic; margin: 0;">
+                    Zatím nemáte vybrané žádné oblíbené části. Klikněte nahoře na „Upravit výběr“ a zvolte si své 4 oblíbené.
+                </p>
+            {% endfor %}
+        </div>
+    </div>
+
     <!-- Sekce: Změna hesla -->
     <div class="dashboard-section">
         <h3>🔐 Zabezpečení a nastavení</h3>
-        <p style="font-size: 0.85rem; color: #666; margin-bottom: 10px;">
+        <p style="font-size: 0.85rem; color: #666; margin-bottom: 10px; margin-top: 5px;">
             Zde můžete spravovat své heslo nebo upravit přístupové údaje.
         </p>
         <a href="{% url 'password_change' %}" class="btn-luxury">Změnit heslo</a>
