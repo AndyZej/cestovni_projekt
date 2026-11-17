@@ -72,7 +72,6 @@
         border-bottom: 1.5px solid var(--panel-border, #eee);
     }
 
-    /* Styl pro položku s checkboxem namísto čistého prokliku */
     .checkbox-row-link {
         display: flex;
         align-items: center;
@@ -146,7 +145,13 @@
         cursor: pointer;
     }
 
-    /* Ovládací panel dole (Uložit / Zpět) */
+    /* Vzhled pro zablokované checkboxy po dosažení limitu 4 */
+    input[type="checkbox"]:disabled + span,
+    input[type="checkbox"]:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
     .form-actions-bar {
         margin-top: 30px;
         display: flex;
@@ -222,7 +227,7 @@
                 </ul>
             </div>
 
-            <!-- 2. SEKCE: ITINERÁŘE CEST A JEJICH GALERIE -->
+            <!-- 2. SEKCE: ITINERÁŘE CEST -->
             <div class="menu-card glass-panel">
                 <div class="menu-card-header">
                     <span>📅</span> Itineráře cest
@@ -235,25 +240,21 @@
                     <li class="country-item">
                         <div class="country-row">
                             <label class="country-label"><input type="checkbox" name="oblibene_sekce" value="egypt_itinerar" {% if 'egypt_itinerar' in uzivatelske_vybrane %}checked{% endif %}> 🇪🇬 Egypt – itinerář</label>
-                            <label class="gallery-checkbox-wrap"><input type="checkbox" name="oblibene_sekce" value="egypt_galerie" {% if 'egypt_galerie' in uzivatelske_vybrane %}checked{% endif %}> 📸 Galerie</label>
                         </div>
                     </li>
                     <li class="country-item">
                         <div class="country-row">
                             <label class="country-label"><input type="checkbox" name="oblibene_sekce" value="kapverdy_itinerar" {% if 'kapverdy_itinerar' in uzivatelske_vybrane %}checked{% endif %}> 🇨🇻 Kapverdy – itinerář</label>
-                            <label class="gallery-checkbox-wrap"><input type="checkbox" name="oblibene_sekce" value="kapverdy_galerie" {% if 'kapverdy_galerie' in uzivatelske_vybrane %}checked{% endif %}> 📸 Galerie</label>
                         </div>
                     </li>
                     <li class="country-item">
                         <div class="country-row">
                             <label class="country-label"><input type="checkbox" name="oblibene_sekce" value="tunisko_itinerar" {% if 'tunisko_itinerar' in uzivatelske_vybrane %}checked{% endif %}> 🇹🇳 Tunisko – itinerář</label>
-                            <label class="gallery-checkbox-wrap"><input type="checkbox" name="oblibene_sekce" value="tunisko_galerie" {% if 'tunisko_galerie' in uzivatelske_vybrane %}checked{% endif %}> 📸 Galerie</label>
                         </div>
                     </li>
                     <li class="country-item">
                         <div class="country-row">
                             <label class="country-label"><input type="checkbox" name="oblibene_sekce" value="turecko_itinerar" {% if 'turecko_itinerar' in uzivatelske_vybrane %}checked{% endif %}> 🇹🇷 Turecko – itinerář</label>
-                            <label class="gallery-checkbox-wrap"><input type="checkbox" name="oblibene_sekce" value="turecko_galerie" {% if 'turecko_galerie' in uzivatelske_vybrane %}checked{% endif %}> 📸 Galerie</label>
                         </div>
                     </li>
                 </ul>
@@ -319,4 +320,43 @@
         </div>
     </form>
 </div>
+
+<!-- JavaScript pro hlídání limitu 4 zaškrtnutých položek -->
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const checkboxes = document.querySelectorAll('input[name="oblibene_sekce"]');
+    const MAX_LIMIT = 4;
+
+    function updateCheckboxesState() {
+        const checkedCount = document.querySelectorAll('input[name="oblibene_sekce"]:checked').length;
+
+        checkboxes.forEach(cb => {
+            if (!cb.checked) {
+                if (checkedCount >= MAX_LIMIT) {
+                    cb.disabled = true; // Zablokuje nezaškrtnuté, pokud je limit dosažen
+                } else {
+                    cb.disabled = false; // Odblokuje, pokud je pod limitem
+                }
+            }
+        });
+    }
+
+    // Spustit při načtení stránky (pokud už uživatel má 4 položky předvyplněné)
+    updateCheckboxesState();
+
+    // Sledovat změny při kliknutí
+    checkboxes.forEach(cb => {
+        cb.addEventListener('change', function() {
+            const checkedCount = document.querySelectorAll('input[name="oblibene_sekce"]:checked').length;
+
+            if (checkedCount > MAX_LIMIT) {
+                this.checked = false;
+                alert("Můžeš si vybrat maximálně 4 oblíbené sekce.");
+            }
+
+            updateCheckboxesState();
+        });
+    });
+});
+</script>
 {% endblock %}
